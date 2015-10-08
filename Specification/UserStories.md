@@ -1,14 +1,22 @@
 # User Stories
 
+Actores.
+
+
+User Stories.
+| Identificador | Nome | Descrição | Prioridade |
+| ------ | ----------- | ------------ | -----------|
+| US01   | Pesquisar Evento. | | |
+| US02   | Filtrar Eventos. | | |
+| US03   | Visualizar Evento. | | |
+| US04   | Como ser Promotor. | | |
+
+
 Visitante
 US01 Login
 US02 Sign Up
 
-Utilizador
-US13 Pesquisar Eventos
-US14 Filtrar Eventos
-US15 Visualizar Evento
-US16 Como ser promotor
+
 
 Autenticado
 US19 Reportar utilizador
