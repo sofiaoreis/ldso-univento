@@ -4,12 +4,15 @@ Actores.
 
 
 User Stories.
-| Identificador | Nome | Descrição | Prioridade |
-| ------ | ----------- | ------------ | -----------|
-| US01   | Pesquisar Evento. | | |
-| US02   | Filtrar Eventos. | | |
-| US03   | Visualizar Evento. | | |
-| US04   | Como ser Promotor. | | |
+
+
+
+| Identificador | Nome |
+| ------ | ----------- | 
+| US01   | Pesquisar Evento. | 
+| US02   | Filtrar Eventos. |
+| US03   | Visualizar Evento. | 
+| US04   | Como ser Promotor. |
 
 
 Visitante
