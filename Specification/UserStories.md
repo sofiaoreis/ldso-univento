@@ -1,12 +1,12 @@
 # User Stories
 
-Actores.
+##Actores.
 
 
-User Stories.
+##User Stories.
 
 
-
+####Utilizador
 | Identificador | Nome |
 | ------ | ----------- | 
 | US01   | Pesquisar Evento. | 
@@ -15,16 +15,16 @@ User Stories.
 | US04   | Como ser Promotor. |
 
 
-Visitante
+####Visitante
 US01 Login
 US02 Sign Up
 
 
 
-Autenticado
+####Autenticado
 US19 Reportar utilizador
 
-Normal
+####Normal
 US11 Preferências
 US12 Sugerir Eventos
 US13 Classificar Eventos (Estrelinhas: 0 - 5)
@@ -35,7 +35,7 @@ US17 Editar Perfil
 US18 Google Maps 
 
 
-Promotor
+####Promotor
 US21 Criar Evento
 US22 Convidar Colaborador
 US23 Definir permissões do Colaborador
@@ -44,12 +44,12 @@ US24 Remover Evento
 US25 Aprovar Evento criado por Colaborador
 US26 Visualizar registo de atividade de Evento
 
-Administrador
+####Administrador
 US31 Banir Promotor
 US32 Banir utilizador
 US33 Criar Promotor
 US34 Ver registo de atividade de site
 
-Colaborador
+####Colaborador
 US41 Propor Evento
 US42 Editar proposta
