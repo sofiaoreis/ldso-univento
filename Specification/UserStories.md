@@ -32,7 +32,7 @@
 | US32   | Sugerir Evento | Como utilizador normal quero  sugerir um evento a outro utilizador |
 | US33   | Classificar Evento | Como utilizador normal quero classificar os eventos | 
 | US34   | Comentar Evento | Como utilizador normal quero comentar os eventos |
-| US35   | Inscrever em Evento | Como utilizador normal quero inscrever-me em eventos (incluiu compra de bilhetes se aplicável) | 
+| US35   | Inscrever em Evento | Como utilizador normal quero inscrever-me em eventos (inclui compra de bilhetes se aplicável) | 
 | US36   | Partilhar Evento em Rede Social | Como utilizador normal quero partilhar evento numa rede social |
 | US37   | Editar Perfil | Como utilizador normal quero editar o perfil para atualizar os meus dados
 | US38   | Google Maps | Como utilizador normal quero visualizar os eventos no google Maps para ver a sua localização|
