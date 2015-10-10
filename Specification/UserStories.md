@@ -1,4 +1,3 @@
-##### 1º Versão manter por enquanto! 
 # User Stories
 
 ##Actores.
