@@ -251,4 +251,17 @@ padding-right: 0px;
     }
 }
 
+.alert {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
 
+.alert-warning {
+    color: #2a2b2d ;
+    background-color: #ececec ;
+    border: 0px;
+}
+
+.input-group {
+    padding-bottom: 10px;
+}

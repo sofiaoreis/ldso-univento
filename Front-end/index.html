@@ -21,7 +21,6 @@
 </head>
 
 <body>
-
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -183,6 +182,75 @@
                 <!-- /.col-lg-12 -->
             </div>
             <div class="row" id="eventos">
+                <div class="col-sm-15 col-md-12">
+                    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                        Cria conta e personaliza os eventos sugeridos consoante os teus gostos
+
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Registar</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Registar</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Primeiro Nome</span>
+                                            <input type="firstname" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Último nome</span>
+                                            <input type="lastname" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">@</span>
+                                            <input type="email" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Password</span>
+                                            <input type="password" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+<div class="input-group">
+                                        <div class="form-group">
+                                            <div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="gender" value="male" data-fv-field="gender"> Sexo Masculino
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="gender" value="female" data-fv-field="gender"> Sexo Feminino
+                                                    </label>
+                                                </div>
+                                                
+                                            </div>
+                                        </div></div>
+
+
+
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn btn-primary">Submeter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="col-sm-15 col-md-12">
                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                     <span class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"></span>
