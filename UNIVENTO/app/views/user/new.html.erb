@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Univento</title>
+
+    <!-- Bootstrap -->
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,400italic,300italic' rel='stylesheet' type='text/css'>
+    <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+<link rel="manifest" href="favicon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+    <script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <!--<script src="lib/angular/angular.js"></script>-->
+    <!--<script src="lib/angular-bootstrap/ui-bootstrap.js"></script>-->
+    <!--<script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>-->
+    <script src="main.js"></script>
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/index.html"><img src="imgs/logo_univento-01.svg" class="img-responsive" alt="Logo Univento" style="width: auto; height: 30px; max-width:100px; margin-top: -7px;">
+                </a>
+            </div>
+            <!-- /.navbar-header -->
+
+            
+            <!-- /.navbar-top-links -->
+
+            
+            <!-- /.navbar-static-side -->
+        </nav>
+
+      
+        <!-- /#page-wrapper -->
+
+    </div>
+    
+    <div class="jumbotron">
+    
+        <div class="regist_title">Registo na UNIVENTO!</div>
+        Queres ficar a par de todos os eventos na tua Academia?<br>
+        <%= form_for @user, :url => '/user' do |u| %>
+          
+          <p>
+            <%= u.label :email %><br>
+            <%= u.text_field :email %>
+          </p>
+         
+          <p>
+            <%= u.label :password %><br>
+            <%= u.text_area :password %>
+          </p>
+         
+         <p>
+            <%= label_tag :first_name %><br>
+            <%= text_area_tag :first_name %>
+          </p>
+          <p>
+            <%= label_tag :last_name %><br>
+            <%= text_area_tag :last_name %>
+          </p>
+          <p>
+            <%= u.submit %>
+          </p>
+         
+        <% end %>
+
+         <div class="form-group">
+                        <input type="first_name" placeholder="Primeiro Nome" class="form-control">
+                    </div>
+         <div class="form-group">
+                        <input type="last_name" placeholder="Último Nome" class="form-control">
+                    </div>
+         <div class="form-group">
+                        <input type="email" placeholder="E-mail" class="form-control">
+                    </div>
+        <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+        
+        <div class="btn-group">
+            <button type="button" class="btn btn-danger">Género</button>
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li>Feminino</li>
+    <li>Maculino</li>
+   
+    
+  </ul>
+</div>
+        
+        <button type="button" class="btn btn-primary active">Submeter</button>
+        
+      
+        
+        
+    </div>
+    <!-- /#wrapper -->
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.js"></script>
+    <script src="main.js"></script>
+
+</body>
+
+
+</html>

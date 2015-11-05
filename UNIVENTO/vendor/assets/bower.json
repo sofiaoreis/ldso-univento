@@ -1,0 +1,23 @@
+{
+  "name": "ui-dev",
+  "authors": [
+    "Maria Marques <mariajoao.rmarques@gmail.com>"
+  ],
+  "description": "0.0.0",
+  "main": "",
+  "moduleType": [],
+  "license": "Univento",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "angular": "1.4.7",
+    "angular-bootstrap": "~0.14.3"
+  }
+}
