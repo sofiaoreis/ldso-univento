@@ -1,0 +1,2 @@
+module NormalHelper
+end
