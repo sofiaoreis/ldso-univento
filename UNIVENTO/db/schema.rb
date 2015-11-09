@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105105632) do
+ActiveRecord::Schema.define(version: 0) do
 
   create_table "Category", primary_key: "categoryID", force: :cascade do |t|
     t.string "name", limit: 50
@@ -41,17 +41,6 @@ ActiveRecord::Schema.define(version: 20151105105632) do
 
   add_index "Coment", ["eventID"], name: "eventID", using: :btree
   add_index "Coment", ["normalID"], name: "normalID", using: :btree
-
-  create_table "Data", primary_key: "dataID", force: :cascade do |t|
-    t.date    "startData"
-    t.float   "preco",     limit: 53
-    t.float   "endData",   limit: 53
-    t.integer "eventID",   limit: 4
-    t.integer "localID",   limit: 4
-  end
-
-  add_index "Data", ["eventID"], name: "eventID", using: :btree
-  add_index "Data", ["localID"], name: "localID", using: :btree
 
   create_table "Date", primary_key: "dateID", force: :cascade do |t|
     t.date    "startDate"
@@ -178,8 +167,6 @@ ActiveRecord::Schema.define(version: 20151105105632) do
   add_foreign_key "Colaborator", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Colaborator_Promoter"
   add_foreign_key "Coment", "Event", column: "eventID", primary_key: "eventID", name: "FK_Coment_Event"
   add_foreign_key "Coment", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Coment_Normal"
-  add_foreign_key "Data", "Event", column: "eventID", primary_key: "eventID", name: "FK_Data_Event"
-  add_foreign_key "Data", "Local", column: "localID", primary_key: "localID", name: "FK_Data_Local"
   add_foreign_key "Date", "Event", column: "eventID", primary_key: "eventID", name: "FK_Date_Event"
   add_foreign_key "Date", "Local", column: "localID", primary_key: "localID", name: "FK_Date_Local"
   add_foreign_key "Event", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_Event_Category"

@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
-  self.table_name = "User"
-  has_one :normal, :foreign_key => 'normalID'
+  self.table_name = 'User'
+  self.primary_key = :userID
+
+  has_one :normal, :class_name => 'Normal'
+  has_one :promoter, :class_name => 'Promoter'
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
