@@ -1,28 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="app">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Univento</title>
-
-    <!-- Bootstrap -->
-    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets/stylesheets/style.css" rel="stylesheet">
-    <link href="vendor/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800,400italic,300italic' rel='stylesheet' type='text/css'>
-    <!--<script src="lib/angular/angular.js"></script>-->
-    <!--<script src="lib/angular-bootstrap/ui-bootstrap.js"></script>-->
-    <!--<script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>-->
-    <script src="main.js"></script>
-</head>
-
-<body>
-
-    <div id="wrapper">
+      <div id="wrapper">
 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -39,40 +15,25 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-               <li><div class="fb-login-button" data-max-rows="2" data-size="icon" data-show-faces="false" data-auto-logout-link="false"></div></li> 
-              <!-- <form class="navbar-form navbar-right">
+                <li><p class="navbar-text pull-right">
+                    <% if user_signed_in? %>
+                      Logged in as <strong><%= current_user.email %></strong>.
+                      <img alt="Assets" src= <%=session[:image]%> ><br>
+                      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+                      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+                    <% else %>
+                      <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+                      <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+                    <% end %></p></li>
+                <!--<form class="navbar-form navbar-right">
                     <div class="form-group">
-                        <input type="text" placeholder="E-MAIL" class="form-control">
+                        <input type="text" placeholder="Email" class="form-control">
                     </div>
                     <div class="form-group">
-                        <input type="password" placeholder="PASSWORD" class="form-control">
+                        <input type="password" placeholder="Password" class="form-control">
                     </div>
-                    <button type="submit" class="btn signin">LOG IN</button>
-                </form> -->
-          <%= form_for(:user, url: '/user/login') do |f| %>
-
-              <%= f.label :email %>
-              <%= f.email_field :email, class: 'form-control' %>
-
-              <%= f.label :password %>
-              <%= f.password_field :password, class: 'form-control' %>
-
-              <%= f.submit "Log in", class: "btn btn-primary" %>
-            <% end %>
-                <li><div><a href="/user/new">Regista-te</a></div></li> 
-
-                <div id="user-widget">
-               
-  <% if current_user %>
-    Welcome <strong><%= current_user.email %></strong>!<br>
-    <img alt="Assets" src= <%=session[:image]%> ><br>
-    <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-  <% else %>
-    <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
-  <% end %>
-</div>
-                  
-                
+                    <button type="submit" class="btn signin">log in</button>
+                </form>-->
                 <!--<li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Ana Sousa
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -207,16 +168,279 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-            <div class="row">
-                <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
-                        <img src="..." alt="...">
-                        <div class="caption">
-                            <h3>Thumbnail label</h3>
-                            <p>...</p>
-                            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a>
-                            </p>
+            <div class="row" id="eventos">
+                <div class="col-sm-15 col-md-12">
+                    <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                        </button>
+                        Cria conta e personaliza os eventos sugeridos consoante os teus gostos
+
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Registar</button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Registar</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Primeiro Nome</span>
+                                            <input type="firstname" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Último nome</span>
+                                            <input type="lastname" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">@</span>
+                                            <input type="email" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Password</span>
+                                            <input type="password" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+<div class="input-group">
+                                        <div class="form-group">
+                                            <div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="gender" value="male" data-fv-field="gender"> Sexo Masculino
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="gender" value="female" data-fv-field="gender"> Sexo Feminino
+                                                    </label>
+                                                </div>
+                                                
+                                            </div>
+                                        </div></div>
+
+
+
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn btn-primary">Submeter</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-15 col-md-12">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-chevron-right pull-right" aria-hidden="true"></span>
+                </div>
+                <div class="col-sm-6 col-md-2" id="evento">
+                    <div class="thumbnail">
+                        <img src="imgs/e1.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e2.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e3.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e4.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e5.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e6.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e7.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e8.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e9.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e1.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e2.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e3.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e4.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e5.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e6.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e7.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e8.jpg" alt="#">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <div class="thumbnail">
+                        <img src="imgs/e9.jpg" alt="#">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <script src='https://maps.googleapis.com/maps/api/js?v=3.exp'></script>
+                    <div style='overflow:hidden;height:300px;width:550px;'>
+                        <div id='gmap_canvas' style='height:300px;width:550px;'></div>
+                        <style>
+                            #gmap_canvas img {
+                                max-width: none!important;
+                                background: none!important
+                            }
+                        </style>
+                    </div> <a href='http://maps-generator.com/pt'>Maps-Generator</a>
+                    <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=2ac96f7bb0bada1a9fa29f103625ac357a3cf2ff'></script>
+                    <script type='text/javascript'>
+                        function init_map() {
+                            var myOptions = {
+                                zoom: 12,
+                                center: new google.maps.LatLng(41.1579438, -8.629105299999992),
+                                mapTypeId: google.maps.MapTypeId.ROADMAP
+                            };
+                            map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+                            marker = new google.maps.Marker({
+                                map: map,
+                                position: new google.maps.LatLng(41.1579438, -8.629105299999992)
+                            });
+                            infowindow = new google.maps.InfoWindow({
+                                content: '<strong>Univento</strong><br><br> Porto<br>'
+                            });
+                            google.maps.event.addListener(marker, 'click', function () {
+                                infowindow.open(map, marker);
+                            });
+                            infowindow.open(map, marker);
+                        }
+                        google.maps.event.addDomListener(window, 'load', init_map);
+                    </script>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <button type="button" class="btn btn-primary" id="btn-lgg" data-toggle="modal" data-target="#myModal">
+                        A decorrer
+                    </button>
+                    <button type="button" class="btn btn-primary" id="btn-lgg" data-toggle="modal" data-target="#myModal">
+                        Dentro de 1h
+                    </button>
+                </div>
+
+                <div class="col-sm-12 col-md-6">
+                    <div class="bs-glyphicons">
+                        <ul class="bs-glyphicons-list">
+                            <li>
+                                <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+
+                            <li>
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+
+                            <li>
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+
+                            <li>
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="bs-glyphicons">
+                        <ul class="bs-glyphicons-list">
+                            <li>
+                                <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+
+                            <li>
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+
+                            <li>
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
+
+                            <li>
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                <span class="glyphicon-class">Title</span>
+                            </li>
                     </div>
                 </div>
             </div>
@@ -226,23 +450,3 @@
 
     </div>
     <!-- /#wrapper -->
-    <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v2.5&appId=548043568677408";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.js"></script>
-    <script src="main.js"></script>
-
-</body>
-
-
-</html>

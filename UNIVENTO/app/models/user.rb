@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   self.table_name = 'User'
   self.primary_key = :userID
 
-  has_one :normal, :class_name => 'Normal'
+  has_one :normal, :class_name => 'Normal', :foreign_key => :normalID
   has_one :promoter, :class_name => 'Promoter'
 
   # Include default devise modules. Others available are:

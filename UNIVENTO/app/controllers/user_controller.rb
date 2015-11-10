@@ -36,10 +36,5 @@ class UserController < ApplicationController
     end
   end
 
-  def destroy
-    sign_out
-    redirect_to "/homepage/index"
-  end
-
 end
 
