@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
   self.table_name = 'User'
   self.primary_key = :userID
 
+  validates :password, presence: true, length: { minimum: 5 }
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+
   has_one :normal, :class_name => 'Normal', :foreign_key => :normalID
   has_one :promoter, :class_name => 'Promoter'
 
