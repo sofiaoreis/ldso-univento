@@ -73,59 +73,34 @@
         <div class="regist_title">Registo na UNIVENTO!</div>
         Queres ficar a par de todos os eventos na tua Academia?<br>
         <%= form_for @user, :url => '/user' do |u| %>
-          
-          <p>
-            <%= u.label :email %><br>
-            <%= u.text_field :email %>
-          </p>
-         
-          <p>
-            <%= u.label :password %><br>
-            <%= u.text_area :password %>
-          </p>
-         
-         <p>
-            <%= label_tag :first_name %><br>
-            <%= text_area_tag :first_name %>
-          </p>
-          <p>
-            <%= label_tag :last_name %><br>
-            <%= text_area_tag :last_name %>
-          </p>
-          <p>
-            <%= u.submit %>
-          </p>
-         
-        <% end %>
-
-         <div class="form-group">
-                        <input type="first_name" placeholder="Primeiro Nome" class="form-control">
-                    </div>
-         <div class="form-group">
-                        <input type="last_name" placeholder="Último Nome" class="form-control">
-                    </div>
-         <div class="form-group">
-                        <input type="email" placeholder="E-mail" class="form-control">
-                    </div>
-        <div class="form-group">
-                        <input type="password" placeholder="Password" class="form-control">
-                    </div>
-        
-        <div class="btn-group">
-            <button type="button" class="btn btn-danger">Género</button>
-  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="caret"></span>
-    <span class="sr-only"></span>
-  </button>
-  <ul class="dropdown-menu">
-    <li>Feminino</li>
-    <li>Maculino</li>
-   
-    
-  </ul>
+            <div class="form-group">
+                <%= u.email_field :email , :class => 'form-control', :placeholder => 'E-mail'%>
+            </div>
+            <div class="form-group">
+                <%= u.password_field :password, :class => 'form-control', :placeholder => 'Password' %>
+            </div>
+            <div class="form-group">
+                <%= text_field_tag :first_name,"", class: 'form-control',:placeholder => 'Primeiro Name' %>
+            </div>
+            <div class="form-group">
+                <%= text_field_tag :last_name,"", class: 'form-control',:placeholder => 'Último Nome' %>
+            </div>
+            <div class="form_row">
+                <label for="gender">Género:</label>
+                <% [ 'Maculino','Feminino'].each do |gender| %>
+                  <br><%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
+                  <%= gender.humanize %>
+                <% end %>
+            </div>
+            <label>Data de nascimento:
+            <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: 1900, end_year:2015) %>
+            </label><br>
+            <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>
+            </div>
+        <% end %>    
 </div>
         
-        <button type="button" class="btn btn-primary active">Submeter</button>
+
         
       
         

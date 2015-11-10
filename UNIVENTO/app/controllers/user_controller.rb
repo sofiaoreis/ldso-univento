@@ -15,6 +15,8 @@ class UserController < ApplicationController
       normal = Normal.new
       normal.first_name = params[:first_name]
       normal.last_name = params[:last_name]
+      normal.gender = params[:gender]
+      normal.birthday = Date.civil(*params[:birthday].sort.map(&:last).map(&:to_i))
       normal.normalID = user.userID
       if normal.save
         redirect_to user
