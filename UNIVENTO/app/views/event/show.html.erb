@@ -7,6 +7,29 @@
   <strong>descrition:</strong>
   <%= @event.descrition %>
 </p>
+<p>
+  <strong>promoter:</strong>
+  Nome: <%= @event.promoter.name %> <br>
+  contact: <%= @event.promoter.contact %> <br>
+  institution: <%= @event.promoter.institution %> <br>
+  website: <%= @event.promoter.website %> <br>
+</p>
+<p>
+  <strong>rate:</strong>
+  <%= @event.averageRate %>
+</p>
+<p>
+  <strong>category:</strong>
+  <%= @event.category.name %>
+</p>
+
+<h2>Tags: </h2>
+<% @event.tags.each do |link| %>
+  <p>
+    <strong>Tag:</strong>
+    <%= link.name %>
+  </p>
+<% end %>
  
 <h2>Links youtube</h2>
 <% @event.youtube.each do |link| %>
@@ -15,3 +38,45 @@
     <%= link.videoID %>
   </p>
 <% end %>
+
+<h2>Links spotify</h2>
+<% @event.spotify.each do |link| %>
+  <p>
+    <strong>LINK:</strong>
+    <%= link.playListLink %>
+  </p>
+<% end %>
+
+<h2>Links images</h2>
+<% @event.image.each do |link| %>
+  <p>
+    <strong>LINK:</strong>
+    <%= link.name %>
+  </p>
+<% end %>
+
+<h2>Datas</h2>
+<% @event.eventdate.each do |link| %>
+  <p>
+    <strong>startData:</strong>
+    <%= link.startDate %><br>
+    <strong>endData:</strong>
+    <%= link.endDate %><br>
+    <strong>preco:</strong>
+    <%= link.preco %><br>
+    <strong>Local:</strong>
+    morada: <%= link.local.address %> latitude: <%= link.local.latitude %> longitude <%= link.local.longitude %>
+  </p>
+<% end %>
+
+
+<h2>Comments</h2>
+<div class="fb-comments" data-href=<%= request.original_url %> data-numposts="5"></div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v2.5&appId=548043568677408";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

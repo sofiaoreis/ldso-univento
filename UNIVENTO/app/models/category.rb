@@ -4,4 +4,5 @@ class Category < ActiveRecord::Base
 
     has_many :categorytags, :class_name => 'CategoryTags', :foreign_key => :categoryID
     has_many :event, :class_name => 'Event', :foreign_key => :categoryID
+    has_many :tags, :through => :categorytags
 end
