@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   root 'homepage#index'
 
   resources :user do
-    post 'login', :on => :collection
     resources :normal
   end
 
