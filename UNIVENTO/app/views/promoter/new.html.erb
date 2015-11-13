@@ -1,0 +1,49 @@
+<div class="jumbotron">
+
+    <div class="regist_title">Registo como promotor de eventos na UNIVENTO!</div>
+
+    <br>Queres divulgar eventos na tua Academia?<br><br><br>
+
+    <%= form_for @user, :url => '/promoter' do |u| %>
+
+        <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <h2>
+                <%= pluralize(@user.errors.count, "error") %> prohibited this promoter from being saved:
+              </h2>
+              <ul>
+                <% @user.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        Dados do Promotor<br>
+
+        <div class="form-group">
+            <%= text_field_tag :name, "", class: 'form-control', :placeholder => 'Nome' %>
+        </div>
+        <div class="form-group">
+            <%= text_field_tag :institution, "", class: 'form-control', :placeholder => 'Instituição' %>
+        </div>
+        <div class="form-group">
+            <%= text_field_tag :website, "", class: 'form-control', :placeholder => 'Website'%>
+        </div>
+        <div class="form-group">
+            <%= text_field_tag :contact, "", class: 'form-control', :placeholder => 'Contacto'%>
+        </div>
+
+        <br>Credenciais do Promotor<br>
+
+        <div class="form-group">
+            <%= u.email_field :email, :class => 'form-control', :placeholder => 'E-mail'%>
+        </div>
+        <div class="form-group">
+            <%= u.password_field :password, :class => 'form-control', :placeholder => 'Password' %>
+        </div>
+        <br>
+
+        <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>
+    <% end %>
+</div>
