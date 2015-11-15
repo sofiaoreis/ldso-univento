@@ -1,0 +1,68 @@
+Events DB CONNECTION results
+<br><br>
+List of Events:
+<br><br>
+<% time = Time.now + 60 %>
+<%= time %>
+<br><br>
+
+<table border="1">
+  <tr>
+    <th>eventID</th>
+    <th>name</th>
+    <th>descrition</th>
+    <th>promoter</th>
+    <th>institution</th>
+    <th>averageRate</th>
+    <th>category</th>
+    <th>tags</th>
+    <th>youtube</th>
+    <th>spotify</th>
+    <th>images</th>
+    <th>datas</th>
+    <th colspan="3"></th>
+  </tr>
+
+  
+  <% @events.each do |event| %>
+    <% if event.eventdate[0].startDate > time %>
+      <tr>
+        <td><%= event.eventID %></td>
+        <td><%= link_to event.name, event_path(event) %></td>
+        <td><%= event.descrition %></td>
+        <td><%= link_to event.promoter.name, promoter_path(event.promoter) %></td>
+        <td><%= event.promoter.institution %></td>
+        <td><%= event.averageRate %></td>
+        <td><%= event.category.name %></td>
+        <td>
+          <% event.tags.each do |link| %>
+              <%= link.name %><br>
+          <% end %>
+        </td>
+        <td>
+          <% event.youtube.each do |link| %>
+            <%= link_to link.videoID, link.videoID %><br>
+          <% end %>
+        </td>
+        <td>
+          <% event.spotify.each do |link| %>
+            <%= link_to link.playListLink, link.playListLink %><br>
+          <% end %>
+        </td>
+        <td>
+          <% event.image.each do |link| %>
+            <%= link_to link.name, link.name %><br>
+          <% end %>
+        </td>
+        <td>
+          <% event.eventdate.each do |link| %>
+              <%= link.startDate %> ->
+              <%= link.endDate %> : 
+              <%= link.preco %> €<br>
+              <%= link.local.address %><br>lat: <%= link.local.latitude %> long: <%= link.local.longitude %><br>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
