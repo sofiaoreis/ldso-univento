@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
 
   has_one :normal, :class_name => 'Normal', :foreign_key => :normalID
-  has_one :promoter, :class_name => 'Promoter'
+  has_one :promoter, :class_name => 'Promoter', :foreign_key => :promoterID
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 	    user.email = auth.info.email
 	    user.password = Devise.friendly_token[0,20]
 	  end
+
     user = User.where(uid: auth.uid).take
     normal = Normal.where(normalID: user[:userID])
 
@@ -30,8 +31,8 @@ class User < ActiveRecord::Base
       normal.normalID = user[:userID]
       normal.save
     end
+
     return user
   end
-
 
 end
