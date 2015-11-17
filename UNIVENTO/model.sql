@@ -66,7 +66,7 @@ CREATE TABLE EventDate
 
 CREATE TABLE Event
 (
-	descrition VARCHAR(50) NULL,
+	descrition TEXT NULL,
 	name VARCHAR(50) NULL,
 	propose BOOL NULL,
 	averageRate DOUBLE NULL,

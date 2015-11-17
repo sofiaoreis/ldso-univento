@@ -30,16 +30,5 @@ class UserController < ApplicationController
   def show
     @user = User.find(params[:id])
   end
-
-  def login 
-    user = User.where(email: params[:user][:email]).take
-    if user.valid_password?(params[:user][:password])
-      sign_in(user)
-      redirect_to "/homepage/index"
-    else
-      redirect_to "/homepage/index"
-    end
-  end
-
 end
 

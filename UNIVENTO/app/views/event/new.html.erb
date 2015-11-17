@@ -1,0 +1,118 @@
+<%= form_for @event, :url => '/event',:authenticity_token => true, :multipart => true do |f| %>
+ 
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@event.errors.count, "error") %> prohibited
+        this article from being saved:
+      </h2>
+      <ul>
+        <% @event.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <p>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </p>
+ 
+  <p>
+    <%= f.label :descrition %><br>
+    <%= f.text_area :descrition %>
+  </p>
+ 
+  <div class="">
+    <label for="category">Escolha a categoria:</label>
+      <% @category.each do |category| %>
+        <br>
+        <%= radio_button_tag 'category', category.categoryID, @category == category, :checked => true %>
+        <strong><%= category.name %></strong>
+        <div class="">
+        <strong>ISTO TEM DE ESTAR HIDDEN E SÓ APARECE PARA A CATEGORIA QUE ESTIVER SELECIONADA</strong>
+          <p for="tag">Escolha até 3 tags da categoria  <%= category.name %>:</p>
+            <% category.tags.each do |tag| %>
+              <%= check_box_tag 'tags[]', tag.tagsID, @tag == tag %>
+              <%= tag.name %>
+            <% end %>
+        </div>
+      <% end %>
+  </div>
+
+  <p>
+    <%= label_tag 'youtube link' %><br>
+    <%= text_field_tag 'youtube[]' %>
+  </p>
+  <p>
+    <%= label_tag 'youtube link' %><br>
+    <%= text_field_tag 'youtube[]' %>
+  </p>
+  <p>
+    <%= label_tag 'youtube link' %><br>
+    <%= text_field_tag 'youtube[]' %>
+  </p>
+    <p>
+    <%= label_tag 'spotify link' %><br>
+    <%= text_field_tag 'spotify[]' %>
+  </p>
+  <p>
+    <%= label_tag 'spotify link' %><br>
+    <%= text_field_tag 'spotify[]' %>
+  </p>
+  <p>
+    <%= label_tag 'spotify link' %><br>
+    <%= text_field_tag 'spotify[]' %>
+  </p>
+
+    <p>LOCAL1:<br>
+    <%= label_tag 'morada' %><br>
+    <%= text_field_tag 'address[]' %><br>
+    <%= label_tag 'latitude' %><br>
+    <%= text_field_tag 'latitude[]' %><br>
+    <%= label_tag 'longitude' %><br>
+    <%= text_field_tag 'longitude[]' %>
+  </p>
+    <p>LOCAL2:<br>
+    <%= label_tag 'morada' %><br>
+    <%= text_field_tag 'address[]' %><br>
+    <%= label_tag 'latitude' %><br>
+    <%= text_field_tag 'latitude[]' %><br>
+    <%= label_tag 'longitude' %><br>
+    <%= text_field_tag 'longitude[]' %>
+  </p>
+      <p>LOCAL3:<br>
+    <%= label_tag 'morada' %><br>
+    <%= text_field_tag 'address[]' %><br>
+    <%= label_tag 'latitude' %><br>
+    <%= text_field_tag 'latitude[]' %><br>
+    <%= label_tag 'longitude' %><br>
+    <%= text_field_tag 'longitude[]' %>
+  </p>
+
+  <p>DATa1<br>
+    <%= label_tag 'Start Data' %><br>
+    <%=  date_select("dates[0]", "startDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%= label_tag 'End Data' %><br>
+    <%=  date_select("dates[0]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%= label_tag 'Preco' %><br>
+    <%= text_field_tag 'preco[]' %><br>
+    <strong>meter aqui um dropdown para escolher entre os locais inseridos em cima (javascrpit for the win)</strong>
+  </p>
+    <p>DATa2<br>
+    <%= label_tag 'Start Data' %><br>
+    <%=  date_select("dates[1]", "startDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%= label_tag 'End Data' %><br>
+    <%=  date_select("dates[1]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%= label_tag 'Preco' %><br>
+    <%= text_field_tag 'preco[]' %><br>
+    <strong>meter aqui um dropdown para escolher entre os locais inseridos em cima (javascrpit for the win)</strong>
+  </p>
+  <h2>Images</h2>
+  <%= file_field :attachment, :multiple => true %>
+  <p>
+    <%= f.submit %>
+  </p>
+ 
+<% end %>

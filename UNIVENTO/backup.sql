@@ -8,7 +8,7 @@ INSERT INTO `Event` VALUES ('descricao do evento de teste','Nome do evento blabl
 INSERT INTO `EventTags` VALUES (1,1),(1,2),(1,3);
 INSERT INTO `Image` VALUES ('img1.jpg',1,1),('img2.jpg',2,1);
 INSERT INTO `Local` VALUES ('rua lá ao fundo',100,100,1);
-INSERT INTO `EventDate` VALUES ('2015-11-12',10,2015,1,1,1),('2015-11-15',15,2015,2,1,1);
+INSERT INTO `EventDate` VALUES ('2015-11-12',10,'2015-11-13',1,1,1),('2015-11-15',15,'2015-11-17',2,1,1);
 INSERT INTO `Spotify` VALUES ('http:playlist/1',1,1),('http:playlist/2',2,1);
 INSERT INTO `Youtube` VALUES ('http://youtube.com/link1',1,1),('http://youtube.com/link2',2,1),('http://youtube.com/link3',3,1);
 
