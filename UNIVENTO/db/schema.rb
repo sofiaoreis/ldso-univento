@@ -33,29 +33,8 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "Colaborator", ["normalID"], name: "normalID", using: :btree
   add_index "Colaborator", ["promoterID"], name: "promoterID", using: :btree
 
-  create_table "Coment", primary_key: "comentID", force: :cascade do |t|
-    t.string  "comment",  limit: 50
-    t.integer "eventID",  limit: 4
-    t.integer "normalID", limit: 4
-  end
-
-  add_index "Coment", ["eventID"], name: "eventID", using: :btree
-  add_index "Coment", ["normalID"], name: "normalID", using: :btree
-
-  create_table "Date", primary_key: "dateID", force: :cascade do |t|
-    t.date    "startDate"
-    t.float   "preco",     limit: 53
-    t.float   "endDate",   limit: 53
-    t.integer "eventID",   limit: 4
-    t.integer "localID",   limit: 4
-  end
-
-  add_index "Date", ["eventID"], name: "eventID", using: :btree
-  add_index "Date", ["localID"], name: "localID", using: :btree
-
   create_table "Event", primary_key: "eventID", force: :cascade do |t|
-    t.string  "category",    limit: 50
-    t.string  "descrition",  limit: 50
+    t.text    "descrition",  limit: 65535
     t.string  "name",        limit: 50
     t.boolean "propose"
     t.float   "averageRate", limit: 53
@@ -69,6 +48,17 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "Event", ["categoryID"], name: "categoryID", using: :btree
   add_index "Event", ["promoterID"], name: "promoterID", using: :btree
 
+  create_table "EventDate", primary_key: "dateID", force: :cascade do |t|
+    t.date    "startDate"
+    t.float   "preco",     limit: 53
+    t.date    "endDate"
+    t.integer "eventID",   limit: 4
+    t.integer "localID",   limit: 4
+  end
+
+  add_index "EventDate", ["eventID"], name: "eventID", using: :btree
+  add_index "EventDate", ["localID"], name: "localID", using: :btree
+
   create_table "EventTags", id: false, force: :cascade do |t|
     t.integer "eventID", limit: 4
     t.integer "tagsID",  limit: 4
@@ -78,7 +68,7 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "EventTags", ["tagsID"], name: "tagsID", using: :btree
 
   create_table "Image", primary_key: "imageID", force: :cascade do |t|
-    t.string  "name",    limit: 50
+    t.string  "image",   limit: 255
     t.integer "eventID", limit: 4
   end
 
@@ -86,7 +76,7 @@ ActiveRecord::Schema.define(version: 0) do
 
   create_table "Local", primary_key: "localID", force: :cascade do |t|
     t.string  "address",   limit: 50
-    t.integer "latituide", limit: 4
+    t.integer "latitude",  limit: 4
     t.integer "longitude", limit: 4
   end
 
@@ -165,12 +155,10 @@ ActiveRecord::Schema.define(version: 0) do
   add_foreign_key "CategoryTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_CategoryTags_Tags"
   add_foreign_key "Colaborator", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Colaborator_Normal"
   add_foreign_key "Colaborator", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Colaborator_Promoter"
-  add_foreign_key "Coment", "Event", column: "eventID", primary_key: "eventID", name: "FK_Coment_Event"
-  add_foreign_key "Coment", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Coment_Normal"
-  add_foreign_key "Date", "Event", column: "eventID", primary_key: "eventID", name: "FK_Date_Event"
-  add_foreign_key "Date", "Local", column: "localID", primary_key: "localID", name: "FK_Date_Local"
   add_foreign_key "Event", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_Event_Category"
   add_foreign_key "Event", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Event_Promoter"
+  add_foreign_key "EventDate", "Event", column: "eventID", primary_key: "eventID", name: "FK_Date_Event"
+  add_foreign_key "EventDate", "Local", column: "localID", primary_key: "localID", name: "FK_Date_Local"
   add_foreign_key "EventTags", "Event", column: "eventID", primary_key: "eventID", name: "FK_EventTags_Event"
   add_foreign_key "EventTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_EventTags_Tags"
   add_foreign_key "Image", "Event", column: "eventID", primary_key: "eventID", name: "FK_Image_Event"

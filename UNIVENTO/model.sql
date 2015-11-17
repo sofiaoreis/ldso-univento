@@ -95,7 +95,7 @@ CREATE TABLE EventTags
 
 CREATE TABLE Image
 (
-	name VARCHAR(50) NULL,
+	image varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 	imageID INTEGER NOT NULL AUTO_INCREMENT,
 	eventID INTEGER NULL,
 	PRIMARY KEY (imageID),
