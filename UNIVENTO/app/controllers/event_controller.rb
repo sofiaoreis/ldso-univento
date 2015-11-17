@@ -7,11 +7,17 @@ class EventController < ApplicationController
     	@image = @event.image.all
  	end
 
+# ========================================================
+
+
  	def new
  		@event = Event.new
  		@category = Category.all
  		@image = Image.new
  	end
+
+# ========================================================
+
  	def create
  		#{
  		#	"utf8"=>"✓", 
