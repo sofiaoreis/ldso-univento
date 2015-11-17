@@ -16,8 +16,8 @@ List of Promoters:
     <tr>
       <td><%= promoter.promoterID %></td>
       <td><%= promoter.institution %></td>
-      <td><%= promoter.name %></td>
-      <td><%= promoter.website %></td>
+      <td><%= link_to promoter.name, promoter_path(promoter) %></td>
+      <td><a href="<%= promoter.website %>">Web Site</a></td>         <%# website must be in URL format in DB %>
       <td><%= promoter.contact %></td>
     </tr>
   <% end %>

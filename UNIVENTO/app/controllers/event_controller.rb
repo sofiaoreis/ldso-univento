@@ -1,4 +1,7 @@
 class EventController < ApplicationController
+
+# ========================================================
+
 	def show
     	@event = Event.find(params[:id])
     	@image = @event.image.all
@@ -86,4 +89,13 @@ class EventController < ApplicationController
       	end
       	redirect_to @event
  	end
+
+# ========================================================
+
+	def index
+    	@events = Event.all
+ 	end
+
+# ========================================================
+
 end
