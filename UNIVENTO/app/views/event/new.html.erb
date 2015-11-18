@@ -66,30 +66,7 @@
     <%= text_field_tag 'spotify[]' %>
   </p>
 
-    <p>LOCAL1:<br>
-    <%= label_tag 'morada' %><br>
-    <%= text_field_tag 'address[]' %><br>
-    <%= label_tag 'latitude' %><br>
-    <%= text_field_tag 'latitude[]' %><br>
-    <%= label_tag 'longitude' %><br>
-    <%= text_field_tag 'longitude[]' %>
-  </p>
-    <p>LOCAL2:<br>
-    <%= label_tag 'morada' %><br>
-    <%= text_field_tag 'address[]' %><br>
-    <%= label_tag 'latitude' %><br>
-    <%= text_field_tag 'latitude[]' %><br>
-    <%= label_tag 'longitude' %><br>
-    <%= text_field_tag 'longitude[]' %>
-  </p>
-      <p>LOCAL3:<br>
-    <%= label_tag 'morada' %><br>
-    <%= text_field_tag 'address[]' %><br>
-    <%= label_tag 'latitude' %><br>
-    <%= text_field_tag 'latitude[]' %><br>
-    <%= label_tag 'longitude' %><br>
-    <%= text_field_tag 'longitude[]' %>
-  </p>
+
 
   <p>DATa1<br>
     <%= label_tag 'Start Data' %><br>
@@ -98,7 +75,17 @@
     <%=  date_select("dates[0]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
     <%= label_tag 'Preco' %><br>
     <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01%><br>
-    <strong>meter aqui um dropdown para escolher entre os locais inseridos em cima (javascrpit for the win)</strong>
+    <strong>Escolha um local</strong>
+    <%= select_tag "local[]", options_from_collection_for_select(@local, "localID", "address") %>
+    <p>Novo local:<br>
+      <%= label_tag 'morada' %><br>
+      <%= text_field_tag 'dates[0][address]' %><br>
+      <%= label_tag 'latitude' %><br>
+      <%= text_field_tag 'dates[0][latitude' %><br>
+      <%= label_tag 'longitude' %><br>
+      <%= text_field_tag 'dates[0][longitude]' %>
+    </p>
+
   </p>
     <p>DATa2<br>
     <%= label_tag 'Start Data' %><br>
@@ -107,7 +94,16 @@
     <%=  date_select("dates[1]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
     <%= label_tag 'Preco' %><br>
     <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01%><br>
-    <strong>meter aqui um dropdown para escolher entre os locais inseridos em cima (javascrpit for the win)</strong>
+    <strong>Local: </strong>
+    <%= select_tag "local[]", options_from_collection_for_select(@local, "localID", "address") %>
+    <p>Novo local:<br>
+      <%= label_tag 'morada' %><br>
+      <%= text_field_tag 'dates[1][address]' %><br>
+      <%= label_tag 'latitude' %><br>
+      <%= text_field_tag 'dates[1][latitude' %><br>
+      <%= label_tag 'longitude' %><br>
+      <%= text_field_tag 'dates[1][longitude]' %>
+    </p>
   </p>
   <h2>Images</h2>
   

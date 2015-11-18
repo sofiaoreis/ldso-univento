@@ -19,6 +19,7 @@ class EventController < ApplicationController
  		@event = Event.new
  		@category = Category.all
  		@image = Image.new
+ 		@local = Local.all
  	end
 
 # ========================================================
@@ -53,6 +54,8 @@ class EventController < ApplicationController
  		#	"controller"=>"event", 
  		#	"action"=>"create"
  		#}
+ 		#render plain: params.inspect
+ 		#return
         @fail = false
  		@event = Event.new
  		event_params = params[:event]
@@ -68,64 +71,81 @@ class EventController < ApplicationController
        	if saveOrDestroy(@event) 
        		return 
        	end
-        #@event.save
         
-        params[:tags].each do |tag|
-            eventTag = EventTags.new
-            eventTag.eventID = @event.eventID
-            eventTag.tagsID=tag.to_i
-            
-            #eventTag.save
-            if saveOrDestroy(eventTag) 
-            	return 
-            end
-        end
-        params[:youtube].each do |link|
-            youtube = Youtube.new
-            youtube.videoID=link
-            youtube.eventID=@event.eventID
-            
-            if saveOrDestroy(youtube) 
-            	return 
-            end
-            #youtube.save
-        end
-        params[:spotify].each do |link|
-            spotify = Spotify.new
-            spotify.playListLink=link
-            spotify.eventID=@event.eventID
-            
-            if saveOrDestroy(spotify) 
-            	return 
-            end
-            #spotify.save
-        end
-        params[:address].each_with_index do |address, i|
-          local = Local.new
-          local.address=address
-          local.latitude = params[:latitude].index(i)
-          local.longitude= params[:longitude].index(i)
-          
-          if saveOrDestroy(local) 
-          	return 
-          end
-          #local.save
-        end
+        if params[:tags].present?
+	        params[:tags].each do |tag|
+	            eventTag = EventTags.new
+	            eventTag.eventID = @event.eventID
+	            eventTag.tagsID=tag.to_i
+	     
+	            if saveOrDestroy(eventTag) 
+	            	return 
+	            end
+	        end
+	    end
 
-        params[:dates].each_with_index do |date, k|
-            eventDate = EventDate.new
-            eventDate.startDate = (params[:dates][k.to_s]["startDate(1i)"] << "-" << params[:dates][k.to_s]["startDate(2i)"]<< "-" << params[:dates][k.to_s]["startDate(3i)"])
-            eventDate.endDate = (params[:dates][k.to_s]["endDate(1i)"] << "-" << params[:dates][k.to_s]["endDate(2i)"]<< "-" << params[:dates][k.to_s]["endDate(3i)"])
-            eventDate.eventID=@event.eventID
-            eventDate.preco=params["price"][k].to_f
-            #eventDate.localID = date.localID
-            eventDate.localID = 999
-            
-           if saveOrDestroy(eventDate) 
-           	return 
-           end
-            #eventDate.save
-        end
+	    if params[:youtube].present?
+	        params[:youtube].each do |link|
+	            youtube = Youtube.new
+	            youtube.videoID=link
+	            youtube.eventID=@event.eventID
+	            
+	            if saveOrDestroy(youtube) 
+	            	return 
+	            end
+	        end
+	    end
+	    if params[:spotify].present?
+	        params[:spotify].each do |link|
+	            spotify = Spotify.new
+	            spotify.playListLink=link
+	            spotify.eventID=@event.eventID
+	            
+	            if saveOrDestroy(spotify) 
+	            	return 
+	            end
+	        end
+	    end
+=begin
+	    if params[:address].present?
+	        params[:address].each_with_index do |address, i|
+	          local = Local.new
+	          local.address=address
+	          local.latitude = params[:latitude].index(i)
+	          local.longitude= params[:longitude].index(i)
+	          
+	          if saveOrDestroy(local) 
+	          	return 
+	          end
+	        end
+	    end
+=end
+	    if params[:dates].present?
+		    params[:dates].each_with_index do |date, k|
+		        eventDate = EventDate.new
+		        eventDate.startDate = (params[:dates][k.to_s]["startDate(1i)"] << "-" << params[:dates][k.to_s]["startDate(2i)"]<< "-" << params[:dates][k.to_s]["startDate(3i)"])
+		        eventDate.endDate = (params[:dates][k.to_s]["endDate(1i)"] << "-" << params[:dates][k.to_s]["endDate(2i)"]<< "-" << params[:dates][k.to_s]["endDate(3i)"])
+		        eventDate.eventID=@event.eventID
+		        eventDate.preco=params["price"][k].to_f
+
+		        if params[:dates][k.to_s]["address"].present?
+		        	local = Local.new
+			        local.address=params[:dates][k.to_s]["address"]
+			        local.latitude = params[:dates][k.to_s]["latitude"]
+			        local.longitude= params[:dates][k.to_s]["longitude"]
+			        if saveOrDestroy(local) 
+			          	return 
+			        end
+			        eventDate.localID= local.localID
+		        else
+		        	eventDate.localID = params[:local][k].to_i
+		        end
+
+		        if saveOrDestroy(eventDate) 
+		          	return 
+		        end
+		    end
+		end
         if params[:image].present?
 	        params[:image]['image'].each do |a|
 	          @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
@@ -147,6 +167,7 @@ class EventController < ApplicationController
         	object.save! # é suposto todos os erros serem verificados em javascript e não dar erro aqui
         	return false
         rescue Exception
+        	@event.destroy
         	@fail = true
             flash[:alert] = "Erro ao criar o evento, por favor verifique os dados introduzidos"
             @category = Category.all
