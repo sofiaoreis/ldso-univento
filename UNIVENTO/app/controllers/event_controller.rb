@@ -3,8 +3,13 @@ class EventController < ApplicationController
 # ========================================================
 
 	def show
-    	@event = Event.find(params[:id])
-    	@image = @event.image.all
+    	begin
+		  @event = Event.find(params[:id])
+		  @image = @event.image.all
+		rescue ActiveRecord::RecordNotFound => e
+		  flash[:alert] = "Este evento não existe"
+		  redirect_to root_path
+		end
  	end
 
 # ========================================================
@@ -15,6 +20,11 @@ class EventController < ApplicationController
  		@category = Category.all
  		@image = Image.new
  	end
+
+# ========================================================
+
+	def update
+	end
 
 # ========================================================
 
@@ -43,6 +53,7 @@ class EventController < ApplicationController
  		#	"controller"=>"event", 
  		#	"action"=>"create"
  		#}
+        @fail = false
  		@event = Event.new
  		event_params = params[:event]
  		@event.name = event_params[:name]
@@ -53,47 +64,74 @@ class EventController < ApplicationController
  		@event.numRates=0
  		@event.active=true
  		@event.propose=false
- 		@event.save
- 		params[:tags].each do |tag|
- 			 eventTag = EventTags.new
- 			 eventTag.eventID = @event.eventID
- 			 eventTag.tagsID=tag.to_i
- 			 eventTag.save
- 		end
- 		params[:youtube].each do |link|
- 			youtube = Youtube.new
- 			youtube.videoID=link
- 			youtube.eventID=@event.eventID
- 			youtube.save
- 		end
- 		params[:spotify].each do |link|
- 			spotify = Spotify.new
- 			spotify.playListLink=link
- 			spotify.eventID=@event.eventID
- 			spotify.save
- 		end
-		params[:address].each_with_index do |address, i|
-		  local = Local.new
-		  local.address=address
-		  local.latitude = params[:latitude].index(i)
-		  local.longitude= params[:longitude].index(i)
-		  local.save
-		end
+        
+       	if saveOrDestroy(@event) 
+       		return 
+       	end
+        #@event.save
+        
+        params[:tags].each do |tag|
+            eventTag = EventTags.new
+            eventTag.eventID = @event.eventID
+            eventTag.tagsID=tag.to_i
+            
+            #eventTag.save
+            if saveOrDestroy(eventTag) 
+            	return 
+            end
+        end
+        params[:youtube].each do |link|
+            youtube = Youtube.new
+            youtube.videoID=link
+            youtube.eventID=@event.eventID
+            
+            if saveOrDestroy(youtube) 
+            	return 
+            end
+            #youtube.save
+        end
+        params[:spotify].each do |link|
+            spotify = Spotify.new
+            spotify.playListLink=link
+            spotify.eventID=@event.eventID
+            
+            if saveOrDestroy(spotify) 
+            	return 
+            end
+            #spotify.save
+        end
+        params[:address].each_with_index do |address, i|
+          local = Local.new
+          local.address=address
+          local.latitude = params[:latitude].index(i)
+          local.longitude= params[:longitude].index(i)
+          
+          if saveOrDestroy(local) 
+          	return 
+          end
+          #local.save
+        end
 
-		params[:dates].each_with_index do |date, k|
- 			eventDate = EventDate.new
- 			eventDate.startDate = (params[:dates][k.to_s]["startDate(1i)"] << "-" << params[:dates][k.to_s]["startDate(2i)"]<< "-" << params[:dates][k.to_s]["startDate(3i)"])
- 			eventDate.endDate = (params[:dates][k.to_s]["endDate(1i)"] << "-" << params[:dates][k.to_s]["endDate(2i)"]<< "-" << params[:dates][k.to_s]["endDate(3i)"])
- 			eventDate.eventID=@event.eventID
- 			eventDate.preco=params["price"][k].to_f
- 			#eventDate.localID = date.localID
- 			eventDate.localID = 1
- 			eventDate.save
- 		end
- 		params[:image]['image'].each do |a|
-          @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
-      	end
-      	redirect_to @event
+        params[:dates].each_with_index do |date, k|
+            eventDate = EventDate.new
+            eventDate.startDate = (params[:dates][k.to_s]["startDate(1i)"] << "-" << params[:dates][k.to_s]["startDate(2i)"]<< "-" << params[:dates][k.to_s]["startDate(3i)"])
+            eventDate.endDate = (params[:dates][k.to_s]["endDate(1i)"] << "-" << params[:dates][k.to_s]["endDate(2i)"]<< "-" << params[:dates][k.to_s]["endDate(3i)"])
+            eventDate.eventID=@event.eventID
+            eventDate.preco=params["price"][k].to_f
+            #eventDate.localID = date.localID
+            eventDate.localID = 999
+            
+           if saveOrDestroy(eventDate) 
+           	return 
+           end
+            #eventDate.save
+        end
+        if params[:image].present?
+	        params[:image]['image'].each do |a|
+	          @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
+	        end
+    	end
+        redirect_to @event
  	end
 
 # ========================================================
@@ -104,4 +142,16 @@ class EventController < ApplicationController
 
 # ========================================================
 
+    def saveOrDestroy(object)
+    	begin
+        	object.save! # é suposto todos os erros serem verificados em javascript e não dar erro aqui
+        	return false
+        rescue Exception
+        	@fail = true
+            flash[:alert] = "Erro ao criar o evento, por favor verifique os dados introduzidos"
+            @category = Category.all
+            render new_event_path
+            return true
+        end
+    end
 end
