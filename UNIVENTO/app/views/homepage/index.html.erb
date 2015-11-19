@@ -10,9 +10,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#home"><img src="assets/images/logo_univento-01.svg" class="img-responsive" alt="Logo Univento" style="width: auto; height: 30px; max-width:100px; margin-top: -7px;">
+                <a class="navbar-brand" href="#home">
+
+                     <%= image_tag("logo_univento-01.svg", :alt => "Logo Univento", :style => "width: auto; height: 30px; max-width:100px; margin-top: -7px;") %>
                 </a>
-                
+               
             </div>
             <!-- /.navbar-header -->
 
@@ -20,16 +22,12 @@
                 
                     <% if user_signed_in? %>
                     <li><p class="navbar-text pull-right">
-                     <!-- <img alt="Assets" src= <%=session[:image]%> ><br>-->
                      
                       <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <%= Normal.find_by(normalID: current_user.userID).first_name %>  <%= Normal.find_by(normalID: current_user.userID).last_name %> <i class="fa fa-caret-down"></i>
+                        <img alt="Assets" src= <%=session[:image]%> class="img-responsive img-circle"></i> <%= Normal.find_by(normalID: current_user.userID).first_name %>  <%= Normal.find_by(normalID: current_user.userID).last_name %> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                       <!-- <li><a href="#"><i class="fa fa-user fa-fw"></i> Meu Perfil</a>
-
-                        </li>-->
                         <li>
                             <%= link_to ' Definições', edit_user_registration_path, :class => 'fa fa-gear fa-fw' %> 
                         </li>
