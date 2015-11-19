@@ -10,49 +10,45 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#home"><img src="imgs/logo_univento-01.svg" class="img-responsive" alt="Logo Univento" style="width: auto; height: 30px; max-width:100px; margin-top: -7px;">
+                <a class="navbar-brand" href="#home"><img src="assets/images/logo_univento-01.svg" class="img-responsive" alt="Logo Univento" style="width: auto; height: 30px; max-width:100px; margin-top: -7px;">
                 </a>
+                
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <li><p class="navbar-text pull-right">
+                
                     <% if user_signed_in? %>
-                      Logged in as <strong><%= current_user.email %></strong>.
-                      <img alt="Assets" src= <%=session[:image]%> ><br>
-                      <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-                      <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-                    <% else %>
-                      <%= link_to "Sign up", new_user_path, :class => 'navbar-link'  %> |
-                      <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
-                    <% end %></p></li>
-
-               <!--<form class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <input type="text" placeholder="Email" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Password" class="form-control">
-                    </div>
-                    <button type="submit" class="btn signin">log in</button>
-                </form>-->
-            
-                <li class="dropdown">
+                    <li><p class="navbar-text pull-right">
+                     <!-- <img alt="Assets" src= <%=session[:image]%> ><br>-->
+                     
+                      <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> <%= Normal.find_by(normalID: current_user.userID).first_name %>  <%= Normal.find_by(normalID: current_user.userID).last_name %> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> Meu Perfil</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Definições</a>
+                       <!-- <li><a href="#"><i class="fa fa-user fa-fw"></i> Meu Perfil</a>
+
+                        </li>-->
+                        <li>
+                            <%= link_to ' Definições', edit_user_registration_path, :class => 'fa fa-gear fa-fw' %> 
                         </li>
                         <li class="divider"></li>
-                        <li><a href=<%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li>
+                            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'fa fa-sign-out fa-fw'  %>
                         </li>
+                        
                     </ul>
               <!-- /.dropdown-user -->
                 </li>
-              
+                      </p></li>
+                    <% else %>
+                    <li><p class="navbar-text pull-right">
+                      <%= link_to "Registar", new_user_path, :class => 'navbar-link'  %> |
+                      <%= link_to "Entrar", new_user_session_path, :class => 'navbar-link'  %>
+                       
+                      </p></li>
+                    <% end %>
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
@@ -196,12 +192,12 @@
                                         </div>
 
                                         <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1">Último nome</span>
+                                            <span class="input-group-addon" id="basic-addon1">Último Nome</span>
                                             <input type="lastname" class="form-control" placeholder="" aria-describedby="basic-addon1">
                                         </div>
 
                                         <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1">@</span>
+                                            <span class="input-group-addon" id="basic-addon1">E-mail</span>
                                             <input type="email" class="form-control" placeholder="" aria-describedby="basic-addon1">
                                         </div>
 
