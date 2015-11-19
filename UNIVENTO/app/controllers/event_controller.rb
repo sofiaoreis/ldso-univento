@@ -157,8 +157,26 @@ class EventController < ApplicationController
 # ========================================================
 
 	def index
-    	@events = Event.all
- 	end
+		# Find 18 events ordered by most closest date for the next 4 years from now.
+		eventDates1 = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
+
+		@eventDates = Array.new
+		eventID = -1
+		maxShowCount = 18
+		@showCount = 0
+		@listCount = 0
+
+		eventDates1.each do |eventDate|
+			if eventID != eventDate.eventID
+				if @showCount < maxShowCount
+					@eventDates.push(eventDate)
+					@showCount = @showCount + 1
+				end
+				@listCount = @listCount +1
+			end
+			eventID = eventDate.eventID
+		end
+	end
 
 # ========================================================
 
