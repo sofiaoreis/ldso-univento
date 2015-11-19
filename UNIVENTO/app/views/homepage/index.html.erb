@@ -25,11 +25,17 @@
                      
                       <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <img alt="Assets" src= <%=session[:image]%> class="img-responsive img-circle"></i> <%= Normal.find_by(normalID: current_user.userID).first_name %>  <%= Normal.find_by(normalID: current_user.userID).last_name %> <i class="fa fa-caret-down"></i>
+
+                       <img alt="Assets" src= <%=session[:image]%> class="img-responsive img-circle">  <%= Normal.find_by(normalID: current_user.userID).first_name %>  <%= Normal.find_by(normalID: current_user.userID).last_name %> <i class="fa fa-caret-down"></i>
+
+                        <i class="fa fa-user fa-fw"></i> <%= @name %> <i class="fa fa-caret-down"></i>
+
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
                             <%= link_to ' Definições', edit_user_registration_path, :class => 'fa fa-gear fa-fw' %> 
+
+
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -42,8 +48,15 @@
                       </p></li>
                     <% else %>
                     <li><p class="navbar-text pull-right">
-                      <%= link_to "Registar", new_user_path, :class => 'navbar-link'  %> |
-                      <%= link_to "Entrar", new_user_session_path, :class => 'navbar-link'  %>
+
+                    <a href="" data-toggle="modal" data-target="#myModal">REGISTAR</a>|
+                    <a href="" data-toggle="modal" data-target="#loginModel">ENTRAR</a>
+                            
+                    <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Registar</button>-->
+                        <!-- Modal -->
+                       
+                     <!-- <%= link_to "Registar", new_user_path, :class => 'navbar-link'  %> |-->
+                    <!--  <%= link_to "Entrar", new_user_session_path, :class => 'navbar-link'  %> -->
                        
                       </p></li>
                     <% end %>
@@ -173,66 +186,6 @@
                         </button>
                         Cria conta e personaliza os eventos sugeridos consoante os teus gostos
 
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Registar</button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">Registar</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1">Primeiro Nome</span>
-                                            <input type="firstname" class="form-control" placeholder="" aria-describedby="basic-addon1">
-                                        </div>
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1">Último Nome</span>
-                                            <input type="lastname" class="form-control" placeholder="" aria-describedby="basic-addon1">
-                                        </div>
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1">E-mail</span>
-                                            <input type="email" class="form-control" placeholder="" aria-describedby="basic-addon1">
-                                        </div>
-
-                                        <div class="input-group">
-                                            <span class="input-group-addon" id="basic-addon1">Password</span>
-                                            <input type="password" class="form-control" placeholder="" aria-describedby="basic-addon1">
-                                        </div>
-<div class="input-group">
-                                        <div class="form-group">
-                                            <div>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="gender" value="male" data-fv-field="gender"> Sexo Masculino
-                                                    </label>
-                                                </div>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" name="gender" value="female" data-fv-field="gender"> Sexo Feminino
-                                                    </label>
-                                                </div>
-                                                
-                                            </div>
-                                        </div></div>
-
-
-
-
-
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                                        <button type="button" class="btn btn-primary">Submeter</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
@@ -448,3 +401,101 @@
 
     </div>
     <!-- /#wrapper -->
+
+     <div class="modal fade" id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Registar</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Primeiro Nome</span>
+                                            <input type="firstname" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Último Nome</span>
+                                            <input type="lastname" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">E-mail</span>
+                                            <input type="email" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Password</span>
+                                            <input type="password" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+<div class="input-group">
+                                        <div class="form-group">
+                                            <div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="gender" value="male" data-fv-field="gender"> Sexo Masculino
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="gender" value="female" data-fv-field="gender"> Sexo Feminino
+                                                    </label>
+                                                </div>
+                                                
+                                            </div>
+                                        </div></div>
+
+
+
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn btn-primary">Submeter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="loginModel"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">ENTRAR</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">E-mail</span>
+                                            <input type="firstname" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+
+                                        <div class="input-group">
+                                            <span class="input-group-addon" id="basic-addon1">Password</span>
+                                            <input type="lastname" class="form-control" placeholder="" aria-describedby="basic-addon1">
+                                        </div>
+                                        <div class="fb-login-button" data-max-rows="1" data-size="icon" data-show-faces="false" data-auto-logout-link="false"></div>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn btn-primary">Submeter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v2.5&appId=548043568677408";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
