@@ -1,2 +1,0 @@
-class NormalController < ApplicationController
-end
