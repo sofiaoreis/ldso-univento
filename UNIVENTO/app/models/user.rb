@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 	    user.password = Devise.friendly_token[0,20]
 	  end
 
-    user = User.where(uid: auth.uid).take
+    user = User.where(email: auth.info.email).take
     normal = Normal.where(normalID: user[:userID])
 
     if !normal.present?

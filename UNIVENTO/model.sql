@@ -76,6 +76,7 @@ CREATE TABLE Event
 	eventID INTEGER NOT NULL AUTO_INCREMENT,
 	categoryID INTEGER NULL,
 	promoterID INTEGER NULL,
+	preco DOUBLE NULL,
 	PRIMARY KEY (eventID),
 	KEY (categoryID),
 	KEY (promoterID)
