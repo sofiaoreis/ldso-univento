@@ -16,6 +16,10 @@ class EventController < ApplicationController
 
 
  	def new
+ 		if !session[:promoter].present?
+ 			flash[:alert] = "Não tem autorização para criar eventos"
+ 			redirect_to root_path
+ 		end
  		@event = Event.new
  		@category = Category.all
  		@image = Image.new
@@ -61,6 +65,7 @@ class EventController < ApplicationController
  		event_params = params[:event]
  		@event.name = event_params[:name]
  		@event.descrition = event_params[:descrition]
+ 		@event.preco = event_params[:preco]
  		@event.promoterID = current_user.userID
  		@event.categoryID = params[:category].to_i
  		@event.averageRate=0
