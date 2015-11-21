@@ -35,4 +35,10 @@ class User < ActiveRecord::Base
     return user
   end
 
+  def self.getUserType(user)
+    normalID=Normal.find_by normalID: user.userID
+    promoterID=Promoter.find_by promoterID: user.userID
+    return normalID,promoterID
+  end
+
 end
