@@ -50,11 +50,11 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "Event", ["promoterID"], name: "promoterID", using: :btree
 
   create_table "EventDate", primary_key: "dateID", force: :cascade do |t|
-    t.date    "startDate"
-    t.float   "preco",     limit: 53
-    t.date    "endDate"
-    t.integer "eventID",   limit: 4
-    t.integer "localID",   limit: 4
+    t.datetime "startDate"
+    t.float    "preco",     limit: 53
+    t.datetime "endDate"
+    t.integer  "eventID",   limit: 4
+    t.integer  "localID",   limit: 4
   end
 
   add_index "EventDate", ["eventID"], name: "eventID", using: :btree
