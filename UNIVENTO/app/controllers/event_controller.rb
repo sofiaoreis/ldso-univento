@@ -132,7 +132,7 @@ class EventController < ApplicationController
 		        eventDate.endDate = (params[:dates][k.to_s]["endDate(1i)"] << "-" << params[:dates][k.to_s]["endDate(2i)"]<< "-" << params[:dates][k.to_s]["endDate(3i)"]<< " "<<params[:dates][k.to_s]["endDate(4i)"]<<":"<<params[:dates][k.to_s]["endDate(5i)"])
 		        eventDate.eventID=@event.eventID
 		        eventDate.preco=params["price"][k].to_f
-
+		       	eventDate.descrition = params[:page]["info"<<k.to_s]
 		        if params[:dates][k.to_s]["address"].present?
 		        	local = Local.new
 			        local.address=params[:dates][k.to_s]["address"]

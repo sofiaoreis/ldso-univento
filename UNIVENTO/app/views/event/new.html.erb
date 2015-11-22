@@ -88,7 +88,7 @@
       <%= label_tag 'longitude' %><br>
       <%= text_field_tag 'dates[0][longitude]' %>
     </p>
-
+    <%= cktext_area :page, :info0, :cols => 40, :ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'} %>
   </p>
     <p>DATa2<br>
     <%= label_tag 'Start Data' %><br>
@@ -107,6 +107,7 @@
       <%= label_tag 'longitude' %><br>
       <%= text_field_tag 'dates[1][longitude]' %>
     </p>
+    <%= cktext_area :page, :info1, :cols => 40, :ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'} %>
   </p>
   <h2>Images</h2>
   
