@@ -5,7 +5,7 @@ class HomepageController < ApplicationController
   	elsif session[:promoter].present?
   		@name = Promoter.find_by(promoterID: current_user.userID).name
   	else
-  		@name = "Ainda não está acabado"
+  		@user = User.new
   	end
   end
 end
