@@ -18,7 +18,10 @@
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </p>
- 
+ <p>
+    <%= f.label 'Preco Total' %><br>
+    <%= f.text_field :preco %>
+  </p>
   <p>
     <%= f.label :descrition %><br>
     <%= f.text_area :descrition %>
@@ -70,9 +73,9 @@
 
   <p>DATa1<br>
     <%= label_tag 'Start Data' %><br>
-    <%=  date_select("dates[0]", "startDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%=  datetime_select("dates[0]", "startDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
     <%= label_tag 'End Data' %><br>
-    <%=  date_select("dates[0]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%=  datetime_select("dates[0]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
     <%= label_tag 'Preco' %><br>
     <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01%><br>
     <strong>Escolha um local</strong>
@@ -85,13 +88,13 @@
       <%= label_tag 'longitude' %><br>
       <%= text_field_tag 'dates[0][longitude]' %>
     </p>
-
+    <%= cktext_area :page, :info0, :cols => 40, :ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'} %>
   </p>
     <p>DATa2<br>
     <%= label_tag 'Start Data' %><br>
-    <%=  date_select("dates[1]", "startDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%=  datetime_select("dates[1]", "startDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
     <%= label_tag 'End Data' %><br>
-    <%=  date_select("dates[1]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%=  datetime_select("dates[1]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
     <%= label_tag 'Preco' %><br>
     <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01%><br>
     <strong>Local: </strong>
@@ -104,6 +107,7 @@
       <%= label_tag 'longitude' %><br>
       <%= text_field_tag 'dates[1][longitude]' %>
     </p>
+    <%= cktext_area :page, :info1, :cols => 40, :ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'} %>
   </p>
   <h2>Images</h2>
   

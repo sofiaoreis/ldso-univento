@@ -43,17 +43,18 @@ ActiveRecord::Schema.define(version: 0) do
     t.string  "docsID",      limit: 50
     t.integer "categoryID",  limit: 4
     t.integer "promoterID",  limit: 4
+    t.float   "preco",       limit: 53
   end
 
   add_index "Event", ["categoryID"], name: "categoryID", using: :btree
   add_index "Event", ["promoterID"], name: "promoterID", using: :btree
 
   create_table "EventDate", primary_key: "dateID", force: :cascade do |t|
-    t.date    "startDate"
-    t.float   "preco",     limit: 53
-    t.date    "endDate"
-    t.integer "eventID",   limit: 4
-    t.integer "localID",   limit: 4
+    t.datetime "startDate"
+    t.float    "preco",     limit: 53
+    t.datetime "endDate"
+    t.integer  "eventID",   limit: 4
+    t.integer  "localID",   limit: 4
   end
 
   add_index "EventDate", ["eventID"], name: "eventID", using: :btree
@@ -151,23 +152,23 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "Youtube", ["eventID"], name: "eventID", using: :btree
 
-  add_foreign_key "CategoryTags", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_CategoryTags_Category"
-  add_foreign_key "CategoryTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_CategoryTags_Tags"
-  add_foreign_key "Colaborator", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Colaborator_Normal"
-  add_foreign_key "Colaborator", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Colaborator_Promoter"
-  add_foreign_key "Event", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_Event_Category"
-  add_foreign_key "Event", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Event_Promoter"
-  add_foreign_key "EventDate", "Event", column: "eventID", primary_key: "eventID", name: "FK_Date_Event"
-  add_foreign_key "EventDate", "Local", column: "localID", primary_key: "localID", name: "FK_Date_Local"
-  add_foreign_key "EventTags", "Event", column: "eventID", primary_key: "eventID", name: "FK_EventTags_Event"
-  add_foreign_key "EventTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_EventTags_Tags"
-  add_foreign_key "Image", "Event", column: "eventID", primary_key: "eventID", name: "FK_Image_Event"
-  add_foreign_key "Normal", "User", column: "normalID", primary_key: "userID", name: "FK_Normal_User"
-  add_foreign_key "Promoter", "User", column: "promoterID", primary_key: "userID", name: "FK_Promoter_User"
-  add_foreign_key "Rate", "Event", column: "eventID", primary_key: "eventID", name: "FK_Rate_Event"
-  add_foreign_key "Rate", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Rate_Normal"
-  add_foreign_key "Registration", "Event", column: "eventID", primary_key: "eventID", name: "FK_Registration_Event"
-  add_foreign_key "Registration", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Registration_Normal"
-  add_foreign_key "Spotify", "Event", column: "eventID", primary_key: "eventID", name: "FK_Spotify_Event"
-  add_foreign_key "Youtube", "Event", column: "eventID", primary_key: "eventID", name: "FK_Youtube_Event"
+  add_foreign_key "CategoryTags", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_CategoryTags_Category", on_delete: :cascade
+  add_foreign_key "CategoryTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_CategoryTags_Tags", on_delete: :cascade
+  add_foreign_key "Colaborator", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Colaborator_Normal", on_delete: :cascade
+  add_foreign_key "Colaborator", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Colaborator_Promoter", on_delete: :cascade
+  add_foreign_key "Event", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_Event_Category", on_delete: :cascade
+  add_foreign_key "Event", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Event_Promoter", on_delete: :cascade
+  add_foreign_key "EventDate", "Event", column: "eventID", primary_key: "eventID", name: "FK_Date_Event", on_delete: :cascade
+  add_foreign_key "EventDate", "Local", column: "localID", primary_key: "localID", name: "FK_Date_Local", on_delete: :cascade
+  add_foreign_key "EventTags", "Event", column: "eventID", primary_key: "eventID", name: "FK_EventTags_Event", on_delete: :cascade
+  add_foreign_key "EventTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_EventTags_Tags", on_delete: :cascade
+  add_foreign_key "Image", "Event", column: "eventID", primary_key: "eventID", name: "FK_Image_Event", on_delete: :cascade
+  add_foreign_key "Normal", "User", column: "normalID", primary_key: "userID", name: "FK_Normal_User", on_delete: :cascade
+  add_foreign_key "Promoter", "User", column: "promoterID", primary_key: "userID", name: "FK_Promoter_User", on_delete: :cascade
+  add_foreign_key "Rate", "Event", column: "eventID", primary_key: "eventID", name: "FK_Rate_Event", on_delete: :cascade
+  add_foreign_key "Rate", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Rate_Normal", on_delete: :cascade
+  add_foreign_key "Registration", "Event", column: "eventID", primary_key: "eventID", name: "FK_Registration_Event", on_delete: :cascade
+  add_foreign_key "Registration", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Registration_Normal", on_delete: :cascade
+  add_foreign_key "Spotify", "Event", column: "eventID", primary_key: "eventID", name: "FK_Spotify_Event", on_delete: :cascade
+  add_foreign_key "Youtube", "Event", column: "eventID", primary_key: "eventID", name: "FK_Youtube_Event", on_delete: :cascade
 end

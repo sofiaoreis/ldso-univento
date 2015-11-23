@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS Event CASCADE;
 DROP TABLE IF EXISTS Category CASCADE;
 DROP TABLE IF EXISTS Promoter CASCADE;
 DROP TABLE IF EXISTS User CASCADE;
+DROP TABLE IF EXISTS ckeditor_assets CASCADE;
 
 -- Create Tables //
 CREATE TABLE Category
@@ -51,9 +52,10 @@ CREATE TABLE Colaborator
 
 CREATE TABLE EventDate
 (
-	startDate DATE NULL,
+	descrition TEXT NULL,
+	startDate DATETIME NULL,
 	preco DOUBLE NULL,
-	endDate DATE NULL,
+	endDate DATETIME NULL,
 	dateID INTEGER NOT NULL AUTO_INCREMENT,
 	eventID INTEGER NULL,
 	localID INTEGER NULL,
@@ -218,6 +220,22 @@ CREATE TABLE Youtube
 ) ;
 
 
+CREATE TABLE ckeditor_assets (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  data_file_name varchar(255) NOT NULL,
+  data_content_type varchar(255) DEFAULT NULL,
+  data_file_size int(11) DEFAULT NULL,
+  assetable_id int(11) DEFAULT NULL,
+  assetable_type varchar(30) DEFAULT NULL,
+  type varchar(30) DEFAULT NULL,
+  width int(11) DEFAULT NULL,
+  height int(11) DEFAULT NULL,
+  created_at datetime DEFAULT NULL,
+  updated_at datetime DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY idx_ckeditor_assetable_type (assetable_type,type,assetable_id),
+  KEY idx_ckeditor_assetable (assetable_type,assetable_id)
+);
 
 SET FOREIGN_KEY_CHECKS=1;
 

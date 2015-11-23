@@ -16,6 +16,10 @@ class EventController < ApplicationController
 
 
  	def new
+ 		if !session[:promoter].present?
+ 			flash[:alert] = "Não tem autorização para criar eventos"
+ 			redirect_to root_path
+ 		end
  		@event = Event.new
  		@category = Category.all
  		@image = Image.new
@@ -61,6 +65,7 @@ class EventController < ApplicationController
  		event_params = params[:event]
  		@event.name = event_params[:name]
  		@event.descrition = event_params[:descrition]
+ 		@event.preco = event_params[:preco]
  		@event.promoterID = current_user.userID
  		@event.categoryID = params[:category].to_i
  		@event.averageRate=0
@@ -123,11 +128,11 @@ class EventController < ApplicationController
 	    if params[:dates].present?
 		    params[:dates].each_with_index do |date, k|
 		        eventDate = EventDate.new
-		        eventDate.startDate = (params[:dates][k.to_s]["startDate(1i)"] << "-" << params[:dates][k.to_s]["startDate(2i)"]<< "-" << params[:dates][k.to_s]["startDate(3i)"])
-		        eventDate.endDate = (params[:dates][k.to_s]["endDate(1i)"] << "-" << params[:dates][k.to_s]["endDate(2i)"]<< "-" << params[:dates][k.to_s]["endDate(3i)"])
+		        eventDate.startDate = (params[:dates][k.to_s]["startDate(1i)"] << "-" << params[:dates][k.to_s]["startDate(2i)"]<< "-" << params[:dates][k.to_s]["startDate(3i)"]<< " "<<params[:dates][k.to_s]["startDate(4i)"]<<":"<<params[:dates][k.to_s]["startDate(5i)"])
+		        eventDate.endDate = (params[:dates][k.to_s]["endDate(1i)"] << "-" << params[:dates][k.to_s]["endDate(2i)"]<< "-" << params[:dates][k.to_s]["endDate(3i)"]<< " "<<params[:dates][k.to_s]["endDate(4i)"]<<":"<<params[:dates][k.to_s]["endDate(5i)"])
 		        eventDate.eventID=@event.eventID
 		        eventDate.preco=params["price"][k].to_f
-
+		       	eventDate.descrition = params[:page]["info"<<k.to_s]
 		        if params[:dates][k.to_s]["address"].present?
 		        	local = Local.new
 			        local.address=params[:dates][k.to_s]["address"]
