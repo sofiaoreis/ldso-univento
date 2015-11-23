@@ -19,7 +19,8 @@ class UserController < ApplicationController
       normal.birthday = Date.civil(*params[:birthday].sort.map(&:last).map(&:to_i))
       normal.normalID = @user.userID
       if normal.save
-        redirect_to @user
+        flash[:notice] = "Conta criada com sucesso! Pode agora fazer login!"
+        redirect_to root_path
       else 
         @user.destroy
         render 'new'

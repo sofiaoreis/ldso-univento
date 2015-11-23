@@ -5,7 +5,7 @@ class HomepageController < ApplicationController
   	elsif session[:promoter].present?
   		@name = Promoter.find_by(promoterID: current_user.userID).name
   	else
-  		@user = User.new
+  		@name = "Ocorreu um erro"
   	end
   end
 end
