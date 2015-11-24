@@ -7,12 +7,26 @@ class UserController < ApplicationController
     @user = User.new
   end
 
+  attr_reader   :errors
+
   def create
     @user = User.new
     @user.email = params[:user][:email]
     @user.password = params[:user][:password]
     if @user.save
       normal = Normal.new
+      if !params[:first_name].present?
+        @user.errors.add("first_name", "Inserir o primeiro nome")
+        @user.destroy
+        render 'new'
+        return
+      end 
+      if !params[:last_name].present?
+        @user.errors.add("last_name", "Inserir o último nome")
+        @user.destroy
+        render 'new'
+        return
+      end 
       normal.first_name = params[:first_name]
       normal.last_name = params[:last_name]
       normal.gender = params[:gender]

@@ -3,39 +3,37 @@
 <link rel="stylesheet" type="text/css" href="/jquery-gmaps-latlon-picker.css"/>
 <script src="/jquery-gmaps-latlon-picker.js"></script>
 <%= form_for(@event,:url => '/event', :authenticity_token => true, :html => { :multipart => true }) do |f| %>
- 
-  <% if @event.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@event.errors.count, "error") %> prohibited
-        this article from being saved:
-      </h2>
-      <ul>
-        <% @event.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
- 
   <p>
     <%= f.label :name %><br>
+      <% if @event.errors[:name].any? %>
+      <div class="btn btn-danger">
+      <%= @event.errors[:name].first %>
+      </div>
+    <% end %><br>
     <%= f.text_field :name %>
   </p>
  <p>
     <%= f.label 'Preco Total' %><br>
-    <%= f.text_field :preco %>
+      <% if @event.errors[:preco].any? %>
+      <div class="btn btn-danger">
+      <%= @event.errors[:preco].first %>
+      </div>
+    <% end %><br>
+    <%= f.number_field :preco , :in => 0..999, :step => 0.01%><br>
   </p>
   <p>
-    <%= f.label :descrition %><br>
+    <%= f.label :descrition %>
+    <% if @event.errors[:descrition].any? %>
+      <div class="btn btn-danger">
+      <%= @event.errors[:descrition].first %>
+      </div>
+    <% end %><br>
     <%= f.text_area :descrition %>
   </p>
   <p>
     Escolha a data a partir do qual o evento fica activo:
     <%=  datetime_select("activeDate", "activeDate", order: [:day, :month, :year], start_year: Time.now.year, end_year: Time.now.year+2) %>
-  </p>
-  
- 
+  </p> 
   <div class="">
     <label for="category">Escolha a categoria:</label>
       <% @category.each do |category| %>

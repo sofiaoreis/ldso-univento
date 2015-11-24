@@ -1,12 +1,11 @@
 class User < ActiveRecord::Base
   self.table_name = 'User'
   self.primary_key = :userID
-
-  validates :password, presence: true, length: { minimum: 5 }
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-
   has_one :normal, :class_name => 'Normal', :foreign_key => :normalID
   has_one :promoter, :class_name => 'Promoter', :foreign_key => :promoterID
+
+  validates_length_of :password, :minimum => 5, :message => 'Inserir uma password de tamanho superior a 4'
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i , :message => "Inserir um email válido"
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
