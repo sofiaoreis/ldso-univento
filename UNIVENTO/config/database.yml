@@ -15,8 +15,8 @@ default: &default
   pool: 5
   username: root
   password:
-  socket: /var/run/mysqld/mysqld.sock   # =========== local development ===========================
-#  socket: /var/lib/mysql/mysql.sock    # =========== server development ==========================
+#  socket: /var/run/mysqld/mysqld.sock   # =========== local development ===========================
+  socket: /var/lib/mysql/mysql.sock    # =========== server development ==========================
 
 development:
   <<: *default
