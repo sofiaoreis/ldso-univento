@@ -1,3 +1,7 @@
+<!--<script src="/jquery-2.1.1.min.js"></script>-->
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<link rel="stylesheet" type="text/css" href="/jquery-gmaps-latlon-picker.css"/>
+<script src="/jquery-gmaps-latlon-picker.js"></script>
 <%= form_for(@event,:url => '/event', :authenticity_token => true, :html => { :multipart => true }) do |f| %>
  
   <% if @event.errors.any? %>
@@ -78,16 +82,16 @@
     <%=  datetime_select("dates[0]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
     <%= label_tag 'Preco' %><br>
     <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01%><br>
-    <strong>Escolha um local</strong>
-    <%= select_tag "local[]", options_from_collection_for_select(@local, "localID", "address") %>
-    <p>Novo local:<br>
-      <%= label_tag 'morada' %><br>
-      <%= text_field_tag 'dates[0][address]' %><br>
-      <%= label_tag 'latitude' %><br>
-      <%= text_field_tag 'dates[0][latitude' %><br>
-      <%= label_tag 'longitude' %><br>
-      <%= text_field_tag 'dates[0][longitude]' %>
-    </p>
+    <strong>Escolha o local: </strong>
+    <fieldset class="gllpLatlonPicker" id="map0">
+      <input name="dates[0][address]" value="Porto" type="text" class="gllpSearchField">
+      <input type="button" class="gllpSearchButton" value="search">
+      <div class="gllpMap">Google Maps</div>
+      <input name="dates[0][latitude]" type="hidden" class="gllpLatitude" value="41.1579438"/>
+      <input name="dates[0][longitude]" type="hidden" class="gllpLongitude" value="-8.629105299999992"/>
+      <input type="hidden" class="gllpZoom" value="12"/>
+    </fieldset> 
+
     <%= cktext_area :page, :info0, :cols => 40, :ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'} %>
   </p>
     <p>DATa2<br>
@@ -97,16 +101,16 @@
     <%=  datetime_select("dates[1]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
     <%= label_tag 'Preco' %><br>
     <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01%><br>
-    <strong>Local: </strong>
-    <%= select_tag "local[]", options_from_collection_for_select(@local, "localID", "address") %>
-    <p>Novo local:<br>
-      <%= label_tag 'morada' %><br>
-      <%= text_field_tag 'dates[1][address]' %><br>
-      <%= label_tag 'latitude' %><br>
-      <%= text_field_tag 'dates[1][latitude' %><br>
-      <%= label_tag 'longitude' %><br>
-      <%= text_field_tag 'dates[1][longitude]' %>
-    </p>
+    <strong>Escolha o local: </strong>
+    <fieldset class="gllpLatlonPicker" id="map1">
+      <input name="dates[1][address]" value="Porto" type="text" class="gllpSearchField">
+      <input type="button" class="gllpSearchButton" value="search">
+      <div class="gllpMap">Google Maps</div>
+      <input name="dates[1][latitude]" type="hidden" class="gllpLatitude" value="41.1579438"/>
+      <input name="dates[1][longitude]" type="hidden" class="gllpLongitude" value="-8.629105299999992"/>
+      <input type="hidden" class="gllpZoom" value="12"/>
+    </fieldset> 
+
     <%= cktext_area :page, :info1, :cols => 40, :ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'} %>
   </p>
   <h2>Images</h2>
@@ -114,8 +118,6 @@
   <div class="field">
     <%= f.file_field :image, :multiple => true, name: "image[image][]" %>
   </div>
-
-
   <p>
     <%= f.submit %>
   </p>

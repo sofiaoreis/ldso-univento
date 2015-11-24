@@ -110,8 +110,8 @@ CREATE TABLE Image
 CREATE TABLE Local
 (
 	address VARCHAR(50) NULL,
-	latitude int NULL,
-	longitude int NULL,
+	latitude DOUBLE NULL,
+	longitude DOUBLE NULL,
 	localID INTEGER NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (localID)
 

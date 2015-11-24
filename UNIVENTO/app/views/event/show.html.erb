@@ -1,3 +1,6 @@
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<link rel="stylesheet" type="text/css" href="/jquery-gmaps-latlon-picker.css"/>
+<script src="/jquery-gmaps-latlon-picker.js"></script>
 <p>
   <strong>name:</strong>
   <%= @event.name %>
@@ -57,7 +60,7 @@
 <% end %>
 
 <h2>Datas</h2>
-<% @event.eventdate.each do |link| %>
+<% @event.eventdate.each_with_index do |link, index| %>
   <p>
     <strong>startData:</strong>
     <%= link.startDate %><br>
@@ -65,8 +68,15 @@
     <%= link.endDate %><br>
     <strong>preco:</strong>
     <%= link.preco %><br>
-    <strong>Local:</strong>
-    morada: <%= link.local.address %> latitude: <%= link.local.latitude %> longitude <%= link.local.longitude %>
+    <strong>Morada:</strong><%= link.local.address %> latitude: <%= link.local.latitude %> longitude <%= link.local.longitude %><br>
+    <fieldset class="gllpLatlonPicker" id="<%= index%>" >
+      <input value="<%= link.local.address %>" type="text" class="gllpSearchField">
+      <input type="button" class="gllpSearchButton" value="search">
+      <div class="gllpMap">Google Maps</div>
+      <input type="hidden" class="gllpLatitude" value="<%= link.local.latitude %>" />
+      <input type="hidden" class="gllpLongitude" value="<%= link.local.longitude %>" />
+      <input type="hidden" class="gllpZoom" value="12"/>
+    </fieldset> 
     <%= raw (link.descrition) %>
   </p>
 <% end %>
