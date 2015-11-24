@@ -73,7 +73,7 @@ CREATE TABLE Event
 	propose BOOL NULL,
 	averageRate DOUBLE NULL,
 	numRates int NULL,
-	active BOOL NULL,
+	activeDate DATETIME NULL,
 	docsID VARCHAR(50) NULL,
 	eventID INTEGER NOT NULL AUTO_INCREMENT,
 	categoryID INTEGER NULL,

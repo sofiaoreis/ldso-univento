@@ -34,30 +34,6 @@ class EventController < ApplicationController
 # ========================================================
 
  	def create
- 		#{
- 		#	"utf8"=>"✓", 
- 		#	"authenticity_token"=>"aclVkYcUEqhCdBC6l0yYHDLrvRXsThC8PGy15lewduwanw8y92k20YwJfMbT7h9ISncqudgZOBYZKf8oEX8IEw==", 
- 		#	"event"=>
- 		#		{
- 		#			"name"=>"", 
- 		#			"descrition"=>""
- 		#		}, 
- 		#	"category"=>"#<Category:0x007f950ff00d88>",
- 		#	"tags"=>"#<Tags:0x007f950ff00d88>",
- 		#	"youtube"=>["", "", ""], 
- 		#	"spotify"=>["", "", ""], 
- 		#	"address"=>["", "", ""], 
- 		#	"latitude"=>["", "", ""], 
- 		#	"longitude"=>["", "", ""], 
- 		#	"dates"=>{
- 		#		"0"=>{"startDate(3i)"=>"12", "startDate(2i)"=>"11", "startDate(1i)"=>"2015", "endDate(3i)"=>"12", "endDate(2i)"=>"11", "endDate(1i)"=>"2015"}, 
- 		#		"1"=>{"startDate(3i)"=>"20", "startDate(2i)"=>"11", "startDate(1i)"=>"2015", "endDate(3i)"=>"16", "endDate(2i)"=>"11", "endDate(1i)"=>"2015"}
- 		#		}, 
- 		#	"price"=>["", ""], 
- 		#	"commit"=>"Create Event", 
- 		#	"controller"=>"event", 
- 		#	"action"=>"create"
- 		#}
  		#render plain: params.inspect
  		#return
         @fail = false
@@ -70,9 +46,9 @@ class EventController < ApplicationController
  		@event.categoryID = params[:category].to_i
  		@event.averageRate=0
  		@event.numRates=0
- 		@event.active=true
  		@event.propose=false
-        
+        @event.activeDate = (params["activeDate"]["activeDate(3i)"]<<"-"<<params["activeDate"]["activeDate(2i)"]<<"-"<<params["activeDate"]["activeDate(1i)"]<<" "<<params["activeDate"]["activeDate(4i)"]<<":"<<params["activeDate"]["activeDate(5i)"])
+
        	if saveOrDestroy(@event) 
        		return 
        	end

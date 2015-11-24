@@ -30,6 +30,11 @@
     <%= f.label :descrition %><br>
     <%= f.text_area :descrition %>
   </p>
+  <p>
+    Escolha a data a partir do qual o evento fica activo:
+    <%=  datetime_select("activeDate", "activeDate", order: [:day, :month, :year], start_year: Time.now.year, end_year: Time.now.year+2) %>
+  </p>
+  
  
   <div class="">
     <label for="category">Escolha a categoria:</label>
@@ -77,9 +82,9 @@
 
   <p>DATa1<br>
     <%= label_tag 'Start Data' %><br>
-    <%=  datetime_select("dates[0]", "startDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%=  datetime_select("dates[0]", "startDate", order: [:day, :month, :year], start_year: Time.now.year, end_year: Time.now.year+2) %><br>
     <%= label_tag 'End Data' %><br>
-    <%=  datetime_select("dates[0]", "endDate", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br>
+    <%=  datetime_select("dates[0]", "endDate", order: [:day, :month, :year], start_year: Time.now.year, end_year: Time.now.year+2) %><br>
     <%= label_tag 'Preco' %><br>
     <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01%><br>
     <strong>Escolha o local: </strong>

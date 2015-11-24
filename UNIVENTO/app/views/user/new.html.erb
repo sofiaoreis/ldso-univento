@@ -36,7 +36,7 @@
                 <% end %>
             </div>
             <label>Data de nascimento:
-            <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: 1900, end_year:2015) %>
+            <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year) %>
             </label><br>
             <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>
             </div>
