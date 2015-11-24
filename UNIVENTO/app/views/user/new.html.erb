@@ -2,6 +2,7 @@
     
         <div class="regist_title">Registo na UNIVENTO!</div>
         Queres ficar a par de todos os eventos na tua Academia?<br>
+        <%= form_for @user, :url => '/user' do |u| %>
             <div class="form-group">
             <% if @user.errors[:email].any? %>
               <div class="btn btn-danger">

@@ -23,13 +23,22 @@ class EventController < ApplicationController
  		@event = Event.new
  		@category = Category.all
  		@image = Image.new
- 		@local = Local.all
  	end
 
 # ========================================================
 
 	def update
+		@event = Event.find(params[:id])
 	end
+
+# ========================================================
+
+	def edit
+    	@event = Event.find(params[:id])
+    	@category = Category.all
+    	@image = @event.image
+ 	end
+
 
 # ========================================================
 
