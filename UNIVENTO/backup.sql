@@ -30,7 +30,7 @@ INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 16',FALSE,10,
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 17',FALSE,10,1,'2015-11-01',NULL,17,2,4,15);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 18',FALSE,10,1,'2015-11-01',NULL,18,3,4,15);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 19',FALSE,10,1,'2015-11-01',NULL,19,1,4,15);
-INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 20',FALSE,10,1,'2015-11-01',NULL,20,2,4,15);
+INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 20',NULL,10,1,'2015-11-01',NULL,20,2,4,15);
 INSERT INTO `EventTags` VALUES (1,1),(1,2),(1,3);
 INSERT INTO `Image` VALUES ('img1.jpg',1,1),('img2.jpg',2,1);
 INSERT INTO `Local` VALUES ('rua lá ao fundo',100,100,1);

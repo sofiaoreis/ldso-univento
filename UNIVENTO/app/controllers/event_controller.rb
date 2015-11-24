@@ -161,7 +161,7 @@ class EventController < ApplicationController
 		eventsID = Array.new
 
 		eventDates1.each do |eventDate|
-			if eventDate.event.activeDate < Time.now && eventDate.event.propose
+			if eventDate.event.activeDate < Time.now && !eventDate.event.propose && eventDate.event.propose != nil
 				if !eventsID.include?(eventDate.eventID)
 					@eventDates.push(eventDate)
 				end
