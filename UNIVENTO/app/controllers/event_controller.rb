@@ -10,6 +10,7 @@ class EventController < ApplicationController
 		  flash[:alert] = "Este evento não existe"
 		  redirect_to root_path
 		end
+		render 'temp'
  	end
 
 # ========================================================
@@ -29,6 +30,13 @@ class EventController < ApplicationController
 
 	def update
 		@event = Event.find(params[:id])
+		render plain: params.inspect
+		return
+		@event.image.destroy_all
+		@event.youtube.destroy_all
+		@event.spotify.destroy_all
+		@event.eventtags.destroy_all
+		@event.eventDate.destroy_all
 	end
 
 # ========================================================
@@ -36,7 +44,6 @@ class EventController < ApplicationController
 	def edit
     	@event = Event.find(params[:id])
     	@category = Category.all
-    	@image = @event.image
  	end
 
 
