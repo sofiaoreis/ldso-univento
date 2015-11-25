@@ -4,10 +4,9 @@
     <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
     <link rel="stylesheet" href="/gallery/bootstrap-image-gallery.min.css">
     <div id="wrapper">
-
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/"><img src="imgs/logo_univento-01.svg" class="img-responsive" alt="Logo Univento" style="width: auto; height: 30px; max-width:100px; margin-top: -7px;">
+                <a class="navbar-brand" href="/"><img src="/imgs/logo_univento-01.svg" class="img-responsive" alt="Logo Univento" style="width: auto; height: 30px; max-width:100px; margin-top: -7px;">
                 </a>
             </div>
             <ul class="nav navbar-top-links navbar-right">
@@ -55,7 +54,7 @@
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="thumbnail">
                          <a href="imgs/arraial.jpg" data-gallery>
-                                <img src="imgs/arraial.jpg" alt="">
+                                <%= image_tag @image.first.image %>
                             </a>
                         <div class="caption text-center">
                             <h4><%= @event.preco %>€ - 23h</h4>
@@ -64,23 +63,23 @@
                             </p>
                         </div>
                     </div>
-                <!-- VIDEOS YOUTUBE-->
-                <% @event.youtube.each do |video| %>
-                    <div class="row top-buffer" >
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" id="player" src="<%= video.videoID %>" width="450" height="280" frameborder="0"></iframe>
+                    <!-- VIDEOS YOUTUBE-->
+                    <% @event.youtube.each do |video| %>
+                        <div class="row top-buffer" >
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" id="player" src="<%= video.videoID %>" width="450" height="280" frameborder="0"></iframe>
+                            </div>
                         </div>
-                    </div>
-                <% end %>
-                <!-- SPOTIFY -->
-                <% @event.spotify.each do |playlist| %>
-                    <div class="row top-buffer" id="embed">
-                        <div class="embed-responsive" style="height : 80px">
-                            <iframe class="embed-responsive-item" src="<%= playlist.playListLink %>" frameborder="0" allowtransparency="true"></iframe>
+                    <% end %>
+                    <!-- SPOTIFY -->
+                    <% @event.spotify.each do |playlist| %>
+                        <div class="row top-buffer" id="embed">
+                            <div class="embed-responsive" style="height : 80px">
+                                <iframe class="embed-responsive-item" src="<%= playlist.playListLink %>" frameborder="0" allowtransparency="true"></iframe>
+                            </div>
                         </div>
-                    </div>
-                    
-                <% end %>
+                        
+                    <% end %>
                 </div>
 
                 <div class="col-lg-8 col-md-12 col-sm-12">
@@ -96,13 +95,13 @@
                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=index%>" aria-expanded="true" aria-controls="collapse<%=index%>">
                                     Data: <%= data.startDate %> até <%= data.endDate %> - <%= data.preco %>€
                                   </a>
-                              </h4>
-                          </div>
-                          <% if index==0%>
-                          <div id="collapse<%=index%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%=index%>">
-                          <% else %>
-                          <div id="collapse<%=index%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%=index%>">
-                          <% end -%>
+                                </h4>
+                            </div>
+                            <% if index==0%>
+                                <div id="collapse<%=index%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%=index%>">
+                            <% else %>
+                                <div id="collapse<%=index%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%=index%>">
+                            <% end -%>
                                 <div class="panel-body">
                                     <div class="row">
                                         <%= raw (data.descrition) %>
@@ -122,25 +121,27 @@
                         <% end %>
                     </div>
 
-            <div class="row top-buffer ">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="grid-sizer"></div>
-                    <div id="links">
-                        <% @image.each do |p| %>
-                            <div class="grid-item">
-                                <a href="<%= p.image %>" data-gallery>
-                                    <%= image_tag p.image %>
-                                </a>
+                    <div class="row top-buffer ">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="grid-sizer"></div>
+                            <div id="links">
+                                <% @image.each do |p| %>
+                                    <div class="grid-item">
+                                        <a href="<%= p.image %>" data-gallery>
+                                            <%= image_tag p.image %>
+                                        </a>
+                                    </div>
+                                <% end %>
                             </div>
-                        <% end %>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
+                    <div class="row top-buffer">
+                        <div class="fb-comments" data-href=<%= request.original_url %>  data-numposts="5"></div>
+                        <div id="fb-root"></div>
                     </div>
                 </div>
-            </div>
-            <br>
-            <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
-            <div class="row top-buffer">
-                <div class="fb-comments" data-href=<%= request.original_url %>  data-numposts="5"></div>
-                <div id="fb-root"></div>
             </div>
         </div>
     </div>

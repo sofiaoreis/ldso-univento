@@ -9,6 +9,7 @@ class EventController < ApplicationController
 		rescue ActiveRecord::RecordNotFound => e
 		  flash[:alert] = "Este evento não existe"
 		  redirect_to root_path
+		  return
 		end
 		render 'temp'
  	end
