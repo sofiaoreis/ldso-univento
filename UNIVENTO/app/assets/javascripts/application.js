@@ -15,3 +15,6 @@
 //= require turbolinks
 //= require_tree .
 //= require ckeditor/init
+//= require angular
+//= require angular-animate
+//= require angular-resource
