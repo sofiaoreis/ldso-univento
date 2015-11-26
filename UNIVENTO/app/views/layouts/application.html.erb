@@ -20,7 +20,6 @@
     <!--<script src="lib/angular/angular.js"></script>-->
     <!--<script src="lib/angular-bootstrap/ui-bootstrap.js"></script>-->
     <!--<script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>-->
-    <!--<script src="main.js"></script>-->
     <link rel="apple-touch-icon" sizes="57x57" href="/imgs/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/imgs/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/imgs/favicon/apple-icon-72x72.png">
@@ -48,7 +47,7 @@
 <% if alert %>
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
-
+<%= render 'homepage/topMenu' %>
 <%= yield %>
 
 </body>
@@ -56,5 +55,4 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.js"></script>
-    <!--<script src="/main.js"></script>-->
 </html>

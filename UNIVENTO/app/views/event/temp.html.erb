@@ -1,0 +1,158 @@
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <link rel="stylesheet" type="text/css" href="/jquery-gmaps-latlon-picker.css"/>
+    <script src="/jquery-gmaps-latlon-picker.js"></script>
+    <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="/gallery/bootstrap-image-gallery.min.css">
+
+    <div id="wrapper">
+        <div id="page-wrapper">
+            <!---->
+            <div id="blueimp-gallery" class="blueimp-gallery">
+                <!-- The container for the modal slides -->
+                <div class="slides"></div>
+                <!-- Controls for the borderless lightbox -->
+                <h3 class="title"></h3>
+                <a class="prev">‹</a>
+                <a class="next">›</a>
+                <a class="close">×</a>
+                <a class="play-pause"></a>
+                <ol class="indicator"></ol>
+                <!-- The modal dialog, which will be used to wrap the lightbox content -->
+                <div class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title"></h4>
+                            </div>
+                            <div class="modal-body next"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-left prev">
+                                    <i class="glyphicon glyphicon-chevron-left"></i>
+                                    Previous
+                                </button>
+                                <button type="button" class="btn btn-primary next">
+                                    Next
+                                    <i class="glyphicon glyphicon-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!---->
+            <div class="row row-centered" id="eventos">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="thumbnail">
+                         <a href="imgs/arraial.jpg" data-gallery>
+                                <%= image_tag @image.first.image %>
+                            </a>
+                        <div class="caption text-center">
+                            <h4><%= @event.preco %>€ - 23h</h4>
+                            <p>
+                                <a href="#" class="btn btn-lgg">Comprar!</a>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- VIDEOS YOUTUBE-->
+                    <% @event.youtube.each do |video| %>
+                        <div class="row top-buffer" >
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" id="player" src="<%= video.videoID %>" width="450" height="280" frameborder="0"></iframe>
+                            </div>
+                        </div>
+                    <% end %>
+                    <!-- SPOTIFY -->
+                    <% @event.spotify.each do |playlist| %>
+                        <div class="row top-buffer" id="embed">
+                            <div class="embed-responsive" style="height : 80px">
+                                <iframe class="embed-responsive-item" src="<%= playlist.playListLink %>" frameborder="0" allowtransparency="true"></iframe>
+                            </div>
+                        </div>
+                        
+                    <% end %>
+                </div>
+
+                <div class="col-lg-8 col-md-12 col-sm-12">
+
+                    <h3><%= @event.name %></h3>
+                    <p><%= @event.descrition %></p>
+
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <% @event.eventdate.each_with_index do |data, index| %>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading<%=index%>">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=index%>" aria-expanded="true" aria-controls="collapse<%=index%>">
+                                    Data: <%= data.startDate %> até <%= data.endDate %> - <%= data.preco %>€
+                                  </a>
+                                </h4>
+                            </div>
+                            <% if index==0%>
+                                <div id="collapse<%=index%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%=index%>">
+                            <% else %>
+                                <div id="collapse<%=index%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%=index%>">
+                            <% end -%>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <%= raw (data.descrition) %>
+                                        <strong>Local:</strong><%= data.local.address %> latitude: <%= data.local.latitude %> longitude <%= data.local.longitude %><br>
+                                        <fieldset class="gllpLatlonPicker" id="<%= index%>" >
+                                          <input value="<%= data.local.address %>" type="text" class="gllpSearchField">
+                                          <input type="button" class="gllpSearchButton" value="search">
+                                          <div class="gllpMap">Google Maps</div>
+                                          <input type="hidden" class="gllpLatitude" value="<%= data.local.latitude %>" />
+                                          <input type="hidden" class="gllpLongitude" value="<%= data.local.longitude %>" />
+                                          <input type="hidden" class="gllpZoom" value="12"/>
+                                        </fieldset> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% end %>
+                    </div>
+                </div>
+                <div class="row top-buffer ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="grid-sizer"></div>
+                        <div id="links">
+                            <% @image.each_with_index do |p,k| %>
+                                <% if k>0%>
+                                    <div class="grid-item">
+                                        <a href="<%= p.image %>" data-gallery>
+                                            <%= image_tag p.image , :class => "img-responsive"%>
+                                        </a>
+                                    </div>
+                                <% end -%>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
+                <div class="row top-buffer">
+                    <div class="fb-comments" data-href=<%= request.original_url %>  data-numposts="5"></div>
+                    <div id="fb-root"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+    <script src="/gallery/bootstrap-image-gallery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
+    <script src="/grid.js"></script>
+
+    <script src="/main.js"></script>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v2.5&appId=548043568677408";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
