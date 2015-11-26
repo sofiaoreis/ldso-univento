@@ -3,16 +3,8 @@
     <script src="/jquery-gmaps-latlon-picker.js"></script>
     <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
     <link rel="stylesheet" href="/gallery/bootstrap-image-gallery.min.css">
-    <div id="wrapper">
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/"><img src="/imgs/logo_univento-01.svg" class="img-responsive" alt="Logo Univento" style="width: auto; height: 30px; max-width:100px; margin-top: -7px;">
-                </a>
-            </div>
-            <ul class="nav navbar-top-links navbar-right">
-            </ul>
-        </nav>
 
+    <div id="wrapper">
         <div id="page-wrapper">
             <!---->
             <div id="blueimp-gallery" class="blueimp-gallery">
@@ -120,27 +112,28 @@
                         </div>
                         <% end %>
                     </div>
-
-                    <div class="row top-buffer ">
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                            <div class="grid-sizer"></div>
-                            <div id="links">
-                                <% @image.each do |p| %>
+                </div>
+                <div class="row top-buffer ">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="grid-sizer"></div>
+                        <div id="links">
+                            <% @image.each_with_index do |p,k| %>
+                                <% if k>0%>
                                     <div class="grid-item">
                                         <a href="<%= p.image %>" data-gallery>
-                                            <%= image_tag p.image %>
+                                            <%= image_tag p.image , :class => "img-responsive"%>
                                         </a>
                                     </div>
-                                <% end %>
-                            </div>
+                                <% end -%>
+                            <% end %>
                         </div>
                     </div>
-                    <br>
-                    <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
-                    <div class="row top-buffer">
-                        <div class="fb-comments" data-href=<%= request.original_url %>  data-numposts="5"></div>
-                        <div id="fb-root"></div>
-                    </div>
+                </div>
+                <br>
+                <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
+                <div class="row top-buffer">
+                    <div class="fb-comments" data-href=<%= request.original_url %>  data-numposts="5"></div>
+                    <div id="fb-root"></div>
                 </div>
             </div>
         </div>

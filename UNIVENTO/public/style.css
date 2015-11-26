@@ -1,14 +1,29 @@
 body {
     background-color: #f8f8f8;
     font-family: 'Open Sans', sans-serif;
+}
+p {
     font-weight: 200;
 }
-
 #wrapper {
     width: 100%;
     background-color: #2A2B2D;
 }
 
+#page-wrapper-homepage {
+    padding: 0 15px;
+    min-height: 568px;
+    background-color: #f6f6f6 ;
+}
+
+@media(min-width:768px) {
+    #page-wrapper-homepage {
+        position: inherit;
+        margin: 0 0 0 250px;
+        /*padding: 0 30px;*/
+        border-left: 1px solid grey;
+    }
+}
 #page-wrapper {
     padding: 0 15px;
     min-height: 568px;
@@ -18,8 +33,8 @@ body {
 @media(min-width:768px) {
     #page-wrapper {
         position: inherit;
-        margin: 0 0 0 250px;
-        /*padding: 0 30px;*/
+        /*margin: 0 0 0 250px;
+        padding: 0 30px;*/
         border-left: 1px solid grey;
     }
 }
@@ -137,7 +152,7 @@ body {
         z-index: 1;
         position: absolute;
         width: 250px;
-        margin-top: 51px;
+       /* margin-top: 51px; */
     }
 }
 
@@ -162,7 +177,7 @@ body {
 }
 
 .col-lg-12#slideshow {
-padding-right: 0px;
+    padding-right: 0px;
     padding-left: 0px;
 }
 
@@ -181,6 +196,7 @@ padding-right: 0px;
 
 #eventos {
     padding-top: 15px;
+    padding-left: 10px;
 }
 
 .thumbnail{
@@ -199,8 +215,8 @@ padding-right: 0px;
 
 #btn-lgg:hover {
      border-color: #1aa69b ;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #fff;
-  outline: 0 none;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #fff;
+    outline: 0 none;
 }
 
 .bs-glyphicons {
@@ -268,4 +284,68 @@ padding-right: 0px;
 
 .navbar-text{
     margin-bottom: 0;
+}
+
+
+
+/***NOVO*****/
+.grid {
+  background: #DDD;
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 33.333%;
+}
+
+.grid-item {
+  float: left;
+}
+
+.grid-item img {
+  display: block;
+  max-width: 100%;
+}
+
+.row #embed{
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.fb-comments, .fb-comments iframe[style], .fb-like-box, .fb-like-box iframe[style] {width: 100% !important;}
+.fb-comments span, .fb-comments iframe span[style], .fb-like-box span, .fb-like-box iframe span[style] {width: 100% !important;}
+
+
+.navbar-top-links>li>a:hover,
+a:focus {
+    text-decoration: none;
+    color: #1AA69B;
+    background-color: none;
+    font-weight: bold; 
+}
+
+.nav#side-menu>li>a:hover,
+a:active,
+a:visited {
+    text-decoration: none;
+    background-color: none;
+}
+
+.panel-title>.small, .panel-title>.small>a, .panel-title>a, .panel-title>small, .panel-title>small>a {
+    text-decoration: none;
+}
+
+.top-buffer { margin-top:1em; }
+
+.embed-responsive-4by3 {
+    padding-bottom: 25%;
 }

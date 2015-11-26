@@ -1,11 +1,11 @@
 class HomepageController < ApplicationController
   def index
   	if session[:normal].present?
-    	@name = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
+    	$name = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
   	elsif session[:promoter].present?
-  		@name = Promoter.find_by(promoterID: current_user.userID).name
+  		$name = Promoter.find_by(promoterID: current_user.userID).name
   	else
-  		@name = "Ocorreu um erro"
+  		$name = "Ocorreu um erro"
   	end
   end
 end
