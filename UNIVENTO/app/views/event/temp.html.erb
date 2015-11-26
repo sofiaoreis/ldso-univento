@@ -46,7 +46,7 @@
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="thumbnail">
                         <% if @image.first.present?%>
-                         <a href="<%= @image.first.image.name %>" data-gallery><%= image_tag @image.first.image %></a>
+                         <a href="<%= @image.first.image %>" data-gallery><%= image_tag @image.first.image %></a>
                         <% end -%>
                         <div class="caption text-center">
                             <h4><%= @event.preco %>€ - 23h</h4>
