@@ -155,25 +155,91 @@ class EventController < ApplicationController
 # ========================================================
 
 	def index
-		# Find 18 events ordered by most closest date for the next 4 years from now.
-		eventDates1 = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
 
 		@eventDates = Array.new
-		eventID = -1
+		eventDates2 = Array.new
+
+		# ------------------- DB query -------------------------
+
+		# Find events ordered by most closest date for the next 4 years from now.
+		eventDates1 = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
+
+		# ----- Active Events & remove duplicated --------------
+
+		eventsID = Array.new
+
+		eventDates1.each do |eventDate|
+			if eventDate.event.activeDate < Time.now && !eventDate.event.propose && eventDate.event.propose != nil
+				if !eventsID.include?(eventDate.eventID)
+					@eventDates.push(eventDate)
+				end
+				eventsID.push(eventDate.eventID)
+			end
+		end
+
+		# ------------------- Filters -------------------------
+
+		promoter = params[:promoter]
+		institution = params[:institution]
+		category = params[:category]
+		date = params[:date]
+		local = params[:local]
+
+		if promoter != nil
+			@eventDates.each do |eventDate|
+				if eventDate.event.promoter.name.upcase == promoter.upcase
+					eventDates2.push(eventDate)
+				end
+			end
+			@eventDates = eventDates2.clone
+			eventDates2.clear
+		end
+
+		if institution != nil
+			@eventDates.each do |eventDate|
+				if eventDate.event.promoter.institution.upcase == institution.upcase
+					eventDates2.push(eventDate)
+				end
+			end
+			@eventDates = eventDates2.clone
+			eventDates2.clear
+		end
+		
+		if category != nil
+			@eventDates.each do |eventDate|
+				if eventDate.event.category.name.upcase == category.upcase
+					eventDates2.push(eventDate)
+				end
+			end
+			@eventDates = eventDates2.clone
+			eventDates2.clear
+		end
+
+		if local != nil
+			@eventDates.each do |eventDate|
+				if eventDate.local.address.upcase.include?(local.upcase)
+					eventDates2.push(eventDate)
+				end
+			end
+			@eventDates = eventDates2.clone
+			eventDates2.clear
+		end
+
+		# ------------------- Limit to 18 events -------------------------
+
 		maxShowCount = 18
 		@showCount = 0
 		@listCount = 0
 
-		eventDates1.each do |eventDate|
-			if eventID != eventDate.eventID
-				if @showCount < maxShowCount
-					@eventDates.push(eventDate)
-					@showCount = @showCount + 1
-				end
-				@listCount = @listCount +1
+		@eventDates.each do |eventDate|
+			if @showCount < maxShowCount
+				eventDates2.push(eventDate)
+				@showCount = @showCount + 1
 			end
-			eventID = eventDate.eventID
+			@listCount = @listCount + 1
 		end
+		@eventDates = eventDates2
+
 	end
 
 # ========================================================
