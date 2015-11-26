@@ -257,4 +257,12 @@ class EventController < ApplicationController
             return true
         end
     end
+
+# ========================================================
+
+	def search
+		@event = Event.where(['name LIKE ?', params[:search]]).take
+		@image = @event.image.all
+		redirect_to @event
+	end
 end

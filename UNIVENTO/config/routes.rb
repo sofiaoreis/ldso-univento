@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     resources :normal
   end
 
-  resources :event
+  resources :event do 
+    get 'search', :on => :collection
+  end
 
   resources :promoter
 

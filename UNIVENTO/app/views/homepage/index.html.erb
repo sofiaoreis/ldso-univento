@@ -6,14 +6,18 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
+                                <%= form_tag search_event_index_path, :method => 'get' do %>
+                                <%= text_field_tag :search, params[:search] %>
+                                <%= submit_tag "Search" %>
+                                <% end %>
+                            <!-- <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Pesquisar Evento">
                                 <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </span>
-                            </div>
+                            </div> -->
                             <!-- /input-group -->
                         </li>
                         <li>
