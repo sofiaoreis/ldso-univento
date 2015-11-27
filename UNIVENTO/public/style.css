@@ -268,10 +268,13 @@ p {
 }
 
 .alert {
+    margin: 0;
     padding-bottom: 5px;
     padding-top: 5px;
 }
-
+.notice {
+    margin: 0;
+}
 .alert-warning {
     color: #2a2b2d ;
     background-color: #ececec ;
