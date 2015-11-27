@@ -1,17 +1,12 @@
 class EventController < ApplicationController
-
 # ========================================================
 
 	def show
     	begin
 		  @event = Event.find(params[:id])
-		  if @event.activeDate > Time.now && current_user.id!=@event.promoterID
-		  	flash[:alert] = "Evento indisponível"
-		  	redirect_to root_path
-		  	return
-		  end
+		  authorize! :read, @event, :message => "Evento indisponível"
 		  @image = @event.image.all
-		  if @event.activeDate > Time.now && current_user.id==@event.promoterID
+		  if @event.activeDate > Time.now
 		  	flash[:alert] = "Evento será publicado em: "<<@event.activeDate.to_s
 		  end
 		rescue ActiveRecord::RecordNotFound => e
@@ -26,11 +21,8 @@ class EventController < ApplicationController
 
 
  	def new
- 		if !session[:promoter].present?
- 			flash[:alert] = "Não tem autorização para criar eventos"
- 			redirect_to root_path
- 		end
  		@event = Event.new
+ 		authorize! :create, @event, :message => "Não tem autorização para criar eventos"
  		@category = Category.all
  		@image = Image.new
  	end
@@ -41,10 +33,6 @@ class EventController < ApplicationController
 		@event = Event.find(params[:id])
 		render plain: params.inspect
 		return
-		if !session[:promoter].present? || current_user.id != @event.promoterID
- 			flash[:alert] = "Não tem autorização para editar este evento"
- 			redirect_to root_path
- 		end
 		@event.image.destroy_all
 		@event.youtube.destroy_all
 		@event.spotify.destroy_all
@@ -56,10 +44,7 @@ class EventController < ApplicationController
 
 	def edit
     	@event = Event.find(params[:id])
-    	if !session[:promoter].present? || current_user.id != @event.promoterID
- 			flash[:alert] = "Não tem autorização para editar este evento"
- 			redirect_to root_path
- 		end
+    	authorize! :update, @event, :message => "Não tem autorização para editar este evento"
     	@category = Category.all
  	end
 
@@ -67,10 +52,6 @@ class EventController < ApplicationController
 # ========================================================
 
  	def create
- 		if !session[:promoter].present?
- 			flash[:alert] = "Não tem autorização para criar eventos"
- 			redirect_to root_path
- 		end
  		#render plain: params.inspect
  		#return
         @fail = false
