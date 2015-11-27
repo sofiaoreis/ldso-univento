@@ -25,9 +25,9 @@
                       <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <% if session[:image].present? %>
-                       <img alt="Assets" src= <%=session[:image]%> class="img-responsive img-circle">  <%= @name %><i class="fa fa-caret-down"></i>
+                       <img alt="Assets" src= <%=session[:image]%> class="img-responsive img-circle">  <%= session[:name] %><i class="fa fa-caret-down"></i>
                        <% else %>
-                            <i class="fa fa-user fa-fw"></i> <%= $name %> <i class="fa fa-caret-down"></i>
+                            <i class="fa fa-user fa-fw"></i> <%= session[:name] %> <i class="fa fa-caret-down"></i>
                        <% end %>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
