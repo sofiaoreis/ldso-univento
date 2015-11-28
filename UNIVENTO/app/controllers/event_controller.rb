@@ -1,13 +1,16 @@
 class EventController < ApplicationController
-
 # ========================================================
 
 	def show
     	begin
 		  @event = Event.find(params[:id])
+		  authorize! :read, @event, :message => "Evento indisponível"
 		  @image = @event.image.all
+		  if @event.activeDate > Time.now
+		  	flash[:alert] = "Evento será publicado em: "<<@event.activeDate.to_s
+		  end
 		rescue ActiveRecord::RecordNotFound => e
-		  flash[:alert] = "Este evento não existe"
+		  flash[:alert] = "Evento indisponível"
 		  redirect_to root_path
 		  return
 		end
@@ -18,11 +21,8 @@ class EventController < ApplicationController
 
 
  	def new
- 		if !session[:promoter].present?
- 			flash[:alert] = "Não tem autorização para criar eventos"
- 			redirect_to root_path
- 		end
  		@event = Event.new
+ 		authorize! :create, @event, :message => "Não tem autorização para criar eventos"
  		@category = Category.all
  		@image = Image.new
  	end
@@ -44,6 +44,7 @@ class EventController < ApplicationController
 
 	def edit
     	@event = Event.find(params[:id])
+    	authorize! :update, @event, :message => "Não tem autorização para editar este evento"
     	@category = Category.all
  	end
 
