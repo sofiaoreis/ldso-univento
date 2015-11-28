@@ -13,8 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require_tree .
+//= require moment
+//= require bootstrap
+//= require bootstrap-datetimepicker
 //= require ckeditor/init
 //= require angular
 //= require angular-animate
 //= require angular-resource
+//= require_tree .
