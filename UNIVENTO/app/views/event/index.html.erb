@@ -1,8 +1,18 @@
 Events DB CONNECTION results
+<br>
+<h1>List of Events:</h1>
+<br>
+Showing <%= @showCount %> of <%= @listCount %> events
+<br>
+from event <%= @startCount+1 %> to <%= @endcount+1 %>
 <br><br>
-List of Events:
+Page <%= @page %> of <%= @maxPage %>
 <br><br>
-<%= @showCount %> of <%= @listCount %> events
+
+|<% for i in 1..@pagesLinks.length %>
+  <%= link_to i, @pagesLinks[i-1] %>
+|<% end %>
+
 <br><br>
 
 <table border="1">
@@ -75,3 +85,11 @@ List of Events:
     </tr>
   <% end %>
 </table>
+
+<br>
+
+|<% for i in 1..@pagesLinks.length %>
+  <%= link_to i, @pagesLinks[i-1] %>
+|<% end %>
+
+<br>
