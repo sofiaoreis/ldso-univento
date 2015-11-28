@@ -6,8 +6,9 @@
 
 
 # Ignore all logfiles and tempfiles.
--/log/*
--!/log/.keep
--/tmp
+log/*.log
+tmp/**/*
+doc/api
+doc/app
 /config/database.yml
 /public/uploads/*

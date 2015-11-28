@@ -107,7 +107,9 @@
                                             </div>
                                             <label>Data de nascimento:</label><br>
                                                 <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br><br>
-                                            <a href="/users/auth/facebook" class="fb-login-button">Sign up with Facebook</a>
+                                            <a class="btn btn-block btn-social-icon btn-facebook" href="/users/auth/facebook" style="color : white; text-decoration: none; background-color : #3b5998">
+    									       <span class="fa fa-facebook" style="background-color : #3b5998"></span>
+    										</a>
                                         </div>
 
                                         <div class="modal-footer">
@@ -140,8 +142,9 @@
                                                 <span class="input-group-addon" id="basic-addon1">Password</span>
                                                 <input autocomplete="off" name="user[password]" id="user_password" type="password" class="form-control" aria-describedby="basic-addon1">
                                             </div>
-                                          <!--  <div class="fb-login-button" data-max-rows="1" data-size="icon" data-show-faces="false" data-auto-logout-link="false"></div> -->
-                                            <a href="/users/auth/facebook" class="fb-login-button">Sign in with Facebook</a>
+                                            <a class="btn btn-block btn-social-icon btn-facebook" href="/users/auth/facebook" style="color : white; text-decoration: none; background-color : #3b5998">
+                                               <span class="fa fa-facebook" style="background-color : #3b5998"></span>
+                                            </a>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -151,12 +154,3 @@
                                 </form>
                             </div>
                         </div>
-
-                        <div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v2.5&appId=548043568677408";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
