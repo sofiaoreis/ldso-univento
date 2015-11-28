@@ -184,6 +184,7 @@ class EventController < ApplicationController
 		category = params[:category]
 		date = params[:date]
 		local = params[:local]
+		pageLink = ""
 
 		if promoter != nil
 			@eventDates.each do |eventDate|
@@ -193,6 +194,7 @@ class EventController < ApplicationController
 			end
 			@eventDates = eventDates2.clone
 			eventDates2.clear
+			pageLink = pageLink + "&promoter=" + promoter
 		end
 
 		if institution != nil
@@ -203,6 +205,7 @@ class EventController < ApplicationController
 			end
 			@eventDates = eventDates2.clone
 			eventDates2.clear
+			pageLink = pageLink + "&institution=" + institution
 		end
 		
 		if category != nil
@@ -213,6 +216,7 @@ class EventController < ApplicationController
 			end
 			@eventDates = eventDates2.clone
 			eventDates2.clear
+			pageLink = pageLink + "&category=" + category
 		end
 
 		if local != nil
@@ -223,16 +227,58 @@ class EventController < ApplicationController
 			end
 			@eventDates = eventDates2.clone
 			eventDates2.clear
+			pageLink = pageLink + "&local=" + local
 		end
 
-		# ------------------- Limit to 18 events -------------------------
+		# ------------------- Paginate by 18 events -------------------------
 
 		maxShowCount = 18
+		@listSize = @eventDates.length
+		@startCount = 0
+		@endcount = @listSize - 1
 		@showCount = 0
 		@listCount = 0
 
+		# ------ Find pages count ----------
+
+		@maxPage = ((@listSize.to_f / maxShowCount.to_f).to_f).ceil
+
+		@page = params[:page].to_i
+		if @page == nil
+			@page = 1
+		end
+
+		if @page < 1
+			@page = 1
+		end
+
+		if @page > @maxPage
+			@page = @maxPage
+		end
+
+		# ------ Find List indexs for 1 page ----------
+
+		if @listSize > maxShowCount
+			@startCount = (@page - 1) * maxShowCount
+			@endcount = @startCount + maxShowCount - 1
+			if @endcount > @listSize - 1
+				@endcount = @listSize - 1
+			end
+		end
+
+		# ------ Create pages links ----------
+
+		@pagesLinks = Array.new
+
+		for i in 1..@maxPage
+			link = "event?page=#{i}"
+			@pagesLinks.push(link + pageLink)
+		end
+
+		# ------ Create a page of events ----------
+
 		@eventDates.each do |eventDate|
-			if @showCount < maxShowCount
+			if @listCount >= @startCount && @listCount <= @endcount
 				eventDates2.push(eventDate)
 				@showCount = @showCount + 1
 			end
