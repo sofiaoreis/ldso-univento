@@ -72,16 +72,16 @@
     <strong>startData:</strong>
     <%=  datetime_select("dates["<<index.to_s<<"]", "startDate", order: [:day, :month, :year], start_year: Time.now.year, end_year: Time.now.year+2, default: link.startDate) %><br>
     <strong>endData:</strong>
-    <%=  datetime_select("dates["<<index.to_s<<"]", "startDate", order: [:day, :month, :year], start_year: Time.now.year, end_year: Time.now.year+2, default: link.endDate) %><br>
+    <%=  datetime_select("dates["<<index.to_s<<"]", "endDate", order: [:day, :month, :year], start_year: Time.now.year, end_year: Time.now.year+2, default: link.endDate) %><br>
     <strong>preco:</strong>
     <%= number_field_tag 'price[]',link.preco , :in => 0..999, :step => 0.01%>
     <br>
     <fieldset class="gllpLatlonPicker" id="<%= index.to_s%>" >
-      <input value="<%= link.local.address %>" type="text" class="gllpSearchField">
+      <input name="dates[<%=index%>][address]" value="<%= link.local.address %>" type="text" class="gllpSearchField">
       <input type="button" class="gllpSearchButton" value="search">
       <div class="gllpMap">Google Maps</div>
-      <input type="hidden" class="gllpLatitude" value="<%= link.local.latitude %>" />
-      <input type="hidden" class="gllpLongitude" value="<%= link.local.longitude %>" />
+      <input name="dates[<%=index%>][latitude]" type="hidden" class="gllpLatitude" value="<%= link.local.latitude %>" />
+      <input name="dates[<%=index%>][longitude]" type="hidden" class="gllpLongitude" value="<%= link.local.longitude %>" />
       <input type="hidden" class="gllpZoom" value="12"/>
     </fieldset> 
 

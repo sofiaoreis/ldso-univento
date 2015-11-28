@@ -31,13 +31,18 @@ class EventController < ApplicationController
 
 	def update
 		@event = Event.find(params[:id])
-		render plain: params.inspect
+		#render plain: params.inspect
+		#return
+		@event.image.each do |img|
+			File.delete("#{Rails.root}/public/uploads/image/image/"<<img.imageID.to_s<<"/"<<img["image"])
+		end
+		@event.image.delete_all
+		@event.youtube.delete_all
+		@event.spotify.delete_all
+		@event.tags.delete_all
+		@event.eventdate.delete_all
+		create_or_update_event
 		return
-		@event.image.destroy_all
-		@event.youtube.destroy_all
-		@event.spotify.destroy_all
-		@event.eventtags.destroy_all
-		@event.eventDate.destroy_all
 	end
 
 # ========================================================
@@ -56,7 +61,15 @@ class EventController < ApplicationController
  		#return
         @fail = false
  		@event = Event.new
- 		event_params = params[:event]
+ 		create_or_update_event
+ 	end
+
+# ========================================================
+
+	def create_or_update_event
+		#render plain: params.inspect
+		#return
+		event_params = params[:event]
  		@event.name = event_params[:name]
  		@event.descrition = event_params[:descrition]
  		@event.preco = event_params[:preco]
@@ -136,8 +149,6 @@ class EventController < ApplicationController
 			          	return 
 			        end
 			        eventDate.localID= local.localID
-		        else
-		        	eventDate.localID = params[:local][k].to_i
 		        end
 
 		        if saveOrDestroy(eventDate) 
@@ -145,16 +156,16 @@ class EventController < ApplicationController
 		        end
 		    end
 		end
+
         if params[:image].present?
 	        params[:image]['image'].each do |a|
 	          @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
 	        end
     	end
         redirect_to @event
- 	end
+	end
 
 # ========================================================
-
 	def index
 
 		@eventDates = Array.new
