@@ -12,11 +12,12 @@ class Ability
         can :read, Event do |e|
             e.activeDate <= Time.now || e.promoterID==user.id
         end
-        can :update, Event, :promoterID => user.id
-        can :destroy, Event, :promoterID => user.id
+        can :update, Event, :promoterID => user.id  # => promotor pode editar eventos os seus eventos
+        can :update, Event, :propose => true, :normalID => user.id    # => colaborador pode editar as suas PROPOSTAS (só se ainda é uma proposta)
+        can :destroy, Event, :promoterID => user.id # => promotor pode apagar eventos
     end
-    if Promoter.find_by_promoterID(user.id)
-        can :create, Event
+    if Promoter.find_by_promoterID(user.id) || Colaborator.find_by_normalID(user.id)
+        can :create, Event # => pormotores/colaboradores podem criar eventos/propostas
     end
 #=end
     #

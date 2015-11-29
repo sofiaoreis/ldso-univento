@@ -34,8 +34,7 @@ CREATE TABLE CategoryTags
 (
 	tagsID INTEGER NULL,
 	categoryID INTEGER NULL,
-	KEY (tagsID),
-	KEY (categoryID)
+	PRIMARY KEY(tagsID,categoryID)
 
 ) ;
 
@@ -44,9 +43,7 @@ CREATE TABLE Colaborator
 (
 	promoterID INTEGER NULL,
 	normalID INTEGER NULL,
-	KEY (promoterID),
-	KEY (normalID)
-
+	PRIMARY KEY (promoterID,normalID)
 ) ;
 
 
@@ -79,10 +76,11 @@ CREATE TABLE Event
 	categoryID INTEGER NULL,
 	promoterID INTEGER NULL,
 	preco DOUBLE NULL,
+	normalID INTEGER NULL,
 	PRIMARY KEY (eventID),
 	KEY (categoryID),
-	KEY (promoterID)
-
+	KEY (promoterID),
+	KEY (normalID)
 ) ;
 
 
@@ -90,8 +88,7 @@ CREATE TABLE EventTags
 (
 	eventID INTEGER NULL,
 	tagsID INTEGER NULL,
-	KEY (eventID),
-	KEY (tagsID)
+	PRIMARY KEY (eventID,tagsID)
 
 ) ;
 
@@ -145,12 +142,9 @@ CREATE TABLE Promoter
 CREATE TABLE Rate
 (
 	rate int NULL,
-	rateID INTEGER NOT NULL AUTO_INCREMENT,
 	eventID INTEGER NULL,
 	normalID INTEGER NULL,
-	PRIMARY KEY (rateID),
-	KEY (eventID),
-	KEY (normalID)
+	PRIMARY KEY (eventID,normalID)
 
 ) ;
 
@@ -159,8 +153,7 @@ CREATE TABLE Registration
 (
 	eventID INTEGER NULL,
 	normalID INTEGER NULL,
-	KEY (eventID),
-	KEY (normalID)
+	PRIMARY KEY (eventID,normalID)
 
 ) ;
 
@@ -265,6 +258,9 @@ ALTER TABLE Event ADD CONSTRAINT FK_Event_Category
 ALTER TABLE Event ADD CONSTRAINT FK_Event_Promoter 
 	FOREIGN KEY (promoterID) REFERENCES Promoter (promoterID) ON DELETE CASCADE;
 
+ALTER TABLE Event ADD CONSTRAINT FK_Event_Normal 
+	FOREIGN KEY (normalID) REFERENCES Normal (normalID) ON DELETE SET NULL;
+
 ALTER TABLE EventTags ADD CONSTRAINT FK_EventTags_Event
 	FOREIGN KEY (eventID) REFERENCES Event (eventID) ON DELETE CASCADE;
 
@@ -284,7 +280,7 @@ ALTER TABLE Rate ADD CONSTRAINT FK_Rate_Event
 	FOREIGN KEY (eventID) REFERENCES Event (eventID) ON DELETE CASCADE;
 
 ALTER TABLE Rate ADD CONSTRAINT FK_Rate_Normal 
-	FOREIGN KEY (normalID) REFERENCES Normal (normalID) ON DELETE CASCADE;
+	FOREIGN KEY (normalID) REFERENCES Normal (normalID) ON DELETE SET NULL;
 
 ALTER TABLE Registration ADD CONSTRAINT FK_Registration_Event 
 	FOREIGN KEY (eventID) REFERENCES Event (eventID) ON DELETE CASCADE;
