@@ -56,4 +56,3 @@ INSERT INTO `EventDate` VALUES ('1','2015-11-13',10,'2015-11-14',37,19,1),('0','
 INSERT INTO `EventDate` VALUES ('1','2015-11-13',10,'2015-11-14',39,20,1),('0','2015-12-01',15,'2015-12-02',40,20,1);
 INSERT INTO `Spotify` VALUES ('http:playlist/1',1,1),('http:playlist/2',2,1);
 INSERT INTO `Youtube` VALUES ('http://youtube.com/link1',1,1),('http://youtube.com/link2',2,1),('http://youtube.com/link3',3,1);
-

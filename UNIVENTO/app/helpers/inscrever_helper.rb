@@ -1,0 +1,2 @@
+module InscreverHelper
+end

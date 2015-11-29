@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   end
 
   resources :promoter
+  resources :inscrever
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   devise_scope :users do
