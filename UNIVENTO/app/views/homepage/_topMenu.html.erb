@@ -46,18 +46,19 @@
                 </li>
                       </p></li>
                     <% else %>
-                    <li><p class="navbar-text pull-right">
-
-                    <a href="" data-toggle="modal" data-target="#myModal">REGISTAR</a>|
+                    <li>
+                        <a href="" data-toggle="modal" data-target="#RegisterModal">REGISTAR</a>
+                    </li>
+                    <li>
                     <a href="" data-toggle="modal" data-target="#loginModel">ENTRAR</a>
-                            
-                    <!-- <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Registar</button>-->
-                        <!-- Modal -->
+                    </li>
+                    <li>
+                    <a class="btn btn-block btn-social-icon btn-facebook" href="/users/auth/facebook" >
+                                               <span class="fa fa-facebook"></span>
+                                            </a>
                        
-                     <!-- <%= link_to "Registar", new_user_path, :class => 'navbar-link'  %> |-->
-                    <!--  <%= link_to "Entrar", new_user_session_path, :class => 'navbar-link'  %> -->
-                       
-                      </p></li>
+                      </li>
+
                     <% end %>
                 <!-- /.dropdown -->
             </ul>
@@ -66,7 +67,7 @@
     </div>
     <!-- /#wrapper -->
 
-     <div class="modal fade" id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+     <div class="modal fade" id="RegisterModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <form class="new_user" id="new_user" action="/user" accept-charset="UTF-8" method="post">
                                     <input name="utf8" value="✓" type="hidden">
@@ -107,9 +108,6 @@
                                             </div>
                                             <label>Data de nascimento:</label><br>
                                                 <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br><br>
-                                            <a class="btn btn-block btn-social-icon btn-facebook" href="/users/auth/facebook" style="color : white; text-decoration: none; background-color : #3b5998">
-    									       <span class="fa fa-facebook" style="background-color : #3b5998"></span>
-    										</a>
                                         </div>
 
                                         <div class="modal-footer">
@@ -142,9 +140,6 @@
                                                 <span class="input-group-addon" id="basic-addon1">Password</span>
                                                 <input autocomplete="off" name="user[password]" id="user_password" type="password" class="form-control" aria-describedby="basic-addon1">
                                             </div>
-                                            <a class="btn btn-block btn-social-icon btn-facebook" href="/users/auth/facebook" style="color : white; text-decoration: none; background-color : #3b5998">
-                                               <span class="fa fa-facebook" style="background-color : #3b5998"></span>
-                                            </a>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
