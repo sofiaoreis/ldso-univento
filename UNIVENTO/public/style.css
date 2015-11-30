@@ -163,7 +163,8 @@ p {
 }
 
 .nav#side-menu>li>a:hover, a:active, a:visited  {
-    background-color: #484b50 ;
+    color: red;
+   
 }
 
 .nav#side-menu a{
@@ -171,10 +172,7 @@ p {
     color: white;
 }
 
-.nav-second-level>li>a:hover, a:active, a:visited {
-    color: #2a2b2d;
-    background-color: #1aa69b;
-}
+
 
 .col-lg-12#slideshow {
     padding-right: 0px;
@@ -352,3 +350,15 @@ a:visited {
 .embed-responsive-4by3 {
     padding-bottom: 25%;
 }
+
+.modal-header {
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #0480be;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+ }
