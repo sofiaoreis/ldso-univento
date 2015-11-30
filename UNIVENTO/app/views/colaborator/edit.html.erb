@@ -1,0 +1,33 @@
+<div class="jumbotron">
+
+    <div class="regist_title">Editar Colaborador</div>
+    <br><br>
+
+    <%= @colaborator.normal.first_name+" "+@colaborator.normal.last_name %>
+    <br><br>
+
+    <%= form_for @colaborator, :url => colaborator_path(@colaborator.normalID) , method: :patch do |c| %>
+
+        <% if @colaborator.errors.any? %>
+            <div id="error_explanation">
+              <h2>
+                <%= pluralize(@colaborator.errors.count, "error") %> prohibited this colaborator from being saved:
+              </h2>
+              <ul>
+                <% @colaborator.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <br>Dados do Colaborador<br>
+
+        <div class="form-group">
+            <%= text_field_tag :normalID, @colaborator.normalID, class: 'form-control', :placeholder => 'normalID' %>
+        </div>
+        <br>
+
+        <%= c.submit 'Remover Colaborador', :class => 'btn btn-primary active' %>
+    <% end %>
+</div>
