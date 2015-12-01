@@ -8,7 +8,7 @@
   <%= @user.promoter.institution %>
   <br>
   <strong>name:</strong>
-  <%= @user.promoter.name %>
+  <%= link_to @user.promoter.name, @user.promoter %>
   <br>
   <strong>website:</strong>
   <%= link_to @user.promoter.website, @user.promoter.website %>
@@ -221,10 +221,10 @@
           <%= link_to "Editar", root_path+"event/"+eventDate.eventID.to_s+"/edit" %>
         </td>
         <td>
-          <%= link_to "Remover", event_path(eventDate.event) %>
+          <%= link_to "Remover", root_path+"event/"+eventDate.eventID.to_s, :method => :delete %>
         </td>
         <td>
-          <%= link_to "Aceitar", event_path(eventDate.event) %>
+          <%= link_to "Aceitar", root_path+"event/accept?id="+eventDate.eventID.to_s %>
         </td>
       </tr>
     <% end %>
