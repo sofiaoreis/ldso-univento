@@ -44,6 +44,7 @@ class UserController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @colaborator = Colaborator.find_by normalID: params[:id]
   end
 
   def defineUserType

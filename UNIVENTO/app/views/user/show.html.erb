@@ -3,21 +3,32 @@
   <%= @user.email %>
 </p>
  
-  <p>
-    <strong>First Name:</strong>
-    <%= @user.normal.first_name %>
-  </p>
-   <p>
-    <strong>Last Name:</strong>
-    <%= @user.normal.last_name %>
-  </p>
+<p>
+  <strong>First Name:</strong>
+  <%= @user.normal.first_name %>
+</p>
 
-  <p>
-    <strong>Gender:</strong>
-    <%= @user.normal.gender %>
-  </p>
+<p>
+  <strong>Last Name:</strong>
+  <%= @user.normal.last_name %>
+</p>
 
-  <p>
-    <strong>Birthday:</strong>
-    <%= @user.normal.birthday %>
-  </p>
+<p>
+  <strong>Gender:</strong>
+  <%= @user.normal.gender %>
+</p>
+
+<p>
+  <strong>Birthday:</strong>
+  <%= @user.normal.birthday %>
+</p>
+
+<br>
+<p>
+  <% if @colaborator != nil %>
+    <strong>
+      <%= link_to "Colaborator", colaborator_path(@colaborator.normal) %> of 
+      <%= link_to @colaborator.promoter.name, promoter_path(@colaborator.promoter) %>
+    </strong>
+  <% end %>
+</p>

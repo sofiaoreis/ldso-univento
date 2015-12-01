@@ -1,0 +1,36 @@
+<div class="jumbotron">
+
+    
+
+    <%= form_for @colaborator, :url => '/colaborator' do |c| %>
+
+        <% if @colaborator.errors.any? %>
+            <div id="error_explanation">
+              <h2>
+                <%= pluralize(@colaborator.errors.count, "error") %> prohibited this colaborator from being saved:
+              </h2>
+              <ul>
+                <% @colaborator.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <br>Dados do Colaborador<br><br>
+
+        <div class="form-group">
+          <%= text_field_tag :normalID, "", class: 'form-control', :placeholder => 'normalID' %>
+        </div>
+        <div class="form-group">
+          <% if params[:promoterID] != nil %>
+            <%= hidden_field_tag :promoterID, params[:promoterID], class: 'form-control', :placeholder => 'promoterID' %>
+          <% else %>
+            <%= text_field_tag :promoterID, "", class: 'form-control', :placeholder => 'promoterID' %>
+          <% end %>
+        </div>
+        <br>
+
+        <%= c.submit 'Submeter', :class => 'btn btn-primary active' %>
+    <% end %>
+</div>
