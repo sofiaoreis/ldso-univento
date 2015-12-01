@@ -1,5 +1,5 @@
 <script type="text/javascript" src="/googlespreadsheet.js"></script>
-<h2>Criar spreadsheet</h2>
+<h2>[teste] Criar spreadsheet</h2>
 
 <form action="" method="POST">
 	<label>Nome: <input name="nome" type="text" value="" /></label>
@@ -7,10 +7,16 @@
 	<input type="submit">
 </form>
 
-<h2>Inserir dados numa spreadsheet</h2>
-<form action="" method="POST">
-	<label>Nome: <input name="nome" type="text" value="" /></label>
+<h2>[teste] Inserir dados numa spreadsheet</h2>
+<form id="enviaDados" action="" method="POST">
+	<label>texto: <input name="texto" type="text" value="" /></label>
+	<br>
+	<label>opcao: <input name="opcao" type="text" value="" /></label>
 	<br>
 	<input type="submit">
 </form>
 
+<br><br>
+<button id="carregarDados"> Carregar dados spreadsheet </button>
+<br>
+<div id="spreadsheet"></div>
