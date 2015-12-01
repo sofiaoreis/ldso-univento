@@ -1,6 +1,11 @@
 var scriptLink = "https://script.google.com/macros/s/AKfycbxpb6ghoFH5Hyllkaq6DbmEepHU-nizHO6ukrOcJgLX4BRCAmM/exec";
 function start(){
 
+	$("#criarSpreadsheet").submit(function(e){
+		var inputs = $( this ).serializeArray();
+		createSpreadSheet(inputs[1].value+"_"+inputs[0].value);
+		e.preventDefault();
+	});
 	$("#carregarDados").on("click",getData);
 	
 	$('#enviaDados').submit(function(e) {
@@ -15,11 +20,23 @@ function start(){
 	});  
 }
 
+function createSpreadSheet(name){
+	$.ajax({
+        url: scriptLink,
+    	type: "get",
+    	dataType: "json",
+    	data: {
+    		funcao: "newSpreadSheet",
+    		nome: name
+    	}
+    }).done(function (data) {
+      	console.log(data);
+      	window.alert(data);
+      	$("#novaSpreadsheet").append("<p>Link spreadsheet criada: <a href=\""+data+"\" >NOVA </a></p>");
+    });
+}
 
 function getData(){
-/*
-    https://docs.google.com/spreadsheets/d/1E6aAOkT-OU2R7MAN0T7v7EBZKuHvQMHYQIUdCDYIZgA/edit#gid=2062161593
-*/
 	$.ajax({
         url: scriptLink,
     	type: "get",

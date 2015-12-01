@@ -1,12 +1,14 @@
 <script type="text/javascript" src="/googlespreadsheet.js"></script>
 <h2>[teste] Criar spreadsheet</h2>
 
-<form action="" method="POST">
+<form id="criarSpreadsheet" action="" method="POST">
 	<label>Nome: <input name="nome" type="text" value="" /></label>
+	<br>
+	<label>Evento: <input name="eventID" type="text" value="1" /></label>
 	<br>
 	<input type="submit">
 </form>
-
+<div id="novaSpreadsheet"></div>
 <h2>[teste] Inserir dados numa spreadsheet</h2>
 <form id="enviaDados" action="" method="POST">
 	<label>texto: <input name="texto" type="text" value="" /></label>
@@ -15,8 +17,7 @@
 	<br>
 	<input type="submit">
 </form>
-
-<br><br>
+<h2>[teste] Obter dados de uma spreadsheet</h2>
 <button id="carregarDados"> Carregar dados spreadsheet </button>
 <br>
 <div id="spreadsheet"></div>
