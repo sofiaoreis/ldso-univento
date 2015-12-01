@@ -11,6 +11,8 @@ class PromoterController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+
+    @colaborators = Colaborator.where(:promoterID => params[:id])
   end
 
 # ========================================================

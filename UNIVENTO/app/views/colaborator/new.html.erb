@@ -20,10 +20,14 @@
         <br>Dados do Colaborador<br><br>
 
         <div class="form-group">
-            <%= text_field_tag :normalID, "", class: 'form-control', :placeholder => 'normalID' %>
+          <%= text_field_tag :normalID, "", class: 'form-control', :placeholder => 'normalID' %>
         </div>
         <div class="form-group">
+          <% if params[:promoterID] != nil %>
+            <%= hidden_field_tag :promoterID, params[:promoterID], class: 'form-control', :placeholder => 'promoterID' %>
+          <% else %>
             <%= text_field_tag :promoterID, "", class: 'form-control', :placeholder => 'promoterID' %>
+          <% end %>
         </div>
         <br>
 

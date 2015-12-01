@@ -65,3 +65,35 @@
   <strong>uid:</strong>
   <%= @user.uid %>
 </p>
+
+
+<strong>=============== Colaborators =======================</strong>
+
+<% if @colaborators.length != 0 %>
+
+  <br><br>
+  <table border="1">
+    <tr>
+      <th>normalID</th>
+      <th>colaborator Name</th>
+      <th>promoterID</th>
+      <th>promoter Name</th>
+      <th></th>
+      <th colspan="3"></th>
+    </tr>
+    <% @colaborators.each do |colaborator| %>
+      <tr>
+        <td><%= colaborator.normalID %></td>
+        <td><%= link_to (colaborator.normal.first_name+" "+colaborator.normal.last_name), colaborator_path(colaborator.normal) %></td>
+        <td><%= colaborator.promoterID %></td>
+        <td><%= link_to colaborator.promoter.name, promoter_path(colaborator.promoter) %></td>
+        <td><%= link_to 'Despromover', root_path+"colaborator/"+colaborator.normalID.to_s+"/edit" %></td>
+      </tr>
+    <% end %>
+  </table>
+
+<% else %>
+  <br>Não existem colaboradores<br>
+<% end %>
+
+<br><%= link_to 'Adicionar Colaborador', root_path + "colaborator/new?promoterID="+@user.promoter.promoterID.to_s %><br>

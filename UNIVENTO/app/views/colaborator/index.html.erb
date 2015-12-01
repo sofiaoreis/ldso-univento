@@ -3,20 +3,28 @@ Colaborator DB CONNECTION results
 List of Colaborators:
 <br><br>
 
-<table border="1">
-  <tr>
-    <th>normalID</th>
-    <th>colaborator Name</th>
-    <th>promoterID</th>
-    <th>promoter Name</th>
-    <th colspan="3"></th>
-  </tr>
-  <% @colaborators.each do |colaborator| %>
+<% if @colaborators.length != 0 %>
+
+  <table border="1">
     <tr>
-      <td><%= colaborator.normalID %></td>
-      <td><%= link_to (colaborator.normal.first_name+" "+colaborator.normal.last_name), colaborator_path(colaborator.normal) %></td>
-      <td><%= colaborator.promoterID %></td>
-      <td><%= link_to colaborator.promoter.name, promoter_path(colaborator.promoter) %></td>
+      <th>normalID</th>
+      <th>colaborator Name</th>
+      <th>promoterID</th>
+      <th>promoter Name</th>
+      <th colspan="3"></th>
     </tr>
-  <% end %>
-</table>
+    <% @colaborators.each do |colaborator| %>
+      <tr>
+        <td><%= colaborator.normalID %></td>
+        <td><%= link_to (colaborator.normal.first_name+" "+colaborator.normal.last_name), colaborator_path(colaborator.normal) %></td>
+        <td><%= colaborator.promoterID %></td>
+        <td><%= link_to colaborator.promoter.name, promoter_path(colaborator.promoter) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+<% else %>
+  <br>Não existem colaboradores<br>
+<% end %>
+
+<br><%= link_to 'Criar Colaborador', root_path + "colaborator/new" %><br>
