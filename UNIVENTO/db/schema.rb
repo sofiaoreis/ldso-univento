@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.float   "averageRate", limit: 53
     t.integer "numRates",    limit: 4
     t.boolean "active"
-    t.string  "docsID",      limit: 50
+    t.string  "docsID",      limit: 255
     t.integer "categoryID",  limit: 4
     t.integer "promoterID",  limit: 4
     t.float   "preco",       limit: 53

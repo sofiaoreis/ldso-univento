@@ -352,6 +352,35 @@ class EventController < ApplicationController
 # ========================================================
 
 	def registration
+		@event = Event.find(params[:event_id])
+		@criarInscricao=false;
+		@isPromoter=false;
+		if user_signed_in?
+			if Promoter.find_by_promoterID(current_user.userID).present? 
+				if Promoter.find(current_user.userID).promoterID == @event.promoterID
+					@isPromoter=true;
+					if !@event.docsID.present?
+						@criarInscricao=true;
+					end
+				end
+			end
+		end
+
+		if !@criarInscricao && !@event.docsID.present?
+			flash[:alert]= "Inscrição indisponível"
+		end
+
+		respond_to do |format|
+	      format.html
+	      format.json { 
+	      	if params[:accao] == "getEventInfo"
+	      		render :json => [@event.name, @event.eventID,@event.docsID].to_json 
+	      	elsif params[:accao] == "saveDocsID"
+	      		@event.docsID = params[:docsID]
+	      		render :json => @event.save!.to_json
+	      	end
+	      }
+	    end
 	end
 # ========================================================
 

@@ -1,23 +1,38 @@
 var scriptLink = "https://script.google.com/macros/s/AKfycbxpb6ghoFH5Hyllkaq6DbmEepHU-nizHO6ukrOcJgLX4BRCAmM/exec";
+var PERGUNTAS = ['Carimbo de data/hora' ,'Nome', 'Faculdade', 'e-mail', 'Telefone', 'dias do evento'];
 function start(){
-
-	$("#criarSpreadsheet").submit(function(e){
-		var inputs = $( this ).serializeArray();
-		createSpreadSheet(inputs[1].value+"_"+inputs[0].value);
-		e.preventDefault();
+	$.ajax({
+	    url: window.location.href,
+	  	type: "get",
+	   	dataType: "json",
+	   	data: {accao:"getEventInfo"}
+	}).done(function (eventInfo) {
+		if(eventInfo[2]!=null){
+			$("#link").append("<a href=\""+eventInfo[2]+"\"> Ver SpreadSheet no google docs </a>");
+		}
+	   	$("#criarSpreadsheet").submit(function(e){
+			/*
+				var inputs = $( this ).serializeArray();
+				createSpreadSheet(inputs[1].value+"_"+inputs[0].value);
+			*/
+			e.preventDefault();
+		    createSpreadSheet(eventInfo[1]+"_"+eventInfo[0]);
+		});
+		$("#carregarDados").on("click",function(){
+		    getData(eventInfo[2]);
+		});
+		
+		$('#enviaDados').submit(function(e) {
+			var inputs = $( this ).serializeArray();
+	    	var values = [];
+	    	values.push(getDateTime());
+	    	$.each(inputs, function (i, input) {
+	    		values.push(input.value);
+	    	});
+	    	sendData(values,eventInfo[2]);
+	    	e.preventDefault();
+		});  
 	});
-	$("#carregarDados").on("click",getData);
-	
-	$('#enviaDados').submit(function(e) {
-		var inputs = $( this ).serializeArray();
-    	var values = [];
-    	values.push(getDateTime());
-    	$.each(inputs, function (i, input) {
-    		values.push(input.value);
-    	});
-    	sendData(values);
-    	e.preventDefault();
-	});  
 }
 
 function createSpreadSheet(name){
@@ -29,21 +44,28 @@ function createSpreadSheet(name){
     		funcao: "newSpreadSheet",
     		nome: name
     	}
-    }).done(function (data) {
-      	console.log(data);
-      	window.alert(data);
-      	$("#novaSpreadsheet").append("<p>Link spreadsheet criada: <a href=\""+data+"\" >NOVA </a></p>");
+    }).done(function (doc) {
+      	$.ajax({
+	        url: window.location.href,
+	    	type: "get",
+	    	dataType: "json",
+	    	data: {accao:"saveDocsID", docsID:doc}
+	    }).done(function (data) {
+	    	console.log(data);
+	    	sendData(PERGUNTAS,doc);
+	    	window.location.reload();
+	    });
     });
 }
 
-function getData(){
+function getData(docID){
 	$.ajax({
         url: scriptLink,
     	type: "get",
     	dataType: "json",
     	data: {
     		funcao: "getData",
-    		spreadsheet: "https://docs.google.com/spreadsheets/d/1E6aAOkT-OU2R7MAN0T7v7EBZKuHvQMHYQIUdCDYIZgA/edit#gid=2062161593"
+    		spreadsheet: docID
     	}
     }).done(function (data) {
       	$("#spreadsheet").html("");
@@ -60,7 +82,7 @@ function getData(){
     });
 }
 
-function sendData(values){
+function sendData(values,docID){
 	$.ajax({
         url: scriptLink,
     	type: "get",
@@ -69,11 +91,12 @@ function sendData(values){
     	data: {
     		funcao: "sendData",
     		dados: JSON.stringify(values),
-    		spreadsheet: "https://docs.google.com/spreadsheets/d/1E6aAOkT-OU2R7MAN0T7v7EBZKuHvQMHYQIUdCDYIZgA/edit#gid=2062161593"
+    		spreadsheet: docID
     	}
     });
     window.alert("Inscrição submetida");
-    getData();
+    //getData(docID);
+    window.location.replace("/");
 }
 
 function getDateTime() {

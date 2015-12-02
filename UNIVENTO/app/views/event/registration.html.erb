@@ -1,23 +1,35 @@
 <script type="text/javascript" src="/googlespreadsheet.js"></script>
-<h2>[teste] Criar spreadsheet</h2>
-
-<form id="criarSpreadsheet" action="" method="POST">
+<% if @criarInscricao %>
+	<h2>Criar form de inscrição ?</h2>
+	<p>Formulário contém Nome, faculdade, e-mail, telefone, dias do evento</p>
+<!--Nome, faculdade, e-mail, telefone, dias do evento -->
+	<form id="criarSpreadsheet" action="" method="POST">
+		<!--<label>Nome: <input name="nome" type="text" value="" /></label>
+		<br>
+		<label>Evento: <input name="eventID" type="text" value="1" /></label>
+		<br>-->
+		<input type="submit" value="Confirmar">
+	<div id="novaSpreadsheet"></div>
+<% elsif @isPromoter %>
+	<h2>Ver inscrições</h2>
+	<button id="carregarDados"> Carregar dados spreadsheet </button>
+	<div id="link" ></div>
+	<br>
+	<div id="spreadsheet"></div>
+<% end -%>
+<% if !@criarInscricao && @event.docsID.present? %>
+<h2> Formulário de inscrição </h2>
+<form id="enviaDados" action="" method="POST">
 	<label>Nome: <input name="nome" type="text" value="" /></label>
 	<br>
-	<label>Evento: <input name="eventID" type="text" value="1" /></label>
+	<label>Faculdade: <input name="faculdade" type="text" value="" /></label>
+	<br>
+	<label>E-mail: <input name="e-mail" type="email" value="" /></label>
+	<br>
+	<label>Telefone: <input name="telefone" type="number" value="" /></label>
+	<br>
+	<label>Dias do Evento: <input name="dias_do_evento" type="text" value="" /></label>
 	<br>
 	<input type="submit">
 </form>
-<div id="novaSpreadsheet"></div>
-<h2>[teste] Inserir dados numa spreadsheet</h2>
-<form id="enviaDados" action="" method="POST">
-	<label>texto: <input name="texto" type="text" value="" /></label>
-	<br>
-	<label>opcao: <input name="opcao" type="text" value="" /></label>
-	<br>
-	<input type="submit">
-</form>
-<h2>[teste] Obter dados de uma spreadsheet</h2>
-<button id="carregarDados"> Carregar dados spreadsheet </button>
-<br>
-<div id="spreadsheet"></div>
+<% end -%>
