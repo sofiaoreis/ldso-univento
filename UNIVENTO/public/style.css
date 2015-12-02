@@ -280,7 +280,8 @@ p {
 }
 
 .input-group {
-    padding-bottom: 10px;
+    padding-bottom: 15px;
+    
 }
 
 .navbar-text{
@@ -362,3 +363,88 @@ a:visited {
      border-top-left-radius: 5px;
      border-top-right-radius: 5px;
  }
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: auto;
+  background-color: #1AA69B;
+}
+
+.container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
+
+.container .text-muted {
+    color: #f1f1f1;
+    margin: 20px 0;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    background-color: #f8f8f8;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 200;
+    margin-bottom: 60px;
+}
+
+
+.box {
+    text-align: center;
+   
+    
+}
+.box h2 {color:white;padding:10px;}
+.box p {color:white;padding:10px;}
+
+.box {
+    -moz-border-radius-topright:5px;
+    -moz-border-radius-topleft:5px;
+    -webkit-border-top-right-radius:5px;
+    -webkit-border-top-left-radius:5px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+
+
+#btn_promoter_user
+{ 
+    background-color: #2A2B2D;
+    border-color: #1AA69B;
+    float: right;
+    margin-right:  15px;
+}
+
+#promoter_forms
+{
+    background:url('http://192.168.58.74/assets/arraial.jpg');
+    padding-bottom: 200px; 
+     padding-top: 100px; 
+     padding-right: 50px; 
+    padding-left: 50px; 
+}
+
+#basic-addon1
+{
+    color: #1AA69B;
+    background-color: #2A2B2D;
+    border: none;
+   
+}
+
+#basic-addon1 .fa{
+    width: 1em;
+}
+
+
+
+
+
