@@ -321,4 +321,34 @@ class EventController < ApplicationController
 		@image = @event.image.all
 		redirect_to @event
 	end
+
+# ========================================================
+
+	def accept
+		@event = Event.find(params[:id])
+
+		promoterID = @event.promoterID.to_s
+
+		if @event.update_attribute(:propose, false)
+			redirect_to root_path+"promoter/"+promoterID
+		else
+			redirect_to @event
+		end
+	end
+
+# ========================================================
+
+	def destroy
+		@event = Event.find(params[:id])
+		promoterID = @event.promoterID.to_s
+
+		if Event.delete(params[:id])
+			redirect_to root_path+"promoter/"+promoterID
+		else
+			redirect_to @event
+		end
+	end
+
+# ========================================================
+
 end

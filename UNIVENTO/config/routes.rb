@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :event do 
     get 'search', :on => :collection
+    get 'accept', :on => :collection
   end
 
   resources :promoter

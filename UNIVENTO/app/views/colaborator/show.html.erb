@@ -11,7 +11,7 @@
   <%= @colaborator.promoterID %>
   <br>
   <strong>promoter name:</strong>
-  <%= @colaborator.promoter.name %>
+  <%= link_to @colaborator.promoter.name, @colaborator.promoter %>
 </p>
 
 <p>
@@ -31,7 +31,7 @@
   <%= @colaborator.normal.user.userID %>
   <br>
   <strong>email:</strong>
-  <%= @colaborator.normal.user.email %>
+  <%= mail_to @colaborator.normal.user.email, @colaborator.normal.user.email %>
   <br>
   <strong>encrypted_password:</strong>
   <%= @colaborator.normal.user.encrypted_password %>

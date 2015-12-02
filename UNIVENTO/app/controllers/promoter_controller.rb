@@ -10,9 +10,46 @@ class PromoterController < ApplicationController
 # ========================================================
 
   def show
-    @user = User.find(params[:id])
 
+    # ------------------- DB query -------------------------
+    
+    @user = User.find(params[:id])
+    @promoter = Promoter.find(params[:id])
     @colaborators = Colaborator.where(:promoterID => params[:id])
+
+    # Find events ordered by most closest date for the next 4 years from now.
+    eventDates1 = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
+
+    # ----- Active Events & remove duplicated --------------
+
+    @activeEventDates = Array.new
+
+    eventsID = Array.new
+
+    eventDates1.each do |eventDate|
+      if eventDate.event.activeDate < Time.now && !eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+        if !eventsID.include?(eventDate.eventID)
+          @activeEventDates.push(eventDate)
+        end
+        eventsID.push(eventDate.eventID)
+      end
+    end
+
+    # ----- Proposed Events & remove duplicated --------------
+    
+    @proposedEventDates = Array.new
+
+    eventsID = Array.new
+
+    eventDates1.each do |eventDate|
+      if eventDate.event.activeDate < Time.now && eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+        if !eventsID.include?(eventDate.eventID)
+          @proposedEventDates.push(eventDate)
+        end
+        eventsID.push(eventDate.eventID)
+      end
+    end
+
   end
 
 # ========================================================
