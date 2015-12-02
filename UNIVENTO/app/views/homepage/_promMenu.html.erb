@@ -1,0 +1,70 @@
+      <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+
+                     <%= image_tag("logo_univento-01.svg", :alt => "Logo Univento", :style => "width: auto; height: 30px; max-width:100px; margin-top: -7px;") %>
+                </a>
+               
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                
+                    <% if user_signed_in? %>
+                    <li><p class="navbar-text pull-right">
+                     
+                      <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <% if session[:image].present? %>
+                       <img alt="Assets" src= <%=session[:image]%> class="img-responsive img-circle">  <%= session[:name] %><i class="fa fa-caret-down"></i>
+                       <% else %>
+                            <i class="fa fa-user fa-fw"></i> <%= session[:name] %> <i class="fa fa-caret-down"></i>
+                       <% end %>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <%= link_to ' Definições', edit_user_registration_path, :class => 'fa fa-gear fa-fw' %> 
+
+
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'fa fa-sign-out fa-fw'  %>
+                        </li>
+                        
+                    </ul>
+              <!-- /.dropdown-user -->
+                </li>
+                      </p></li>
+                    <% else %>
+                    <li>
+                        <a href="" data-toggle="modal" data-target="#RegisterModal">REGISTAR</a>
+                    </li>
+                    <li>
+                    <a href="" data-toggle="modal" data-target="#loginModel">ENTRAR</a>
+                    </li>
+                    <li>
+                    <a class="btn-facebook" href="/users/auth/facebook" >
+                                              <span class="fa fa-facebook"></span>
+                                            </a>
+                       
+                      </li>
+
+                    <% end %>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+        </nav>
+    </div>
+    <!-- /#wrapper -->
+
+   
