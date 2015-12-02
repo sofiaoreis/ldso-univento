@@ -10,6 +10,16 @@
   <div>
     <div class="col-md-6 column">
       <form class="form-horizontal" role="form">
+      <%if @associacoes.present? %>
+      <div class="form_row">
+                <label for="gender">Associação:</label>
+                <% @associacoes.each do |promoter| %>
+                  <br><%= radio_button_tag 'promoter', promoter, @promoter == promoter, :checked => true %>
+                  <%= promoter %>
+                <% end %>
+            </div>
+      <% end -%>
+
         <div class="form-group">
           <div class="col-xs-8">
             <% if @event.errors[:name].any? %>

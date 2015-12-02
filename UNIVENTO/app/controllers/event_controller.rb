@@ -52,6 +52,14 @@ class EventController < ApplicationController
  		authorize! :create, @event, :message => "Não tem autorização para criar eventos"
  		@category = Category.all
  		@image = Image.new
+ 		if Colaborator.find_by_normalID(current_user.userID)
+ 			@associacoes = Array.new
+ 			Colaborator.where(normalID: current_user.userID).each do |promoter|
+ 				@associacoes.push(Promoter.find_by_promoterID(promoter.promoterID).name)
+ 			end
+ 		end
+
+
  	end
 
 # ========================================================
@@ -84,6 +92,7 @@ class EventController < ApplicationController
 	 		elsif Colaborator.find_by_normalID(current_user.userID)
 	 			@event.propose=true
 #<!> 			#escolher o id do promotor conforme o valor do input referente à associação
+				@event.promoterID = Promoter.where(name: params[:promoter]).take.promoterID
 				@event.normalID = current_user.userID
 	 		end
  		end
