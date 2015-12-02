@@ -281,6 +281,7 @@ p {
 
 .input-group {
     padding-bottom: 15px;
+    backgroun-color: red;
     
 }
 
@@ -437,12 +438,19 @@ body {
     color: #1AA69B;
     background-color: #2A2B2D;
     border: none;
-   
 }
 
 #basic-addon1 .fa{
     width: 1em;
 }
+
+input#name, input#institution, input#website, input#contact {
+    background-color: #2A2B2D;
+    border-color: #1AA69B;
+}
+
+
+
 
 
 
