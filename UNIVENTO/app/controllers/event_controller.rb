@@ -351,4 +351,8 @@ class EventController < ApplicationController
 
 # ========================================================
 
+	def registration
+	end
+# ========================================================
+
 end
