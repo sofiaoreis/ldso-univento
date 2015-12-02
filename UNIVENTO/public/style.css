@@ -353,10 +353,14 @@ a:visited {
     padding-bottom: 25%;
 }
 
+.modal{
+    padding-top: 100px;
+}
+
 .modal-header {
     padding:9px 15px;
-    border-bottom:1px solid #eee;
-    background-color: #0480be;
+    border:1px solid #1AA69B;
+    background-color: #2A2B2D;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
@@ -364,6 +368,21 @@ a:visited {
      border-top-left-radius: 5px;
      border-top-right-radius: 5px;
  }
+
+.modal-body{
+    background-color: #2A2B2D;
+}
+
+.modal-footer{
+    background-color: #1AA69B;
+    border:none;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomrightleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+     border-bottom-left-radius: 5px;
+     border-bottom-right-radius: 5px;
+}
 
 .footer {
   position: absolute;
@@ -449,7 +468,9 @@ input#name, input#institution, input#website, input#contact {
     border-color: #1AA69B;
 }
 
-
+#myModalLabel{
+    color: #1AA69B;
+}
 
 
 

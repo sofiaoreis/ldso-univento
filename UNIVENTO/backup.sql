@@ -1,8 +1,18 @@
-INSERT INTO `Category` VALUES ('categoria1',1);
-INSERT INTO `Category` VALUES ('categoria2',2);
-INSERT INTO `Category` VALUES ('categoria3',3);
-INSERT INTO `Tags` VALUES ('tag1_teste',1),('tag2_teste',2),('tag3_teste',3);
-INSERT INTO `CategoryTags` VALUES (1,1),(2,1),(3,1);
+INSERT INTO `Category` VALUES ('Desportivo',1);
+INSERT INTO `Category` VALUES ('Noturno',2);
+INSERT INTO `Category` VALUES ('Formação',3);
+INSERT INTO `Category` VALUES ('Literatura',4);
+INSERT INTO `Category` VALUES ('Artes',5);
+INSERT INTO `Category` VALUES ('Música',6);
+INSERT INTO `Category` VALUES ('Ambiente',7);
+INSERT INTO `Category` VALUES ('Saúde',8);
+INSERT INTO `Category` VALUES ('Empreendorismo',9);
+INSERT INTO `Tags` VALUES ('Workshop',1),('Palestra',2),('Futebol',3), ('Corrida',4),
+('Basquetebol',5), ('Voleibol',6), 
+('Festa Académica', 7), ('Discoteca', 8), ('Erasmus', 9), ('Leitura', 10), ('Escrita', 11),
+('Pintura', 12), ('Design', 13), ('Pop', 14),
+('Rock', 15), ('Eletrónica', 16), ('Indie', 17), ('Clássica', 18), ('Drum & Bass', 19), ('Chill', 20), ('Social', 21), ('Festa', 22);
+INSERT INTO `CategoryTags` VALUES (1,3),(2,3),(3,1), (4,1), (5,1), (6,1), (7,2), (8,2), (9,2), (10,4), (11,4), (12,5), (13,5), (14,6), (15,6), (16,6), (17,6), (18,6), (19,6), (20,7), (21,7), (22,7);
 INSERT INTO `User` VALUES (NULL,NULL,1,'feup@feup.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 INSERT INTO `User` VALUES (NULL,NULL,2,'faup@faup.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 INSERT INTO `User` VALUES (NULL,NULL,3,'fdup@fdup.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
