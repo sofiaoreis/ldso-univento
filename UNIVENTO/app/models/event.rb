@@ -9,7 +9,7 @@ class Event < ActiveRecord::Base
                :too_long => 'Nome demasiado grande'
 
     validates_length_of :descrition,
-               :minimum => 30,           # more than 8 characters
+               :minimum => 20,           # more than 8 characters
                :too_short => 'Descrição demasiado pequena'    
 
     validates_numericality_of :preco, :allow_nil => true, :message => 'Não é um número'

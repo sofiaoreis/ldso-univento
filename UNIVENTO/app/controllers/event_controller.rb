@@ -19,8 +19,35 @@ class EventController < ApplicationController
 
 # ========================================================
 
+	def edit
+    	@event = Event.find(params[:id])
+    	authorize! :update, @event, :message => "Não tem autorização para editar este evento"
+    	@category = Category.all
+ 	end
+
+# ========================================================
+
+	def update
+		#render plain: params.inspect
+		#return
+		@event = Event.find(params[:id])
+		@event.image.each do |img|
+			File.delete("#{Rails.root}/public/uploads/image/image/"<<img.imageID.to_s<<"/"<<img["image"])
+		end
+		@event.image.delete_all
+		@event.youtube.delete_all
+		@event.spotify.delete_all
+		@event.tags.delete_all
+		@event.eventdate.delete_all
+		create_or_update_event("update")
+		return
+	end
+
+# ========================================================
 
  	def new
+ 		#render plain: params.inspect
+		#return
  		@event = Event.new
  		authorize! :create, @event, :message => "Não tem autorização para criar eventos"
  		@category = Category.all
@@ -29,42 +56,39 @@ class EventController < ApplicationController
 
 # ========================================================
 
-	def update
-		@event = Event.find(params[:id])
-		render plain: params.inspect
-		return
-		@event.image.destroy_all
-		@event.youtube.destroy_all
-		@event.spotify.destroy_all
-		@event.eventtags.destroy_all
-		@event.eventDate.destroy_all
-	end
-
-# ========================================================
-
-	def edit
-    	@event = Event.find(params[:id])
-    	authorize! :update, @event, :message => "Não tem autorização para editar este evento"
-    	@category = Category.all
- 	end
-
-
-# ========================================================
-
  	def create
- 		#render plain: params.inspect
- 		#return
         @fail = false
  		@event = Event.new
- 		event_params = params[:event]
+ 		create_or_update_event("new")
+ 		return
+ 	end
+
+# ========================================================
+
+	def create_or_update_event(tipo)
+		event_params = params[:event]
  		@event.name = event_params[:name]
  		@event.descrition = event_params[:descrition]
  		@event.preco = event_params[:preco]
- 		@event.promoterID = current_user.userID
  		@event.categoryID = params[:category].to_i
- 		@event.averageRate=0
- 		@event.numRates=0
- 		@event.propose=false
+
+ 		if tipo == "new"
+	 		@event.averageRate=0
+	 		@event.numRates=0
+	 		if Promoter.find_by_promoterID(current_user.userID)
+	 			@event.propose=false
+	 			@event.promoterID = current_user.userID
+	 			@event.normalID = nil
+	 		elsif Colaborator.find_by_normalID(current_user.userID)
+	 			@event.propose=true
+#<!> 			#escolher o id do promotor conforme o valor do input referente à associação
+				@event.normalID = current_user.userID
+	 		end
+ 		end
+ 			
+
+
+
         @event.activeDate = (params["activeDate"]["activeDate(3i)"]<<"-"<<params["activeDate"]["activeDate(2i)"]<<"-"<<params["activeDate"]["activeDate(1i)"]<<" "<<params["activeDate"]["activeDate(4i)"]<<":"<<params["activeDate"]["activeDate(5i)"])
 
        	if saveOrDestroy(@event) 
@@ -105,20 +129,7 @@ class EventController < ApplicationController
 	            end
 	        end
 	    end
-=begin
-	    if params[:address].present?
-	        params[:address].each_with_index do |address, i|
-	          local = Local.new
-	          local.address=address
-	          local.latitude = params[:latitude].index(i)
-	          local.longitude= params[:longitude].index(i)
-	          
-	          if saveOrDestroy(local) 
-	          	return 
-	          end
-	        end
-	    end
-=end
+
 	    if params[:dates].present?
 		    params[:dates].each_with_index do |date, k|
 		        eventDate = EventDate.new
@@ -136,8 +147,6 @@ class EventController < ApplicationController
 			          	return 
 			        end
 			        eventDate.localID= local.localID
-		        else
-		        	eventDate.localID = params[:local][k].to_i
 		        end
 
 		        if saveOrDestroy(eventDate) 
@@ -145,16 +154,16 @@ class EventController < ApplicationController
 		        end
 		    end
 		end
+
         if params[:image].present?
 	        params[:image]['image'].each do |a|
 	          @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
 	        end
     	end
         redirect_to @event
- 	end
+	end
 
 # ========================================================
-
 	def index
 
 		@eventDates = Array.new
@@ -340,6 +349,39 @@ class EventController < ApplicationController
 		end
 	end
 
+# ========================================================
+
+	def registration
+		@event = Event.find(params[:event_id])
+		@criarInscricao=false;
+		@isPromoter=false;
+		if user_signed_in?
+			if Promoter.find_by_promoterID(current_user.userID).present? 
+				if Promoter.find(current_user.userID).promoterID == @event.promoterID
+					@isPromoter=true;
+					if !@event.docsID.present?
+						@criarInscricao=true;
+					end
+				end
+			end
+		end
+
+		if !@criarInscricao && !@event.docsID.present?
+			flash[:alert]= "Inscrição indisponível"
+		end
+
+		respond_to do |format|
+	      format.html
+	      format.json { 
+	      	if params[:accao] == "getEventInfo"
+	      		render :json => [@event.name, @event.eventID,@event.docsID].to_json 
+	      	elsif params[:accao] == "saveDocsID"
+	      		@event.docsID = params[:docsID]
+	      		render :json => @event.save!.to_json
+	      	end
+	      }
+	    end
+	end
 # ========================================================
 
 end
