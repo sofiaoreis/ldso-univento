@@ -1,7 +1,11 @@
 class HomepageController < ApplicationController
   def index
   	if !current_user.present?
+      alert = flash[:alert]
+      notice = flash[:notice]
   		reset_session
+      flash.now[:alert] = alert
+      flash.now[:notice] = notice
   	end
   	if session[:normal].present?
     	session[:name] = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name

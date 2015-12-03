@@ -58,7 +58,8 @@ class EventController < ApplicationController
  			end
  		end
 
-
+		puts "new"
+		puts flash.inspect
  	end
 
 # ========================================================
