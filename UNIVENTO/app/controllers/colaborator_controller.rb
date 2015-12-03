@@ -70,9 +70,13 @@ class ColaboratorController < ApplicationController
 
 # ========================================================
 
-  def remove
-    @colaborator = Colaborator.find_by normalID: params[:normalID]
-    @colaborator.destroy
+  def destroy
+    if Colaborator.delete_all(:normalID => params[:id])
+      user = User.find(params[:id])
+      redirect_to user
+    else
+      render 'edit'
+    end
   end
 
 # ========================================================

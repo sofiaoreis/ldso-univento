@@ -17,6 +17,7 @@
   <%= mail_to @user.promoter.contact, @user.promoter.contact %>
   <br><br>
   <%= link_to 'Editar Promotor', root_path+"promoter/"+@user.promoter.promoterID.to_s+"/edit" %>
+  <br><%= link_to 'Mudar Credenciais', root_path+"users/edit" %><br>
 </p>
 
 <p>
@@ -89,7 +90,7 @@
         <td><%= link_to (colaborator.normal.first_name+" "+colaborator.normal.last_name), colaborator_path(colaborator.normal) %></td>
         <td><%= colaborator.promoterID %></td>
         <td><%= link_to colaborator.promoter.name, promoter_path(colaborator.promoter) %></td>
-        <td><%= link_to 'Despromover', root_path+"colaborator/"+colaborator.normalID.to_s+"/edit" %></td>
+        <td><%= button_to "Despromover", root_path+"colaborator/"+colaborator.normalID.to_s, data: { confirm: "Tem a certeza?", id: colaborator.normalID.to_s }, method: :delete %></td>
       </tr>
     <% end %>
   </table>
@@ -180,9 +181,9 @@
       <th>spotify</th>
       <th>images</th>
       <th>start</th>
-      <th>Editar</th>
-      <th>Remover</th>
-      <th>Aceitar</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
       <th colspan="3"></th>
     </tr>
     
@@ -218,13 +219,13 @@
           <%= eventDate.startDate %>
         </td>
         <td>
-          <%= link_to "Editar", root_path+"event/"+eventDate.eventID.to_s+"/edit" %>
+          <%= button_to "Editar", root_path+"event/"+eventDate.eventID.to_s+"/edit", data: nil, method: :get %>
         </td>
         <td>
-          <%= link_to "Remover", root_path+"event/"+eventDate.eventID.to_s, :method => :delete %>
+          <%= button_to "Remover", root_path+"event/"+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?" }, method: :delete %>
         </td>
         <td>
-          <%= link_to "Aceitar", root_path+"event/accept?id="+eventDate.eventID.to_s %>
+          <%= button_to "Aceitar", root_path+"event/accept?id="+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?", id: eventDate.eventID.to_s}, method: :post %>
         </td>
       </tr>
     <% end %>

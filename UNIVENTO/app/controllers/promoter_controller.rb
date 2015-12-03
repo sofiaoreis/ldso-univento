@@ -62,6 +62,7 @@ class PromoterController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    @promoter = Promoter.find(params[:id])
   end
 
 # ========================================================
@@ -96,10 +97,9 @@ class PromoterController < ApplicationController
  
   def update
     @user = User.find(params[:id])
+    @promoter = Promoter.find(params[:id])
    
     if @user.update(email: params[:user][:email], password: params[:user][:password])
-      @promoter = Promoter.find(params[:id])
-      
       if @promoter.update(name: params[:name], institution: params[:institution], website: params[:website], contact: params[:contact])
         redirect_to @promoter
       else
