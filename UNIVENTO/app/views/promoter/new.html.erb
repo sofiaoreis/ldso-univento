@@ -1,6 +1,6 @@
-<div class="jumbotron">
+<div class="container-fluid" id="promoter_forms">
 
-    
+ 
 
     <%= form_for @user, :url => '/promoter' do |u| %>
 
@@ -16,32 +16,57 @@
               </ul>
             </div>
         <% end %>
-
-        Dados do Promotor<br>
-
-        <div class="form-group">
-            <%= text_field_tag :name, "", class: 'form-control', :placeholder => 'Nome' %>
+        
+        <div class="box">
+            <h2>Estão ansiosos por poder partilhar os vossos Eventos?</h2>
+            <p><b>Só falta mais um passo!</b></p>
         </div>
-        <div class="form-group">
+
+        <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span> 
+            <%= text_field_tag :name, "", class: 'form-control', :placeholder => 'Nome Núcleo'%>
+        </div>
+            <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-university"></i></span> 
             <%= text_field_tag :institution, "", class: 'form-control', :placeholder => 'Instituição' %>
         </div>
-        <div class="form-group">
+         </div>
+
+         
+
+
+         <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-link"></i></span> 
             <%= text_field_tag :website, "", class: 'form-control', :placeholder => 'Website'%>
         </div>
-        <div class="form-group">
+        </div>
+
+          <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-mobile"></i></span> 
             <%= text_field_tag :contact, "", class: 'form-control', :placeholder => 'Contacto'%>
         </div>
+    </div>
 
-        <br>Credenciais do Promotor<br>
+        <div class="box" id="title">
+            <p>Credencias</p>
+        </div>
 
-        <div class="form-group">
+         <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa">@</i></span> 
             <%= u.email_field :email, :class => 'form-control', :placeholder => 'E-mail'%>
         </div>
-        <div class="form-group">
+    </div>
+
+        <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span> 
             <%= u.password_field :password, :class => 'form-control', :placeholder => 'Password' %>
         </div>
-        <br>
-
-        <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>
+    </div>
+        <%= u.submit 'Submeter', :class => 'btn btn-primary active' , :id=> 'btn_promoter_user' %>
     <% end %>
 </div>

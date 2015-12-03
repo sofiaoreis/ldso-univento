@@ -1,189 +1,222 @@
+<!--<script src="/clone-form-td.js"></script> este script não está a por os IDS corretos-->
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <link rel="stylesheet" type="text/css" href="/jquery-gmaps-latlon-picker.css"/>
 <script src="/jquery-gmaps-latlon-picker.js"></script>
 <script src="/ckeditor.js"></script>
 <script src="/evento.js"></script>
-<div class="row row-centered clearfix" id="eventos">
-  <h1 class="text-center">Criar Evento</h1>
-  <hr>
-  <%= form_for(@event,:url => '/event', :authenticity_token => true, :html => { :multipart => true }) do |f| %>
-  <div>
-    <div class="col-md-6 column">
-      <form class="form-horizontal" role="form">
-      <%if @associacoes.present? %>
-      <div class="form_row">
-                <label for="gender">Associação:</label>
-                <% @associacoes.each do |promoter| %>
-                  <br><%= radio_button_tag 'promoter', promoter, @promoter == promoter, :checked => true %>
-                  <%= promoter %>
-                <% end %>
-            </div>
-      <% end -%>
 
+<div id="wrapper">
+  <div id="page-wrapper">
+    <div class="row row-centered clearfix" id="newevento">
+      <h1 class="text-center">Criar Evento</h1>
+      <hr>
+      <!--<form action="#" method="post" id="sign-up_area" role="form">-->
+      <%= form_for(@event,:url => '/event', :authenticity_token => true, :html => { :multipart => true }) do |f| %>
+      
+      <div class="row">
+        <!-- Event Name -->
+        <div class="col-md-6 column">
+          <div class="form-group">
+           <label class="label_fn control-label" for="event_name">Título:</label>
+           <% if @event.errors[:name].any? %>
+           <div class="btn btn-danger"><%= @event.errors[:name].first %></div>
+           <% end %><br>
+           <%= f.text_field :name, class: "input_fn form-control" %>
+         </div>
+       </div>
+
+       <!-- Event Price -->
+       <div class="col-md-2 column">
         <div class="form-group">
-          <div class="col-xs-8">
-            <% if @event.errors[:name].any? %>
-            <div class="btn btn-danger">
-              <%= @event.errors[:name].first %>
-            </div>
-            <% end %><br>
-            <label for="name">Name: </label>
-            <%= f.text_field :name , :class=>"form-control"%>
-          </div>
-        </div>
+         <label class="label_fn control-label" for="event_tprice">Preço Total:</label>
+         <% if @event.errors[:preco].any? %>
+         <div class="btn btn-danger"><%= @event.errors[:preco].first %></div>
+         <% end %><br>
+         <%= f.number_field :preco, :in => 0..999, :step => 0.01, class: "input_fn form-control" %>
+       </div>
+     </div>
+   </div><!-- row end-->
 
-        <div class="form-group">
-          <div class="col-xs-8">
-            <label for="preco">Preço total:</label>
-            <% if @event.errors[:preco].any? %>
-            <div class="btn btn-danger">
-              <%= @event.errors[:preco].first %>
-            </div>
-            <% end %><br>
-            <%= f.number_field :preco , :in => 0..999, :step => 0.01, :class=>"form-control"%><br>
-          </div>
-        </div>
+   <div class="row">
+    <!-- Event Description -->
+    <div class="col-md-8 column">
+      <div class="form-group">
+       <label class="label_fn control-label" for="event_name">Descrição:</label>
+       <% if @event.errors[:descrition].any? %>
+       <div class="btn btn-danger"><%= @event.errors[:descrition].first %></div>
+       <% end %><br>
+       <%= f.text_area :descrition, class: "form-control" %>
+     </div>
+   </div>
+ </div><!-- row end-->
 
-        <div class="form-group">
-          <div class="col-xs-8">
-            <label for="descricao">Descrição:</label>
-            <% if @event.errors[:descrition].any? %>
-            <div class="btn btn-danger">
-              <%= @event.errors[:descrition].first %>
-            </div>
-            <% end %><br>
-            <%= f.text_area :descrition, :class=>"form-control", :row=>"3" %>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col-xs-8">
-            <label for="data_ativo">Data a partir da qual o evento fica activo:</label>
-            <div class="input-group date" id="datetimepicker1">
-              <input type="text" name="activeDate" class="form-control">
-              <span class="input-group-addon">
-                <span class="glyphicon glyphicon-calendar"></span>
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col-xs-8">
-            <label for="category">Categoria</label><br>
-            <% @category.each_with_index do |category,index| %>
-            <div class="row col-xs-8">
-              <% if index == 0%>
-              <%= radio_button_tag 'category', category.categoryID, @category == category, :checked => true %>
-              <% else %>
-              <%= radio_button_tag 'category', category.categoryID, @category == category %>
-              <% end -%>
-              <strong><%= category.name %></strong>
-              <% category.tags.each do |tag| %>
-              <div class="checkbox">
-                <% if index == 0%>
-                <label><%= check_box_tag 'tags[]', tag.tagsID, @tag == tag %><%= tag.name %></label>
-                <% else %>
-                <label hidden="true"><%= check_box_tag 'tags[]', tag.tagsID, @tag == tag %><%= tag.name %></label>
-                <% end -%>
-              </div>
-              <% end %>
-            </div>
-            <% end %>  
-          </div>
-        </div>
-
-        <div class="col-md-8">
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-youtube"></i></span>
-            <%= text_field_tag 'youtube[]',nil, :class=>"form-control", :placeholder=>"Youtube link" %>
-          </div>
-
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-spotify"></i></span>
-            <%= text_field_tag 'spotify[]',nil, :class=>"form-control", :placeholder=>"Spotify link" %>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="col-xs-8">
-            <label for="exampleInputFile">Imagens (selecione um máximo de 9 imagens)</label>
-            <%= f.file_field :image, :multiple => true, name: "image[image][]" %>
-          </div>
-        </div>
-
-      </form>
-    </div>
-
-    <div class="col-md-6 column">
-      <div class="control-group" id="fields">
-        <h4><strong>Preencha os detalhes para cada dia do evento:</strong></h4>
-        <br>
-        <div class="controls"> 
-            <div class="row entry input-group col-xs-8">
-              <div class="form-group">
-                <div class="col-xs-8">
-                  <label for="data_ativo">Data de início:</label>
-                  <div class="input-group date" id="datetimepicker1">
-                  <input name="dates[0][startDate]" type="text" class="form-control">
-                    <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <div class="col-xs-8">
-                  <label for="data_ativo">Data de fim:</label>
-                  <div class="input-group date" id="datetimepicker1">
-                    <input name="dates[0][endDate]" type="text" class="form-control">
-                    <span class="input-group-addon">
-                      <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="form-group">
-                  <div class="col-xs-4">
-                    <label for="preco">Preço:</label>
-                    <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01, :class=>"form-control"%>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="form-group">
-                <label for="local">Escolha o local:</label>
-                <fieldset class="gllpLatlonPicker" id="map0">
-                  <input name="dates[0][address]" value="Porto" type="text" class="gllpSearchField">
-                  <input type="button" class="gllpSearchButton" value="search">
-                  <div class="gllpMap">Google Maps</div>
-                  <input name="dates[0][latitude]" type="hidden" class="gllpLatitude" value="41.1579438"/>
-                  <input name="dates[0][longitude]" type="hidden" class="gllpLongitude" value="-8.629105299999992"/>
-                  <input type="hidden" class="gllpZoom" value="12"/>
-                </fieldset>
-                <label for="descricao">Descrição da data:</label>
-                <%= cktext_area :page, :info0, :cols => 40, :ckeditor => {:uiColor => '#AADC6E', :toolbar => 'mini'} %>
-                <br> 
-               
-              </div>
-            </div>
-             <span class="input-group-btn" id="addDates">
-                <button class="btn btn-success btn-add" type="button" >
-                  <span class="glyphicon glyphicon-plus">Adicionar outra data</span>
-                </button>
-              </span>
-        </div>
-      </div>
-
-      <div class="text-center">
-        <%= f.submit 'Concluído', :class=>"btn btn-default mrg-bottom"%>
+ <div class="row">
+  <!-- Beginning Date -->
+  <div class="col-md-4 column">
+    <div class="form-group">
+      <label class="label_fn control-label" for="data_inicio">Data de início:</label>
+      <div class='input-group date' id=''>
+        <input type='text'  class="form-control" />
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
       </div>
     </div>
+  </div>
 
+
+  <!-- Active Date -->
+  <div class="col-md-4 column">
+    <div class="form-group">
+      <label class="label_fn control-label" for="data_inicio">Data da partir da qual o evento fica ativo:</label>
+      <div class='input-group date' id=''>
+        <input type='text' class="form-control" name="activeDate"/>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4 column">
+    <label for="category">Escolha a categoria:</label>
+
+    <% @category.each do |category| %>
+    <br>
+    <script type="text/javaScript">
+      $(function() {
+        $('input[type="checkbox"]').on('change', function() {
+          $(this).closest('fieldset').find('.myClass').toggle(this.checked);
+        });
+      });
+    </script>
+    <fieldset>
+      <legend><strong><%= category.name %></strong>
+        <%= check_box_tag 'category', category.categoryID, @category == category, :checked => false %>
+      </legend>
+
+      <span class="myClass" style="display: none;">
+        <h6 for="tag">Escolha até 3 tags da categoria  <%= category.name %>:</h6>
+        <% category.tags.each do |tag| %>
+        <%= check_box_tag 'tags[]', tag.tagsID, @tag == tag %>
+        <%= tag.name %>
+        <% end %>
+      </span>
+    </fieldset>
     <% end %>
   </div>
+
+</div><!-- row end-->
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-youtube"></i></span>
+      <%= text_field_tag 'youtube[]', 'Insira um link do youtube', class: 'form-control' %>
+    </div>
+
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-spotify"></i></span>
+      <%= text_field_tag 'spotify[]', 'Insira um link do spotify', class: 'form-control' %>
+    </div>
+  </div>
+</div><!-- row end-->
+
+<div id="entry1" class="clonedInput">
+  <h2 id="reference" name="reference" class="heading-reference">Data #1</h2>
+  <fieldset>
+
+    <div class="row">
+      <!-- Beginning Date -->
+      <div class="col-md-4 column">
+        <div class="form-group">
+          <label class="label_fn control-label" for="data_fim">Data de início:</label>
+          <div class='input-group date' id=''>
+            <input type='text' class="form-control" name="dates[0][startDate]"/>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- End Date -->
+      <div class="col-md-4 column">
+        <div class="form-group">
+          <label class="label_fn control-label" for="data_fim">Data de fim:</label>
+          <div class='input-group date' id=''>
+            <input type='text' class="form-control" name="dates[0][endDate]"/>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Event Price -->
+      <div class="col-md-2 column">
+        <div class="form-group">
+         <label class="label_fn control-label" for="event_price">Preço:</label>
+         <% if @event.errors[:preco].any? %>
+         <div class="btn btn-danger"><%= @event.errors[:preco].first %></div>
+         <% end %><br>
+         <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01%><br>
+       </div>
+     </div>
+   </div>
+
+   <div class="row">
+    <!-- Place -->
+    <div class="col-md-8 column">
+      <div class="form-group">
+       <label class="label_fn control-label" for="event_local">Escolha o Local:</label>
+       <fieldset class="gllpLatlonPicker" id="map0">
+        <input name="dates[0][address]" value="Porto" type="text" class="gllpSearchField form-control">
+        <input type="button" class="gllpSearchButton btn btn-default" value="search">
+        <div class="gllpMap">Google Maps</div>
+        <input name="dates[0][latitude]" type="hidden" class="gllpLatitude" value="41.1579438"/>
+        <input name="dates[0][longitude]" type="hidden" class="gllpLongitude" value="-8.629105299999992"/>
+        <input type="hidden" class="gllpZoom" value="12"/>
+      </fieldset> 
+    </div>
+  </div>
+</div><!-- row end-->
+
+<div class="row">
+  <!-- Place -->
+  <div class="col-md-8 column">
+    <label class="label_fn control-label" for="event_local">Insira uma descrição detalhada:</label>
+    <%= cktext_area :page, :info0, :cols => 40, :ckeditor => {:uiColor => '#ffffff', :toolbar => 'mini'} %>
+  </div>
+</div><!-- row end-->
+</div><!-- end #entry1 -->
+
+<!-- Button (Double) -->
+<p>
+  <button type="button" id="btnAdd" name="btnAdd" class="btn btn-info">Adicionar Dia</button>
+  <button type="button" id="btnDel" name="btnDel" class="btn btn-danger">Remover dia acima</button>
+</p>
+
+<div class="field">
+  <%= f.file_field :image, :multiple => true, name: "image[image][]" %>
+</div>
+<p>
+  <%= f.submit'Criar Evento', :class => 'btn btn-default' %>
+</p>
+<% end %>
+
+<!-- Button
+<p>
+  <button id="submit_button" name="submit_button" class="btn btn-primary">Submit</button>
+</p> -->
+
+</fieldset>
+</form>
+
+</div> <!-- end attribution -->
+</div> <!-- end wrapper -->
 </div>
