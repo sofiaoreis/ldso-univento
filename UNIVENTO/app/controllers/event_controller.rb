@@ -14,7 +14,6 @@ class EventController < ApplicationController
 		  redirect_to root_path
 		  return
 		end
-		render 'temp'
  	end
 
 # ========================================================

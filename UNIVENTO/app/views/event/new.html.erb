@@ -13,6 +13,17 @@
       <!--<form action="#" method="post" id="sign-up_area" role="form">-->
       <%= form_for(@event,:url => '/event', :authenticity_token => true, :html => { :multipart => true }) do |f| %>
       
+      <%if @associacoes.present? %>
+      <div class="form_row">
+                <label for="gender">Propor Evento para:</label>
+                <% @associacoes.each do |promoter| %>
+                  <br><%= radio_button_tag 'promoter', promoter, @promoter == promoter, :checked => true %>
+                  <%= promoter %>
+                <% end %>
+            </div>
+      <% end -%>
+      <br>
+
       <div class="row">
         <!-- Event Name -->
         <div class="col-md-6 column">
