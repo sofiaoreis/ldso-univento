@@ -2,6 +2,8 @@ SET FOREIGN_KEY_CHECKS=0;
 
 
 -- Drop Tables, Stored Procedures and Views //
+DROP TABLE IF EXISTS NormalTags CASCADE;
+DROP TABLE IF EXISTS NormalCategory CASCADE;
 DROP TABLE IF EXISTS EventTags CASCADE;
 DROP TABLE IF EXISTS CategoryTags CASCADE;
 DROP TABLE IF EXISTS Tags CASCADE;
@@ -21,11 +23,36 @@ DROP TABLE IF EXISTS User CASCADE;
 DROP TABLE IF EXISTS ckeditor_assets CASCADE;
 
 -- Create Tables //
+
+CREATE TABLE NormalTags
+(
+	normalID INTEGER NULL,
+	tagsID INTEGER NULL,
+	PRIMARY KEY(normalID,tagsID)
+) ;
+
+
+CREATE TABLE NormalCategory
+(
+	normalID INTEGER NULL,
+	categoryID INTEGER NULL,
+	PRIMARY KEY(normalID,categoryID)
+) ;
+
+
 CREATE TABLE Category
 (
 	name VARCHAR(50) NULL,
 	categoryID INTEGER NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (categoryID)
+) ;
+
+
+CREATE TABLE Tags
+(
+	name VARCHAR(50) NULL,
+	tagsID INTEGER NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (tagsID)
 
 ) ;
 
@@ -35,7 +62,6 @@ CREATE TABLE CategoryTags
 	tagsID INTEGER NULL,
 	categoryID INTEGER NULL,
 	PRIMARY KEY(tagsID,categoryID)
-
 ) ;
 
 
@@ -169,15 +195,6 @@ CREATE TABLE Spotify
 ) ;
 
 
-CREATE TABLE Tags
-(
-	name VARCHAR(50) NULL,
-	tagsID INTEGER NOT NULL AUTO_INCREMENT,
-	PRIMARY KEY (tagsID)
-
-) ;
-
-
  CREATE TABLE User (
   password varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   admin tinyint(1) DEFAULT NULL,
@@ -234,6 +251,18 @@ SET FOREIGN_KEY_CHECKS=1;
 
 
 -- Create Foreign Key Constraints //
+ALTER TABLE NormalTags ADD CONSTRAINT FK_NormalTags_Normal
+	FOREIGN KEY (normalID) REFERENCES Normal (normalID) ON DELETE CASCADE;
+
+ALTER TABLE NormalTags ADD CONSTRAINT FK_NormalTags_Tags
+	FOREIGN KEY (tagsID) REFERENCES Tags (tagsID) ON DELETE CASCADE;
+
+ALTER TABLE NormalCategory ADD CONSTRAINT FK_NormalCategory_Normal
+	FOREIGN KEY (normalID) REFERENCES Normal (normalID) ON DELETE CASCADE;
+
+ALTER TABLE NormalCategory ADD CONSTRAINT FK_NormalCategory_Category
+	FOREIGN KEY (categoryID) REFERENCES Category (categoryID) ON DELETE CASCADE;
+
 ALTER TABLE CategoryTags ADD CONSTRAINT FK_CategoryTags_Tags
 	FOREIGN KEY (tagsID) REFERENCES Tags (tagsID) ON DELETE CASCADE;
 

@@ -8,11 +8,12 @@ Rails.application.routes.draw do
   resources :user do
     resources :normal
     get 'preferences', :on => :collection
+    post 'savePreferences', :on => :collection
   end
 
   resources :event do 
     get 'search', :on => :collection
-    get 'accept', :on => :collection
+    post 'accept', :on => :collection
     get 'registration'
   end
 
