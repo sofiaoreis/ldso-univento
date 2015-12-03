@@ -20,31 +20,63 @@ class PromoterController < ApplicationController
     # Find events ordered by most closest date for the next 4 years from now.
     eventDates1 = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
 
-    # ----- Active Events & remove duplicated --------------
+    # ----- Visible Events --------------
 
-    @activeEventDates = Array.new
+    @shownEventDates = Array.new
 
     eventsID = Array.new
 
     eventDates1.each do |eventDate|
       if eventDate.event.activeDate < Time.now && !eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
         if !eventsID.include?(eventDate.eventID)
-          @activeEventDates.push(eventDate)
+          @shownEventDates.push(eventDate)
         end
         eventsID.push(eventDate.eventID)
       end
     end
 
-    # ----- Proposed Events & remove duplicated --------------
+    # ----- Hidden Events --------------
+
+    @hiddenEventDates = Array.new
+
+    eventsID = Array.new
+
+    eventDates1.each do |eventDate|
+      if eventDate.event.activeDate > Time.now && !eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+        if !eventsID.include?(eventDate.eventID)
+          @hiddenEventDates.push(eventDate)
+        end
+        eventsID.push(eventDate.eventID)
+      end
+    end
+
+    # ----- Proposed Events --------------
     
     @proposedEventDates = Array.new
 
     eventsID = Array.new
 
     eventDates1.each do |eventDate|
-      if eventDate.event.activeDate < Time.now && eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+      if eventDate.event.activeDate > Time.now && eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
         if !eventsID.include?(eventDate.eventID)
           @proposedEventDates.push(eventDate)
+        end
+        eventsID.push(eventDate.eventID)
+      end
+    end
+
+    # ----- Obsoleted Proposed Events --------------
+
+    eventDates2 = EventDate.order(startDate: :asc)
+    
+    @ObsoletedProposedEventDates = Array.new
+
+    eventsID = Array.new
+
+    eventDates2.each do |eventDate|
+      if eventDate.event.activeDate < Time.now && eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+        if !eventsID.include?(eventDate.eventID)
+          @ObsoletedProposedEventDates.push(eventDate)
         end
         eventsID.push(eventDate.eventID)
       end

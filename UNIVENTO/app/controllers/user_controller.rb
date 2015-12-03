@@ -49,5 +49,19 @@ class UserController < ApplicationController
 
   def defineUserType
   end
-end
+  
+  def preferences
 
+    @user = User.find(params[:id])
+    @categories = Category.all
+    @ambianceTags = Category.find_by(name: "Ambiente").tags
+    @musicTags = Category.find_by(name: "Música").tags
+
+  end
+  
+  def savePreferences
+    render plain: params.inspect
+    return
+  end
+
+end
