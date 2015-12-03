@@ -2,7 +2,7 @@
           <h2>Para teres uma pesquisa ainda mais personalizada, </h2>
           <p>responde ás seguintes questões.</p>
  	
-  <%= form_for @user, :url => "savePreferences" , method: :post do |u| %>
+  <%= form_for @user, :url => "savePreferences?id="+@user.userID.to_s , method: :post do |u| %>
 
     <div class="ambiente">
     	<p>Que tipo de ambientes te agrada mais?</p>
