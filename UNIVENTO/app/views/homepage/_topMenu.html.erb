@@ -47,10 +47,10 @@
                       </p></li>
                     <% else %>
                     <li>
-                        <a href="" data-toggle="modal" data-target="#RegisterModal">REGISTAR</a>
+                        <a href="" data-toggle="modal" data-target="#RegisterModal"><i class="fa fa-pencil-square-o"></i></a>
                     </li>
                     <li>
-                    <a href="" data-toggle="modal" data-target="#loginModel">ENTRAR</a>
+                    <a href="" data-toggle="modal" data-target="#loginModel"><i class="fa fa-sign-in"></i></a>
                     </li>
                     <li>
                     <a class="btn-facebook" href="/users/auth/facebook" >
@@ -81,19 +81,23 @@
 
                                         <div class="modal-body">
                                             <div class="row">
-                                            <div class="input-group col-md-6">
-                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                                <input name="first_name" id="first_name" value="" class="form-control" placeholder="Primeiro Nome" type="text" aria-describedby="basic-addon1">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group" >
+                                                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                                    <input name="first_name" id="first_name" value="" class="form-control" placeholder="Primeiro Nome" type="text" aria-describedby="basic-addon1">
+                                                </div>
                                             </div>
 
-                                            <div class="input-group col-md-6">
-                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                                 <input name="last_name" id="last_name" value="" class="form-control" placeholder="Último Nome" type="text" aria-describedby="basic-addon1">
+                                              <div class="col-lg-6">
+                                                    <div class="form-group">
+                                               
+                                                 <input name="last_name" id="last_name" value="" class="form-control" placeholder="Último Nome" type="text">
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
 
                                             <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-envelope"></i></span>
+                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-at"></i></span>
                                                 <input class="form-control" placeholder="E-mail" value="" name="user[email]" id="user_email" type="email" aria-describedby="basic-addon1">
                                             </div>
 
@@ -101,20 +105,27 @@
                                                 <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></i></span>
                                                 <input class="form-control" placeholder="Password" name="user[password]" id="user_password" type="password" aria-describedby="basic-addon1">
                                             </div>
-                                    <div class="input-group">
+
+                                            <div class="row">
+                                                 <div class="col-lg-6">
+                                            <div class="input-group">
                                             <div class="form_row">
-                                                <% [ 'Sexo Masculino',' Sexo Feminino'].each do |gender| %>
-                                                <br><%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
-                                                    <%= gender %>
+                                                <% [ 'male','female'].each do |gender| %>
+                                                <%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
+                                                     <i class="fa fa-<%= gender %>"></i>
                                                 <% end %>
                                             </div>
                                             </div>
-                                            <label>Data de nascimento:</label><br>
-                                                <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br><br>
                                         </div>
+                                         <div class="col-lg-6">
+                                            <span><i class="fa fa-birthday-cake"></i></span>
+                                                <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br><br>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                         <div class="modal-footer">
-                                             <input name="commit" value="Submeter" class="btn btn-primary active" type="submit">
+                                             <input name="commit" value="Submeter" class="btn btn-primary active" type="submit" id="modalButon">
                                         </div>
                                     </div>
                                 </form>
@@ -134,7 +145,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1">E-mail</span>
+                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-at"></i></span>
                                                 <input autofocus="autofocus" value="" name="user[email]" id="user_email" type="email" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1">
                                             </div>
 
@@ -145,7 +156,7 @@
                                         </div>
                                         <div class="modal-footer">
                                            
-                                            <input name="commit" value="Submeter" type="submit" class="btn btn-primary">
+                                            <input name="commit" value="Submeter" type="submit" class="btn btn-primary active" id="modalButon">
                                         </div>
                                     </div>
                                 </form>

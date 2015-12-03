@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :user do
     resources :normal
+    get 'preferences', :on => :collection
   end
 
   resources :event do 
