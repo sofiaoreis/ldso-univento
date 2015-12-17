@@ -177,7 +177,7 @@ class EventController < ApplicationController
 	end
 
 # ========================================================
-	def index
+	def index		
 
 		@eventDates = Array.new
 		eventDates2 = Array.new
@@ -251,6 +251,45 @@ class EventController < ApplicationController
 			@eventDates = eventDates2.clone
 			eventDates2.clear
 			pageLink = pageLink + "&local=" + local
+		end
+
+		# ------------------- Preferences -------------------------
+
+		if current_user != nil
+			user = User.find(current_user.id.to_s)
+			ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
+			musicCategoryID = Category.find_by(name: "Música").categoryID
+			nightCategoryID = Category.find_by(name: "Noturno").categoryID
+
+			tagsPrefs = NormalTags.all
+			categoriesPrefs = NormalCategory.all
+			nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID)
+
+			if categoriesPrefs.length != 0
+				@eventDates.each do |eventDate|
+					categoriesPrefs.each do |categoryPref|
+						if eventDate.event.categoryID == categoryPref.categoryID
+							eventDates2.push(eventDate)
+						end
+					end
+					@eventDates = eventDates2.clone
+					eventDates2.clear
+				end
+			end
+
+			if tagsPrefs.length != 0
+				@eventDates.each do |eventDate|
+					eventDate.event.tags.each do |eventTag|
+						tagsPrefs.each do |tagsPref|
+							if eventTag.tagsID == tagsPref.tagsID
+								eventDates2.push(eventDate)
+							end
+						end
+					end
+					@eventDates = eventDates2.clone
+					eventDates2.clear
+				end
+			end
 		end
 
 		# ------------------- Paginate by 18 events -------------------------
