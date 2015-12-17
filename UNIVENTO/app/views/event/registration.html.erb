@@ -1,35 +1,82 @@
 <script type="text/javascript" src="/googlespreadsheet.js"></script>
-<% if @criarInscricao %>
-	<h2>Criar form de inscrição ?</h2>
-	<p>Formulário contém Nome, faculdade, e-mail, telefone, dias do evento</p>
-<!--Nome, faculdade, e-mail, telefone, dias do evento -->
-	<form id="criarSpreadsheet" action="" method="POST">
-		<!--<label>Nome: <input name="nome" type="text" value="" /></label>
+<div class="page-wrapper">
+	<% if @criarInscricao %>
+	<div class="col-md-6">
+		<h2>Criar formulário de inscrição ?</h2>
+
+		<select id="tipoPergunta" class="form-control">
+		  <option value="normal" selected >Pergunta de resposta aberta</option>
+		  <option value="multipla" >Pergunta de escolha multipla</option>
+		</select>
+
+
+		<div id="normalDiv" class="form-group">
+		    <label for="Pergunta">Pergunta</label>
+		    <input type="text" class="form-control" id="perguntaNormal" placeholder="Pergunta">
+		</div>
+
+		<div id="multiplaDiv">
+			<div>
+				<label for="Pergunta">Pergunta</label>
+			    <input type="text" class="form-control" id="perguntaMultipla" placeholder="Pergunta">
+			    <label for="">Opcão 1</label>
+			    <input type="text" class="form-control" id="opcao1" placeholder="">
+			    <label for="">Opcão 2</label>
+			    <input type="text" class="form-control" id="opcao2" placeholder="">
+			    <div id="novasOpcoes">
+			    	
+			    </div>
+		    </div>
+		    <button class="btn btn-default" id="adicionarOpcao" type="button">Adicionar Opcão</button>
+			<button class="btn btn-default" id="removerOpcao" type="button">Remover Opcão</button>
+		    <div class="checkbox">
+			    <label>
+			      <input type="checkbox" id="variasRespostas"> Permitir várias respostas
+			    </label>
+			 </div>
+		</div>
+
+		<button class="btn btn-default" id="adicionar" type="button">Adicionar Pergunta</button>
+		<button class="btn btn-default" id="remover" type="button">Remover última Pergunta</button>
+
 		<br>
-		<label>Evento: <input name="eventID" type="text" value="1" /></label>
-		<br>-->
-		<input type="submit" value="Confirmar">
-	<div id="novaSpreadsheet"></div>
-<% elsif @isPromoter %>
-	<h2>Ver inscrições</h2>
-	<button id="carregarDados"> Carregar dados spreadsheet </button>
-	<div id="link" ></div>
-	<br>
-	<div id="spreadsheet"></div>
-<% end -%>
-<% if !@criarInscricao && @event.docsID.present? %>
-<h2> Formulário de inscrição </h2>
-<form id="enviaDados" action="" method="POST">
-	<label>Nome: <input name="nome" type="text" value="" /></label>
-	<br>
-	<label>Faculdade: <input name="faculdade" type="text" value="" /></label>
-	<br>
-	<label>E-mail: <input name="e-mail" type="email" value="" /></label>
-	<br>
-	<label>Telefone: <input name="telefone" type="number" value="" /></label>
-	<br>
-	<label>Dias do Evento: <input name="dias_do_evento" type="text" value="" /></label>
-	<br>
-	<input type="submit">
-</form>
-<% end -%>
+		<form id="criarSpreadsheet" action="" method="POST">
+			<input class="btn btn-default" type="submit" value="Concluir">
+		</form>
+		<div id="novaSpreadsheet"></div>
+	</div>
+	<div class="col-md-6">
+		<h2>Preview</h2>
+		<div id="preview">
+			
+		</div>
+	</div>
+	<% elsif @isPromoter %>
+		<h2>Ver inscrições</h2>
+		<button class="btn btn-default" id="carregarDados"> Carregar dados spreadsheet </button>
+		<div id="link" ></div>
+		<br>
+		<div id="spreadsheet"></div>
+	<% end -%>
+	<% if !@criarInscricao && @event.docsID.present? %>
+	<h2> Formulário de inscrição </h2>
+	<form id="enviaDados" action="" method="POST">
+		<div>
+			
+		</div>
+		<!--
+		<label>Nome: <input name="nome" type="text" value="" /></label>
+		<br>
+		<label>Faculdade: <input name="faculdade" type="text" value="" /></label>
+		<br>
+		<label>E-mail: <input name="e-mail" type="email" value="" /></label>
+		<br>
+		<label>Telefone: <input name="telefone" type="number" value="" /></label>
+		<br>
+		<label>Dias do Evento: <input name="dias_do_evento" type="text" value="" /></label>
+		<br>
+		-->
+		<input class="btn btn-default" type="submit" value="Inscrever">
+	</form>
+	<% end -%>
+</div>

@@ -1,6 +1,7 @@
 var scriptLink = "https://script.google.com/macros/s/AKfycbxpb6ghoFH5Hyllkaq6DbmEepHU-nizHO6ukrOcJgLX4BRCAmM/exec";
-var PERGUNTAS = ['Carimbo de data/hora' ,'Nome', 'Faculdade', 'e-mail', 'Telefone', 'dias do evento'];
+var PERGUNTAS = ['Carimbo de data/hora'];
 function start(){
+    criarForm();
 	$.ajax({
 	    url: window.location.href,
 	  	type: "get",
@@ -11,11 +12,8 @@ function start(){
 			$("#link").append("<a href=\""+eventInfo[2]+"\"> Ver SpreadSheet no google docs </a>");
 		}
 	   	$("#criarSpreadsheet").submit(function(e){
-			/*
-				var inputs = $( this ).serializeArray();
-				createSpreadSheet(inputs[1].value+"_"+inputs[0].value);
-			*/
 			e.preventDefault();
+            console.log(JSON.stringify(PERGUNTAS));
 		    createSpreadSheet(eventInfo[1]+"_"+eventInfo[0]);
 		});
 		$("#carregarDados").on("click",function(){
@@ -32,6 +30,17 @@ function start(){
 	    	sendData(values,eventInfo[2]);
 	    	e.preventDefault();
 		});  
+        $.ajax({
+                url: scriptLink,
+                type: "get",
+                dataType: "json",
+                data: {
+                    funcao: "getQuestions",
+                    spreadsheet: eventInfo[2]
+                }
+            }).done(function (data) {
+                mostrarForm(data);
+            });
 	});
 }
 
@@ -127,3 +136,137 @@ function getDateTime() {
 }
 
 $(start);
+
+
+var numQuestion = 0;
+var numOpcao = 2;
+function criarForm () {
+
+    $("#multiplaDiv").hide();
+    $("#tipoPergunta").val("normal");
+
+    $("#tipoPergunta").on("change",function(){
+        clearInputs();
+
+        if(this.value=="normal"){
+            $("#multiplaDiv").hide();
+            $("#normalDiv").show();
+        }else {
+            $("#multiplaDiv").show();
+            $("#normalDiv").hide();
+        }
+    });
+
+    $("#adicionar").on("click",function(){
+        var opcao = $("#tipoPergunta").val();
+        var opcaoName = [];
+        numQuestion++;
+        
+        if(opcao=="normal"){
+            $("#preview").append("<div class=\"form-group\">"
+                                    +"<label for=\"\">"+numQuestion+". "+$("#perguntaNormal").val()+"</label>"
+                                    +"   <input type=\"text\" class=\"form-control\" >"
+                                    +"</div>");
+            PERGUNTAS.push(JSON.stringify([$("#perguntaNormal").val(),[]]));
+        }else if (opcao=="multipla"){
+            var opcoes = "";
+            if($("#variasRespostas").is(':checked')){
+                opcoes+="<div class=\"checkbox\">";
+                for (var i = 1; i <= numOpcao; i++) {
+                    opcaoName.push($("#opcao"+i).val());
+                    opcoes+="<label><input type=\"checkbox\" value=\"\">";
+                    opcoes+= $("#opcao"+i).val();
+                    opcoes+="</label><br>";
+                };
+                opcoes+="</div>";
+            }else {
+                opcoes+="<div class=\"radio\">";
+                for (var i = 1; i <= numOpcao; i++) {
+                    opcaoName.push($("#opcao"+i).val());
+                    opcoes+="<label><input type=\"radio\" value=\"\" checked name=\"optionsRadios"+numQuestion+"\">";
+                    opcoes+= $("#opcao"+i).val();
+                    opcoes+="</label><br>";
+                };
+                opcoes+="</div>";
+            }
+
+            $("#preview").append("<div class=\"form-group\">"
+                                    +"<label for=\"\">"+numQuestion+". "+$("#perguntaMultipla").val()+"</label>"
+                                    +opcoes
+                                    +"</div>");
+            PERGUNTAS.push(JSON.stringify([$("#perguntaMultipla").val(),opcaoName,$("#variasRespostas").is(':checked')]));
+        }
+        clearInputs();
+    });
+
+    $("#adicionarOpcao").on("click",function(){
+        numOpcao++;
+        $("#novasOpcoes").append("<div><label for=\"\">Opcão "+numOpcao+"</label>"
+              +"<input type=\"text\" class=\"form-control\" id=\"opcao"+numOpcao+"\"></div>");
+    });
+    
+    $("#removerOpcao").on("click",function(){
+        if(numOpcao>2){
+            numOpcao--;
+            $("#novasOpcoes").children().last().remove();
+        }
+    });
+
+    $("#remover").on("click",function(){
+        $("#preview").children().last().remove();
+        if(numQuestion>0)
+            numQuestion--;
+    });
+}
+
+function clearInputs(){
+    numOpcao=2;
+    $("#novasOpcoes").html("");
+    $("#perguntaNormal").val("");
+    $("#perguntaMultipla").val("");
+    $("#opcao1").val("");
+    $("#opcao2").val("");
+}
+
+function mostrarForm(perguntas){
+    /*
+    [ "Carimbo de data/hora", "["NORMAL",[]]", "["radio",["1","2"],false]", "["check",["3","4","5"],true]" ]
+    */
+
+    numQuestion=0;
+    for (var i = 1; i < perguntas.length; i++) {
+        var pergunta = JSON.parse(perguntas[i]);
+        numQuestion++;
+        if(pergunta[1].length>0){
+            var html = [];
+            if(pergunta[2]){//checkbox
+                html+="<div class=\"checkbox\">";
+                for (var j = 0; j < pergunta[1].length; j++) {
+                    html+="<label><input type=\"checkbox\" value=\"\">";
+                    html+= pergunta[1][j];
+                    html+="</label><br>";
+                };
+                html+="</div>";
+            }else {//radio
+                html+="<div class=\"radio\">";
+                for (var j = 0; j < pergunta[1].length; j++) {
+                    html+="<label><input type=\"radio\" value=\"\" checked name=\"optionsRadios"+numQuestion+"\">";
+                    html+= pergunta[1][j];
+                    html+="</label><br>";
+                };
+                html+="</div>";
+            }
+            $("#enviaDados").children().first().append("<div class=\"form-group\">"
+                                    +"<label for=\"\">"+numQuestion+". "+pergunta[0]+"</label>"
+                                    +"</div>");
+            $("#enviaDados").children().first().append(html);
+        }else {// pergunta normal
+            $("#enviaDados").children().first().append("<div class=\"form-group\">"
+                                    +"<label for=\"\">"+numQuestion+". "+pergunta[0]+"</label>"
+                                    +"   <input type=\"text\" class=\"form-control\" >"
+                                    +"</div>");
+        }
+        console.log(pergunta);
+    };
+    
+}
