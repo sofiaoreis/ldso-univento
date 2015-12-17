@@ -24,7 +24,7 @@
     <%= @user.normal.birthday %>
   </p>
 
-  <strong>------ Preferencias ------</strong>
+  <strong>------ <%= link_to "Preferencias", root_url+"user/preferences?id="+@user.userID.to_s %> ------</strong>
   <p>
     <strong>Tags:</strong><br>
     <% @tagsPrefs.each do |tag| %>

@@ -242,33 +242,23 @@ class EventController < ApplicationController
 
 		# ------------------- Preferences -------------------------
 
-		if current_user != nil
-			user = User.find(current_user.id.to_s)
-			ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
-			musicCategoryID = Category.find_by(name: "Música").categoryID
-			nightCategoryID = Category.find_by(name: "Noturno").categoryID
+		prefs = params[:prefs]
 
-			tagsPrefs = NormalTags.all
-			categoriesPrefs = NormalCategory.all
-			nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID)
+		if(prefs != nil)
+			if current_user != nil
+				user = User.find(current_user.id.to_s)
+				ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
+				musicCategoryID = Category.find_by(name: "Música").categoryID
+				nightCategoryID = Category.find_by(name: "Noturno").categoryID
 
-			if categoriesPrefs.length != 0
-				@eventDates.each do |eventDate|
-					categoriesPrefs.each do |categoryPref|
-						if eventDate.event.categoryID == categoryPref.categoryID
-							eventDates2.push(eventDate)
-						end
-					end
-					@eventDates = eventDates2.clone
-					eventDates2.clear
-				end
-			end
+				tagsPrefs = NormalTags.all
+				categoriesPrefs = NormalCategory.all
+				nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID)
 
-			if tagsPrefs.length != 0
-				@eventDates.each do |eventDate|
-					eventDate.event.tags.each do |eventTag|
-						tagsPrefs.each do |tagsPref|
-							if eventTag.tagsID == tagsPref.tagsID
+				if categoriesPrefs.length != 0
+					@eventDates.each do |eventDate|
+						categoriesPrefs.each do |categoryPref|
+							if eventDate.event.categoryID == categoryPref.categoryID
 								eventDates2.push(eventDate)
 							end
 						end
@@ -276,7 +266,22 @@ class EventController < ApplicationController
 					@eventDates = eventDates2.clone
 					eventDates2.clear
 				end
+
+				if tagsPrefs.length != 0
+					@eventDates.each do |eventDate|
+						eventDate.event.tags.each do |eventTag|
+							tagsPrefs.each do |tagsPref|
+								if eventTag.tagsID == tagsPref.tagsID
+									eventDates2.push(eventDate)
+								end
+							end
+						end
+					end
+					@eventDates = eventDates2.clone
+					eventDates2.clear
+				end
 			end
+			pageLink = pageLink + "&prefs=1"
 		end
 
 		# ------------------- Paginate by 18 events -------------------------
