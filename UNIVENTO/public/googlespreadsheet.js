@@ -1,5 +1,6 @@
 var scriptLink = "https://script.google.com/macros/s/AKfycbxpb6ghoFH5Hyllkaq6DbmEepHU-nizHO6ukrOcJgLX4BRCAmM/exec";
 var PERGUNTAS = ['Carimbo de data/hora'];
+
 function start(){
     criarForm();
 	$.ajax({
@@ -11,11 +12,13 @@ function start(){
 		if(eventInfo[2]!=null){
 			$("#link").append("<a href=\""+eventInfo[2]+"\"> Ver SpreadSheet no google docs </a>");
 		}
+
 	   	$("#criarSpreadsheet").submit(function(e){
 			e.preventDefault();
             console.log(JSON.stringify(PERGUNTAS));
 		    createSpreadSheet(eventInfo[1]+"_"+eventInfo[0]);
 		});
+
 		$("#carregarDados").on("click",function(){
 		    getData(eventInfo[2]);
 		});
@@ -24,12 +27,19 @@ function start(){
 			var inputs = $( this ).serializeArray();
 	    	var values = [];
 	    	values.push(getDateTime());
+            var lastQuestion="";
 	    	$.each(inputs, function (i, input) {
-	    		values.push(input.value);
+                if(input.name==lastQuestion){
+                    values[values.length-1]=values[values.length-1]+", "+input.value;
+                }else {
+                    lastQuestion=input.name;
+                    values.push(input.value);
+                }
 	    	});
-	    	sendData(values,eventInfo[2]);
+            sendData(values,eventInfo[2]);
 	    	e.preventDefault();
 		});  
+
         $.ajax({
                 url: scriptLink,
                 type: "get",
@@ -104,7 +114,6 @@ function sendData(values,docID){
     	}
     });
     window.alert("Inscrição submetida");
-    //getData(docID);
     window.location.replace("/");
 }
 
@@ -165,7 +174,7 @@ function criarForm () {
         if(opcao=="normal"){
             $("#preview").append("<div class=\"form-group\">"
                                     +"<label for=\"\">"+numQuestion+". "+$("#perguntaNormal").val()+"</label>"
-                                    +"   <input type=\"text\" class=\"form-control\" >"
+                                    +"   <input name=\"\" type=\"text\" class=\"form-control\" >"
                                     +"</div>");
             PERGUNTAS.push(JSON.stringify([$("#perguntaNormal").val(),[]]));
         }else if (opcao=="multipla"){
@@ -242,7 +251,7 @@ function mostrarForm(perguntas){
             if(pergunta[2]){//checkbox
                 html+="<div class=\"checkbox\">";
                 for (var j = 0; j < pergunta[1].length; j++) {
-                    html+="<label><input type=\"checkbox\" value=\"\">";
+                    html+="<label><input name=\"p"+numQuestion+"\" type=\"checkbox\" value=\""+pergunta[1][j]+"\">";
                     html+= pergunta[1][j];
                     html+="</label><br>";
                 };
@@ -250,7 +259,7 @@ function mostrarForm(perguntas){
             }else {//radio
                 html+="<div class=\"radio\">";
                 for (var j = 0; j < pergunta[1].length; j++) {
-                    html+="<label><input type=\"radio\" value=\"\" checked name=\"optionsRadios"+numQuestion+"\">";
+                    html+="<label><input type=\"radio\" value=\""+pergunta[1][j]+"\" checked name=\"p"+numQuestion+"\">";
                     html+= pergunta[1][j];
                     html+="</label><br>";
                 };
@@ -263,10 +272,9 @@ function mostrarForm(perguntas){
         }else {// pergunta normal
             $("#enviaDados").children().first().append("<div class=\"form-group\">"
                                     +"<label for=\"\">"+numQuestion+". "+pergunta[0]+"</label>"
-                                    +"   <input type=\"text\" class=\"form-control\" >"
+                                    +"   <input name=\"p"+numQuestion+"\" type=\"text\" class=\"form-control\" >"
                                     +"</div>");
         }
-        console.log(pergunta);
     };
     
 }
