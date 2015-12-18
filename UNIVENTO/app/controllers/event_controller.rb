@@ -14,7 +14,6 @@ class EventController < ApplicationController
 		  redirect_to root_path
 		  return
 		end
-		render 'temp'
  	end
 
 # ========================================================
@@ -52,6 +51,15 @@ class EventController < ApplicationController
  		authorize! :create, @event, :message => "Não tem autorização para criar eventos"
  		@category = Category.all
  		@image = Image.new
+ 		if Colaborator.find_by_normalID(current_user.userID)
+ 			@associacoes = Array.new
+ 			Colaborator.where(normalID: current_user.userID).each do |promoter|
+ 				@associacoes.push(Promoter.find_by_promoterID(promoter.promoterID).name)
+ 			end
+ 		end
+
+		puts "new"
+		puts flash.inspect
  	end
 
 # ========================================================
@@ -66,6 +74,8 @@ class EventController < ApplicationController
 # ========================================================
 
 	def create_or_update_event(tipo)
+		#render plain: params.inspect
+		#return
 		event_params = params[:event]
  		@event.name = event_params[:name]
  		@event.descrition = event_params[:descrition]
@@ -82,6 +92,7 @@ class EventController < ApplicationController
 	 		elsif Colaborator.find_by_normalID(current_user.userID)
 	 			@event.propose=true
 #<!> 			#escolher o id do promotor conforme o valor do input referente à associação
+				@event.promoterID = Promoter.where(name: params[:promoter]).take.promoterID
 				@event.normalID = current_user.userID
 	 		end
  		end
@@ -89,7 +100,7 @@ class EventController < ApplicationController
 
 
 
-        @event.activeDate = (params["activeDate"]["activeDate(3i)"]<<"-"<<params["activeDate"]["activeDate(2i)"]<<"-"<<params["activeDate"]["activeDate(1i)"]<<" "<<params["activeDate"]["activeDate(4i)"]<<":"<<params["activeDate"]["activeDate(5i)"])
+        @event.activeDate = params["activeDate"]
 
        	if saveOrDestroy(@event) 
        		return 
@@ -133,8 +144,8 @@ class EventController < ApplicationController
 	    if params[:dates].present?
 		    params[:dates].each_with_index do |date, k|
 		        eventDate = EventDate.new
-		        eventDate.startDate = (params[:dates][k.to_s]["startDate(1i)"] << "-" << params[:dates][k.to_s]["startDate(2i)"]<< "-" << params[:dates][k.to_s]["startDate(3i)"]<< " "<<params[:dates][k.to_s]["startDate(4i)"]<<":"<<params[:dates][k.to_s]["startDate(5i)"])
-		        eventDate.endDate = (params[:dates][k.to_s]["endDate(1i)"] << "-" << params[:dates][k.to_s]["endDate(2i)"]<< "-" << params[:dates][k.to_s]["endDate(3i)"]<< " "<<params[:dates][k.to_s]["endDate(4i)"]<<":"<<params[:dates][k.to_s]["endDate(5i)"])
+		        eventDate.startDate = params[:dates][k.to_s]["startDate"]
+		        eventDate.endDate = params[:dates][k.to_s]["endDate"]
 		        eventDate.eventID=@event.eventID
 		        eventDate.preco=params["price"][k].to_f
 		       	eventDate.descrition = params[:page]["info"<<k.to_s]
@@ -156,8 +167,10 @@ class EventController < ApplicationController
 		end
 
         if params[:image].present?
-	        params[:image]['image'].each do |a|
-	          @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
+	        params[:image]['image'].each_with_index do |a,index|
+	        	if index <10
+			        @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
+			    end
 	        end
     	end
         redirect_to @event

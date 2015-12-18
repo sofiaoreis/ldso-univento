@@ -1,9 +1,9 @@
-
-<script src="/clone-form-td.js"></script>
-
+<!--<script src="/clone-form-td.js"></script> este script não está a por os IDS corretos-->
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <link rel="stylesheet" type="text/css" href="/jquery-gmaps-latlon-picker.css"/>
 <script src="/jquery-gmaps-latlon-picker.js"></script>
+<script src="/ckeditor.js"></script>
+<script src="/evento.js"></script>
 
 <div id="wrapper">
   <div id="page-wrapper">
@@ -13,6 +13,17 @@
       <!--<form action="#" method="post" id="sign-up_area" role="form">-->
       <%= form_for(@event,:url => '/event', :authenticity_token => true, :html => { :multipart => true }) do |f| %>
       
+      <%if @associacoes.present? %>
+      <div class="form_row">
+                <label for="gender">Propor Evento para:</label>
+                <% @associacoes.each do |promoter| %>
+                  <br><%= radio_button_tag 'promoter', promoter, @promoter == promoter, :checked => true %>
+                  <%= promoter %>
+                <% end %>
+            </div>
+      <% end -%>
+      <br>
+
       <div class="row">
         <!-- Event Name -->
         <div class="col-md-6 column">
@@ -51,41 +62,18 @@
  </div><!-- row end-->
 
  <div class="row">
-  <!-- Beginning Date -->
-  <div class="col-md-4 column">
-    <div class="form-group">
-      <label class="label_fn control-label" for="data_inicio">Data de início:</label>
-      <div class='input-group date' id='datetimepicker1'>
-        <input type='text' class="form-control" />
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </span>
-      </div>
-    </div>
-  </div>
-  <script type="text/javascript">
-  $(function () {
-    $('#datetimepicker1').datetimepicker();
-  });
-  </script>
-
   <!-- Active Date -->
   <div class="col-md-4 column">
     <div class="form-group">
       <label class="label_fn control-label" for="data_inicio">Data da partir da qual o evento fica ativo:</label>
-      <div class='input-group date' id='datetimepicker2'>
-        <input type='text' class="form-control" />
+      <div class='input-group date' id=''>
+        <input type='text' class="form-control" name="activeDate"/>
         <span class="input-group-addon">
           <span class="glyphicon glyphicon-calendar"></span>
         </span>
       </div>
     </div>
   </div>
-  <script type="text/javascript">
-  $(function () {
-    $('#datetimepicker2').datetimepicker();
-  });
-  </script>
 </div>
 
 <div class="row">
@@ -95,11 +83,11 @@
     <% @category.each do |category| %>
     <br>
     <script type="text/javaScript">
-    $(function() {
-      $('input[type="checkbox"]').on('change', function() {
-        $(this).closest('fieldset').find('.myClass').toggle(this.checked);
+      $(function() {
+        $('input[type="checkbox"]').on('change', function() {
+          $(this).closest('fieldset').find('.myClass').toggle(this.checked);
+        });
       });
-    });
     </script>
     <fieldset>
       <legend><strong><%= category.name %></strong>
@@ -142,37 +130,27 @@
       <div class="col-md-4 column">
         <div class="form-group">
           <label class="label_fn control-label" for="data_fim">Data de início:</label>
-          <div class='input-group date' id='datetimepicker3'>
-            <input type='text' class="form-control" />
+          <div class='input-group date' id=''>
+            <input type='text' class="form-control" name="dates[0][startDate]"/>
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
         </div>
       </div>
-      <script type="text/javascript">
-      $(function () {
-        $('#datetimepicker3').datetimepicker();
-      });
-      </script>
 
       <!-- End Date -->
       <div class="col-md-4 column">
         <div class="form-group">
           <label class="label_fn control-label" for="data_fim">Data de fim:</label>
-          <div class='input-group date' id='datetimepicker4'>
-            <input type='text' class="form-control" />
+          <div class='input-group date' id=''>
+            <input type='text' class="form-control" name="dates[0][endDate]"/>
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
             </span>
           </div>
         </div>
       </div>
-      <script type="text/javascript">
-      $(function () {
-        $('#datetimepicker4').datetimepicker();
-      });
-      </script>
     </div>
 
     <div class="row">
@@ -194,7 +172,7 @@
       <div class="form-group">
        <label class="label_fn control-label" for="event_local">Escolha o Local:</label>
        <fieldset class="gllpLatlonPicker" id="map0">
-        <input class="form-control" name="dates[0][address]" value="Porto" type="text" class="gllpSearchField">
+        <input name="dates[0][address]" value="Porto" type="text" class="gllpSearchField form-control">
         <input type="button" class="gllpSearchButton btn btn-default" value="search">
         <div class="gllpMap">Google Maps</div>
         <input name="dates[0][latitude]" type="hidden" class="gllpLatitude" value="41.1579438"/>
@@ -209,7 +187,7 @@
   <!-- Place -->
   <div class="col-md-8 column">
     <label class="label_fn control-label" for="event_local">Insira uma descrição detalhada:</label>
-    <%= cktext_area :page, :info1, :cols => 40, :ckeditor => {:uiColor => '#ffffff', :toolbar => 'mini'} %>
+    <%= cktext_area :page, :info0, :cols => 40, :ckeditor => {:uiColor => '#ffffff', :toolbar => 'mini'} %>
   </div>
 </div><!-- row end-->
 </div><!-- end #entry1 -->
