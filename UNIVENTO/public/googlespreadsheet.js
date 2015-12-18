@@ -15,8 +15,8 @@ function start(){
 
 	   	$("#criarSpreadsheet").submit(function(e){
 			e.preventDefault();
-            console.log(JSON.stringify(PERGUNTAS));
-		    createSpreadSheet(eventInfo[1]+"_"+eventInfo[0]);
+            //console.log(JSON.stringify(PERGUNTAS));
+		    createSpreadSheet(eventInfo[1]+"_"+eventInfo[0], $("#gmail").val());
 		});
 
 		$("#carregarDados").on("click",function(){
@@ -54,14 +54,15 @@ function start(){
 	});
 }
 
-function createSpreadSheet(name){
+function createSpreadSheet(name, email){
 	$.ajax({
         url: scriptLink,
     	type: "get",
     	dataType: "json",
     	data: {
     		funcao: "newSpreadSheet",
-    		nome: name
+    		nome: name,
+            editor: email
     	}
     }).done(function (doc) {
       	$.ajax({
@@ -150,6 +151,8 @@ $(start);
 var numQuestion = 0;
 var numOpcao = 2;
 function criarForm () {
+
+    $( "#info" ).mouseenter( function(){$("#infoP").show();} ).mouseleave( function(){$("#infoP").fadeOut()} );
 
     $("#multiplaDiv").hide();
     $("#tipoPergunta").val("normal");
