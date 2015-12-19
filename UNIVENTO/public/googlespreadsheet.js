@@ -1,8 +1,31 @@
+/*  
+    Ficheiro com js para a inscrição em eventos:
+        - permite criar form personalizado
+        - carregar dados das inscrições
+        - registar inscrição
+        - editar inscrição
+        - cancelar inscrição
+        - verificar se user já está inscrito
+*/
+
+
+/*  -   vars globais DON'T TOUCH THIS :D  -   */
+
 var scriptLink = "https://script.google.com/macros/s/AKfycbxpb6ghoFH5Hyllkaq6DbmEepHU-nizHO6ukrOcJgLX4BRCAmM/exec";
-var PERGUNTAS = ['Carimbo de data/hora'];
+var PERGUNTAS = ['Carimbo de data/hora',"[\"Email\",[]]"];
+
+var numQuestion = 1;
+var numOpcao = 2;
+
+/*----------------------------------------------*//*----------------------------------------------*/
 
 function start(){
+    var userEmail ="";
+    /* script de criação de formulário personalizado*/
     criarForm();
+    /*----------------------------------------------*/
+
+    /*obter dados do evento*/
 	$.ajax({
 	    url: window.location.href,
 	  	type: "get",
@@ -13,16 +36,19 @@ function start(){
 			$("#link").append("<a href=\""+eventInfo[2]+"\"> Ver SpreadSheet no google docs </a>");
 		}
 
+        /* botão criar spreadsheet*/
 	   	$("#criarSpreadsheet").submit(function(e){
 			e.preventDefault();
-            //console.log(JSON.stringify(PERGUNTAS));
+            //console.log(PERGUNTAS);
 		    createSpreadSheet(eventInfo[1]+"_"+eventInfo[0], $("#gmail").val());
 		});
 
+        /* botão para mostrar conteudo da spreadsheet*/
 		$("#carregarDados").on("click",function(){
 		    getData(eventInfo[2]);
 		});
 		
+        /* botão para registar uma inscrição*/
 		$('#enviaDados').submit(function(e) {
 			var inputs = $( this ).serializeArray();
 	    	var values = [];
@@ -30,31 +56,96 @@ function start(){
             var lastQuestion="";
 	    	$.each(inputs, function (i, input) {
                 if(input.name==lastQuestion){
-                    values[values.length-1]=values[values.length-1]+", "+input.value;
+                    if(values[values.length-1]!="")
+                        values[values.length-1]=values[values.length-1]+", "+input.value;
+                    else values[values.length-1]=input.value;
                 }else {
                     lastQuestion=input.name;
                     values.push(input.value);
                 }
 	    	});
-            sendData(values,eventInfo[2]);
+            //console.log(values);
+            sendData(values,eventInfo[2],userEmail);
 	    	e.preventDefault();
 		});  
 
-        $.ajax({
+        $("#Inscrever").hide();
+        $("#verificaEmail").on("click",function(){
+            userEmail = $("#inscreverEmailInput").val();
+            $.ajax({
                 url: scriptLink,
                 type: "get",
                 dataType: "json",
                 data: {
-                    funcao: "getQuestions",
-                    spreadsheet: eventInfo[2]
+                    funcao: "getFirstInscription",
+                    spreadsheet: eventInfo[2],
+                    email: userEmail
                 }
-            }).done(function (data) {
-                mostrarForm(data);
+            }).done(function (firstInscription) {
+                console.log(firstInscription);
+                $.ajax({
+                    url: scriptLink,
+                    type: "get",
+                    dataType: "json",
+                    data: {
+                        funcao: "getQuestions",
+                        spreadsheet: eventInfo[2]
+                    }
+                }).done(function (data) {
+                    mostrarForm(data);
+                    console.log(data);
+                    if(firstInscription.length==0){
+                        $("#Inscrever").show();
+                        $('input[name="p1"]').val(userEmail);
+                    }else {
+                        $("#Inscrever").val("Atualizar Inscrição");
+                        $("#enviaDados").append("<button class=\"btn btn-default\" id=\"cancelar\"> Cancelar Inscrição </button>");
+                        $("#Inscrever").show();
+                        $("#cancelar").on("click",function (e){
+                            e.preventDefault();
+                            $.ajax({
+                                url: scriptLink,
+                                type: "get",
+                                dataType: "json",
+                                data: {
+                                    funcao: "cancelInscription",
+                                    spreadsheet: eventInfo[2],
+                                    email: userEmail
+                                }
+                            }).done(function (data){
+                                console.log(data);
+                                window.location.reload();
+                            });
+                        });
+                        for (var i = 1; i < firstInscription.length; i++) {
+                            var pergunta = JSON.parse(data[i]);
+                            if(pergunta[1].length==0){
+                                $('input[name="p'+i+'"]').val(firstInscription[i]);
+                            }else{
+                                if(pergunta[2]){//checkbox
+                                    var escolhidas = firstInscription[i].split(/, /);
+                                    for (var k = 0; k < escolhidas.length; k++) {
+                                        $('input[value="'+escolhidas[k]+'"]').prop('checked',true);
+                                    };
+                                }else{//radio
+                                    $('input[value="'+firstInscription[i]+'"]').prop('checked',true);
+                                }
+                            }
+                        }
+                    }
+                    $("#inscreverEmailDiv").remove();
+                });
             });
+        });
 	});
 }
 
+/*----------------------------------------------*//*----------------------------------------------*/
+
+/* nova spreadsheet*/
 function createSpreadSheet(name, email){
+
+    /*criar spreadsheet*/
 	$.ajax({
         url: scriptLink,
     	type: "get",
@@ -62,22 +153,25 @@ function createSpreadSheet(name, email){
     	data: {
     		funcao: "newSpreadSheet",
     		nome: name,
-            editor: email
+            editor: email,
+            perguntas: JSON.stringify(PERGUNTAS)
     	}
     }).done(function (doc) {
+        /* guardar o url da spreadsheet*/
       	$.ajax({
 	        url: window.location.href,
 	    	type: "get",
 	    	dataType: "json",
 	    	data: {accao:"saveDocsID", docsID:doc}
 	    }).done(function (data) {
-	    	console.log(data);
-	    	sendData(PERGUNTAS,doc);
 	    	window.location.reload();
 	    });
     });
 }
 
+/*----------------------------------------------*//*----------------------------------------------*/
+
+/*obter conteudo da spreadsheet*/
 function getData(docID){
 	$.ajax({
         url: scriptLink,
@@ -102,7 +196,10 @@ function getData(docID){
     });
 }
 
-function sendData(values,docID){
+/*----------------------------------------------*//*----------------------------------------------*/
+
+/*inserir dados da inscrição*/
+function sendData(values,docID, user_email){
 	$.ajax({
         url: scriptLink,
     	type: "get",
@@ -111,13 +208,17 @@ function sendData(values,docID){
     	data: {
     		funcao: "sendData",
     		dados: JSON.stringify(values),
-    		spreadsheet: docID
+    		spreadsheet: docID, 
+            email:user_email
     	}
     });
     window.alert("Inscrição submetida");
     window.location.replace("/");
 }
 
+/*----------------------------------------------*//*----------------------------------------------*/
+
+/*calcular dada e hora atual*/
 function getDateTime() {
     var now     = new Date(); 
     var year    = now.getFullYear();
@@ -145,11 +246,9 @@ function getDateTime() {
      return dateTime;
 }
 
-$(start);
+/*----------------------------------------------*//*----------------------------------------------*/
 
-
-var numQuestion = 0;
-var numOpcao = 2;
+/* cenas para criar e mostrar o formulário personalizado*/
 function criarForm () {
 
     $( "#info" ).mouseenter( function(){$("#infoP").show();} ).mouseleave( function(){$("#infoP").fadeOut()} );
@@ -225,12 +324,17 @@ function criarForm () {
     });
 
     $("#remover").on("click",function(){
-        $("#preview").children().last().remove();
-        if(numQuestion>0)
+        if(numQuestion>1){
             numQuestion--;
+            $("#preview").children().last().remove();
+            PERGUNTAS.pop();
+        }
     });
 }
 
+/*----------------------------------------------*//*----------------------------------------------*/
+
+/*funcao auxiliar para limpar texto introduzido*/
 function clearInputs(){
     numOpcao=2;
     $("#novasOpcoes").html("");
@@ -240,11 +344,10 @@ function clearInputs(){
     $("#opcao2").val("");
 }
 
-function mostrarForm(perguntas){
-    /*
-    [ "Carimbo de data/hora", "["NORMAL",[]]", "["radio",["1","2"],false]", "["check",["3","4","5"],true]" ]
-    */
+/*----------------------------------------------*//*----------------------------------------------*/
 
+/* mostra o formulário para fazer uma inscrição*/
+function mostrarForm(perguntas){
     numQuestion=0;
     for (var i = 1; i < perguntas.length; i++) {
         var pergunta = JSON.parse(perguntas[i]);
@@ -253,6 +356,7 @@ function mostrarForm(perguntas){
             var html = [];
             if(pergunta[2]){//checkbox
                 html+="<div class=\"checkbox\">";
+                 html+="<input name=\"p"+numQuestion+"\" type=\"checkbox\" value=\"\" checked hidden>";
                 for (var j = 0; j < pergunta[1].length; j++) {
                     html+="<label><input name=\"p"+numQuestion+"\" type=\"checkbox\" value=\""+pergunta[1][j]+"\">";
                     html+= pergunta[1][j];
@@ -279,5 +383,8 @@ function mostrarForm(perguntas){
                                     +"</div>");
         }
     };
-    
 }
+
+/*----------------------------------------------*//*----------------------------------------------*/
+
+$(start);

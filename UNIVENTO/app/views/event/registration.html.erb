@@ -56,7 +56,10 @@
 	<div class="col-md-6">
 		<h2>Preview</h2>
 		<div id="preview">
-			
+			<div class="form-group">
+				<label for="">1. Email</label>   
+				<input name="" class="form-control" type="text">
+			</div>
 		</div>
 	</div>
 	<% elsif @isPromoter %>
@@ -68,11 +71,16 @@
 	<% end -%>
 	<% if !@criarInscricao && @event.docsID.present? %>
 	<h2> Formulário de inscrição </h2>
+	<div id="inscreverEmailDiv" class="form-group">
+	    <label for="">Inseria o seu email: </label>
+	    <input type="text" class="form-control" id="inscreverEmailInput" placeholder="">
+	    <button class="btn btn-default" id="verificaEmail"> Verificar inscrição </button>
+	</div>
 	<form id="enviaDados" action="" method="POST">
 		<div>
 			
 		</div>
-		<input class="btn btn-default" type="submit" value="Inscrever">
+		<input id="Inscrever" class="btn btn-default" type="submit" value="Inscrever">
 	</form>
 	<% end -%>
 	<br>
