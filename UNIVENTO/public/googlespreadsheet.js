@@ -308,6 +308,7 @@ function criarForm () {
             PERGUNTAS.push(JSON.stringify([$("#perguntaMultipla").val(),opcaoName,$("#variasRespostas").is(':checked')]));
         }
         clearInputs();
+        $("#adicionar").get(0).scrollIntoView();
     });
 
     $("#adicionarOpcao").on("click",function(){
