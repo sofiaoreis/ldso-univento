@@ -79,34 +79,35 @@
 <div class="row">
   <div class="col-md-4 column">
     <label for="category">Escolha a categoria:</label>
-
-    <% @category.each do |category| %>
-    <br>
     <script type="text/javaScript">
       $(function() {
-        $('input[type="checkbox"]').on('change', function() {
-          $(this).closest('fieldset').find('.myClass').toggle(this.checked);
+        $('select').on('change', function() {
+          $("input[name=\"tags[]\"").prop("checked",false);
+          $(".cat_options").hide();
+          $("#catID_"+this.value).show();
         });
       });
     </script>
     <fieldset>
-      <legend><strong><%= category.name %></strong>
-        <%= check_box_tag 'category', category.categoryID, @category == category, :checked => false %>
-      </legend>
-
-      <span class="myClass" style="display: none;">
-        <h6 for="tag">Escolha até 3 tags da categoria  <%= category.name %>:</h6>
-        <% category.tags.each do |tag| %>
-        <%= check_box_tag 'tags[]', tag.tagsID, @tag == tag %>
-        <%= tag.name %>
+      <legend><%= select_tag 'category', options_from_collection_for_select(@category, "categoryID", "name") %></legend>
+      <% @category.each_with_index do |category,index| %>
+        <% if index > 0%>
+          <span id="catID_<%=category.categoryID%>" class="cat_options" style="display: none;">
+        <% else %>
+          <span id="catID_<%=category.categoryID%>" class="cat_options">
         <% end %>
-      </span>
+          <h6 for="tag">Escolha até 3 tags da categoria  <%= category.name %>:</h6>
+          <% category.tags.each do |tag| %>
+          <%= check_box_tag 'tags[]', tag.tagsID, @tag == tag %>
+          <%= tag.name %>
+          <% end %>
+        </span>
+      <% end %>
     </fieldset>
-    <% end %>
   </div>
 
 </div><!-- row end-->
-
+<br>
 <div class="row">
   <div class="col-md-8">
     <div class="input-group">
