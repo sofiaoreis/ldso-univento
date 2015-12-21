@@ -198,10 +198,16 @@
   <button type="button" id="btnAdd" name="btnAdd" class="btn btn-info">Adicionar Dia</button>
   <button type="button" id="btnDel" name="btnDel" class="btn btn-danger">Remover dia acima</button>
 </p>
-
+<br><br>
 <div class="field">
+  <h2>Imagens</h2>
+  <label>Inserir imagem de capa</label>
+  <%= f.file_field :image, :multiple => false, name: "image[image][]" %>
+  <br>
+  <label>Inserir images para exibir na galeria</label>
   <%= f.file_field :image, :multiple => true, name: "image[image][]" %>
 </div>
+<br>
 <p>
   <%= f.submit'Criar Evento', :class => 'btn btn-default' %>
 </p>
