@@ -1,6 +1,23 @@
 var index=1;
 function setup(){
+
+    $('select').on('change', function() {
+      $("input[name=\"tags[]\"").prop("checked",false);
+      $(".cat_options").hide();
+      $("#catID_"+this.value).show();
+    });
+
+    if($("#eventCategory").length ){
+    	$("#category").val($("#eventCategory").val());
+    	$("#category").trigger("change");
+    	var tags = JSON.parse($("#eventTags").val());
+    	$.each(tags, function(key, value){
+			$("input[value=\""+value+"\"]").prop("checked",true);
+    	});
+    }
+
 	setDateTimePicker();
+	index = $('.clonedInput').length;
 
   	$("#btnAdd").on("click",function(){
   		if(index < 8){
@@ -91,8 +108,11 @@ function setup(){
         return false;
     });
 
-    $('#btnDel').attr('disabled', true);
-    $('#btnAdd').attr('disabled', false)
+	$('#btnAdd').attr('disabled', !(index < 8));
+
+   	$('#btnDel').attr('disabled', (index < 2));
+
+    
 
 }
 
