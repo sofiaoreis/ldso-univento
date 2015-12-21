@@ -85,7 +85,9 @@
                             <div class="panel-heading" role="tab" id="heading<%=index%>">
                                 <h4 class="panel-title">
                                     <a role="button" class="colapseButton" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=index%>" aria-expanded="true" aria-controls="collapse<%=index%>">
-                                    Data: <%= data.startDate %> até <%= data.endDate %> - <%= data.preco %>€
+                                    Data: <%= data.startDate.strftime("%d/%m/%Y - %H:%M") %>
+
+                                     até <%= data.endDate.strftime("%d/%m/%Y - %H:%M") %> - <%= data.preco %>€
                                   </a>
                                 </h4>
                             </div>
