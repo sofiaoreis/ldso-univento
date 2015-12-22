@@ -78,15 +78,6 @@
 <div class="row">
   <div class="col-md-4 column">
     <label for="category">Escolha a categoria:</label>
-    <script type="text/javaScript">
-      $(function() {
-        $('select').on('change', function() {
-          $("input[name=\"tags[]\"").prop("checked",false);
-          $(".cat_options").hide();
-          $("#catID_"+this.value).show();
-        });
-      });
-    </script>
     <fieldset>
       <legend><%= select_tag 'category', options_from_collection_for_select(@category, "categoryID", "name") %></legend>
       <% @category.each_with_index do |category,index| %>
