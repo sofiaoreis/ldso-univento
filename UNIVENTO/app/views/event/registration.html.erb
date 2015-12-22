@@ -6,7 +6,7 @@
 		<div id="preview" style="overflow-y: auto; max-heigth: auto;">
 			<div class="form-group" >
 				<label for="">1. Email</label>   
-				<input name="" class="form-control" type="text">
+				<input name="" class="form-control" type="email" required>
 			</div>
 		</div>
 	</div>
@@ -17,7 +17,7 @@
 		    <label for="gmail">Insira o email de uma conta google</label>
 		    <span id="info" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 		    <p id="infoP" style="display:none">Este email é necessário para que possa aceder e editar as inscrições através do google docs</p>
-		    <input type="text" class="form-control" id="gmail" placeholder="Exemplo: asd_123@gmail.com" required>
+		    <input type="email" class="form-control" id="gmail" placeholder="Exemplo: asd_123@gmail.com" required>
 		</div>
 
 		<label for="tipoPergunta">Tipo da pergunta ?</label>
@@ -71,16 +71,16 @@
 	<% end -%>
 	<% if !@criarInscricao && @event.docsID.present? %>
 	<h2> Formulário de inscrição </h2>
-	<div id="inscreverEmailDiv" class="form-group">
+	<!--<div id="inscreverEmailDiv" class="form-group">
 	    <label for="">Inseria o seu email: </label>
-	    <input type="text" class="form-control" id="inscreverEmailInput" placeholder="">
+	    <input type="email" class="form-control" id="inscreverEmailInput" placeholder="" required>
 	    <button class="btn btn-default" id="verificaEmail"> Verificar inscrição </button>
-	</div>
+	</div>-->
 	<form id="enviaDados" action="" method="POST">
 		<div>
 			
 		</div>
-		<input id="Inscrever" class="btn btn-default" type="submit" value="Inscrever">
+		<input id="Inscrever" class="btn btn-default" type="submit" value="Inscrever" style="display:none;">
 	</form>
 	<% end -%>
 	<br>

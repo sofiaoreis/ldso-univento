@@ -431,7 +431,7 @@ class EventController < ApplicationController
 	      format.html
 	      format.json { 
 	      	if params[:accao] == "getEventInfo"
-	      		render :json => [@event.name, @event.eventID,@event.docsID].to_json 
+	      		render :json => [@event.name, @event.eventID,@event.docsID,current_user.email].to_json 
 	      	elsif params[:accao] == "saveDocsID"
 	      		@event.docsID = params[:docsID]
 	      		render :json => @event.save!.to_json

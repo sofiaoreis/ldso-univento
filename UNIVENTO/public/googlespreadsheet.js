@@ -32,6 +32,8 @@ function start(){
 	   	dataType: "json",
 	   	data: {accao:"getEventInfo"}
 	}).done(function (eventInfo) {
+        //console.log(eventInfo);
+        userEmail = eventInfo[3];
 		if(eventInfo[2]!=null){
 			$("#link").append("<a href=\""+eventInfo[2]+"\"> Ver SpreadSheet no google docs </a>");
 		}
@@ -65,78 +67,97 @@ function start(){
                 }
 	    	});
             //console.log(values);
+            /*
+            if(ValidateEmail(userEmail)==false){
+                $("#inscreverEmailDiv").addClass("has-error");
+                $("#verificaEmail").get(0).scrollIntoView();
+                return;
+            }
+            */
+            values[1]=userEmail; // apenas por segurança :)
             sendData(values,eventInfo[2],userEmail);
 	    	e.preventDefault();
 		});  
 
-        $("#Inscrever").hide();
-        $("#verificaEmail").on("click",function(){
+        //$("#Inscrever").hide();
+        /*$("#verificaEmail").on("click",function(){*/
+            /*
+            $("#inscreverEmailDiv").removeClass("has-error");
             userEmail = $("#inscreverEmailInput").val();
+
+            if(ValidateEmail(userEmail)==false){
+                $("#inscreverEmailDiv").addClass("has-error");
+                $("#verificaEmail").get(0).scrollIntoView();
+                return;
+            }
+            */
+
+        $.ajax({
+            url: scriptLink,
+            type: "get",
+            dataType: "json",
+            data: {
+                funcao: "getFirstInscription",
+                spreadsheet: eventInfo[2],
+                email: userEmail
+            }
+        }).done(function (firstInscription) {
+            //console.log(firstInscription);
             $.ajax({
                 url: scriptLink,
                 type: "get",
                 dataType: "json",
                 data: {
-                    funcao: "getFirstInscription",
-                    spreadsheet: eventInfo[2],
-                    email: userEmail
+                    funcao: "getQuestions",
+                    spreadsheet: eventInfo[2]
                 }
-            }).done(function (firstInscription) {
-                console.log(firstInscription);
-                $.ajax({
-                    url: scriptLink,
-                    type: "get",
-                    dataType: "json",
-                    data: {
-                        funcao: "getQuestions",
-                        spreadsheet: eventInfo[2]
-                    }
-                }).done(function (data) {
-                    mostrarForm(data);
-                    console.log(data);
-                    if(firstInscription.length==0){
-                        $("#Inscrever").show();
-                        $('input[name="p1"]').val(userEmail);
-                    }else {
-                        $("#Inscrever").val("Atualizar Inscrição");
-                        $("#enviaDados").append("<button class=\"btn btn-default\" id=\"cancelar\"> Cancelar Inscrição </button>");
-                        $("#Inscrever").show();
-                        $("#cancelar").on("click",function (e){
-                            e.preventDefault();
-                            $.ajax({
-                                url: scriptLink,
-                                type: "get",
-                                dataType: "json",
-                                data: {
-                                    funcao: "cancelInscription",
-                                    spreadsheet: eventInfo[2],
-                                    email: userEmail
-                                }
-                            }).done(function (data){
-                                console.log(data);
-                                window.location.reload();
-                            });
+            }).done(function (data) {
+                mostrarForm(data);
+                //console.log(data);
+                if(firstInscription.length==0){
+                    $("#Inscrever").show();
+                    $('input[name="p1"]').val(userEmail);
+                    $('input[name="p1"]').prop('readonly',true);
+                }else {
+                    $("#Inscrever").val("Atualizar Inscrição");
+                    $("#enviaDados").append("<button class=\"btn btn-default\" id=\"cancelar\"> Cancelar Inscrição </button>");
+                    $("#Inscrever").show();
+                    $("#cancelar").on("click",function (e){
+                        e.preventDefault();
+                        $.ajax({
+                            url: scriptLink,
+                            type: "get",
+                            dataType: "json",
+                            data: {
+                                funcao: "cancelInscription",
+                                spreadsheet: eventInfo[2],
+                                email: userEmail
+                            }
+                        }).done(function (data){
+                            //console.log(data);
+                            window.location.reload();
                         });
-                        for (var i = 1; i < firstInscription.length; i++) {
-                            var pergunta = JSON.parse(data[i]);
-                            if(pergunta[1].length==0){
-                                $('input[name="p'+i+'"]').val(firstInscription[i]);
-                            }else{
-                                if(pergunta[2]){//checkbox
-                                    var escolhidas = firstInscription[i].split(/, /);
-                                    for (var k = 0; k < escolhidas.length; k++) {
-                                        $('input[value="'+escolhidas[k]+'"]').prop('checked',true);
-                                    };
-                                }else{//radio
-                                    $('input[value="'+firstInscription[i]+'"]').prop('checked',true);
-                                }
+                    });
+                    for (var i = 1; i < firstInscription.length; i++) {
+                        var pergunta = JSON.parse(data[i]);
+                        if(pergunta[1].length==0){
+                            $('input[name="p'+i+'"]').val(firstInscription[i]);
+                        }else{
+                            if(pergunta[2]){//checkbox
+                                var escolhidas = firstInscription[i].split(/, /);
+                                for (var k = 0; k < escolhidas.length; k++) {
+                                    $('input[value="'+escolhidas[k]+'"]').prop('checked',true);
+                                };
+                            }else{//radio
+                                $('input[value="'+firstInscription[i]+'"]').prop('checked',true);
                             }
                         }
                     }
-                    $("#inscreverEmailDiv").remove();
-                });
+                }
+                $("#inscreverEmailDiv").remove();
             });
         });
+        /*});*/
 	});
 }
 
@@ -380,11 +401,22 @@ function mostrarForm(perguntas){
         }else {// pergunta normal
             $("#enviaDados").children().first().append("<div class=\"form-group\">"
                                     +"<label for=\"\">"+numQuestion+". "+pergunta[0]+"</label>"
-                                    +"   <input name=\"p"+numQuestion+"\" type=\"text\" class=\"form-control\" >"
+                                    +"   <input name=\"p"+numQuestion+"\" type=\"text\" class=\"form-control\" required>"
                                     +"</div>");
         }
     };
+
+    $("input[name=\"p1\"]").prop("readonly",true);
 }
+            
+/*----------------------------------------------*//*----------------------------------------------*/
+
+function ValidateEmail(mail){  
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)){  
+        return true;  
+    }  
+    return false;  
+};
 
 /*----------------------------------------------*//*----------------------------------------------*/
 
