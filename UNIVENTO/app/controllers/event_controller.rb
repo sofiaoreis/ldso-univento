@@ -388,9 +388,28 @@ class EventController < ApplicationController
 # ========================================================
 
 	def search
-		@event = Event.where(['name LIKE ?', params[:search]]).take
-		@image = @event.image.all
-		redirect_to @event
+		numEventos = 16
+		if !params[:numPage].present?
+			params[:numPage]=1
+		end
+		if params[:commit].present?
+			if params[:commit]==">"
+				params[:numPage]=params[:numPage].to_i+1
+			elsif params[:commit]=="<"
+				params[:numPage]=params[:numPage].to_i-1
+			end
+		end
+
+		if params[:numPage]<1
+			params[:numPage]=1
+		end
+
+		@events = Event.where('name LIKE ?', "%"+params[:search]+"%").offset(numEventos*(params[:numPage].to_i-1)).first(numEventos)
+
+		while @events.blank?
+			params[:numPage]=params[:numPage].to_i-1
+			@events = Event.where('name LIKE ?', "%"+params[:search]+"%").offset(numEventos*(params[:numPage].to_i-1)).first(numEventos)
+		end
 	end
 
 # ========================================================

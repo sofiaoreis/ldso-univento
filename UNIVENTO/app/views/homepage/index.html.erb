@@ -6,7 +6,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                                <%= form_tag search_event_index_path, :method => 'get' do %>
+                                <%= form_tag search_event_index_path, :method => 'post' do %>
                                 <%= text_field_tag :search, params[:search] %>
                                 <%= submit_tag "Search" %>
                                 <% end %>
