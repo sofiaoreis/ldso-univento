@@ -1,4 +1,3 @@
-<!--<script src="/clone-form-td.js"></script> este script não está a por os IDS corretos-->
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <link rel="stylesheet" type="text/css" href="/jquery-gmaps-latlon-picker.css"/>
 <script src="/jquery-gmaps-latlon-picker.js"></script>
@@ -79,49 +78,41 @@
 <div class="row">
   <div class="col-md-4 column">
     <label for="category">Escolha a categoria:</label>
-
-    <% @category.each do |category| %>
-    <br>
-    <script type="text/javaScript">
-      $(function() {
-        $('input[type="checkbox"]').on('change', function() {
-          $(this).closest('fieldset').find('.myClass').toggle(this.checked);
-        });
-      });
-    </script>
     <fieldset>
-      <legend><strong><%= category.name %></strong>
-        <%= check_box_tag 'category', category.categoryID, @category == category, :checked => false %>
-      </legend>
-
-      <span class="myClass" style="display: none;">
-        <h6 for="tag">Escolha até 3 tags da categoria  <%= category.name %>:</h6>
-        <% category.tags.each do |tag| %>
-        <%= check_box_tag 'tags[]', tag.tagsID, @tag == tag %>
-        <%= tag.name %>
+      <legend><%= select_tag 'category', options_from_collection_for_select(@category, "categoryID", "name") %></legend>
+      <% @category.each_with_index do |category,index| %>
+        <% if index > 0%>
+          <span id="catID_<%=category.categoryID%>" class="cat_options" style="display: none;">
+        <% else %>
+          <span id="catID_<%=category.categoryID%>" class="cat_options">
         <% end %>
-      </span>
+          <h6 for="tag">Escolha até 3 tags da categoria  <%= category.name %>:</h6>
+          <% category.tags.each do |tag| %>
+          <%= check_box_tag 'tags[]', tag.tagsID, @tag == tag %>
+          <%= tag.name %>
+          <% end %>
+        </span>
+      <% end %>
     </fieldset>
-    <% end %>
   </div>
 
 </div><!-- row end-->
-
+<br>
 <div class="row">
   <div class="col-md-8">
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1"><i class="fa fa-youtube"></i></span>
-      <%= text_field_tag 'youtube[]', 'Insira um link do youtube', class: 'form-control' %>
+      <%= text_field_tag 'youtube[]', nil, class: 'form-control', :placeholder=>"Insira um link do youtube" %>
     </div>
 
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1"><i class="fa fa-spotify"></i></span>
-      <%= text_field_tag 'spotify[]', 'Insira um link do spotify', class: 'form-control' %>
+      <%= text_field_tag 'spotify[]', nil, class: 'form-control', :placeholder=>"Insira um link do spotify" %>
     </div>
   </div>
 </div><!-- row end-->
 
-<div id="entry1" class="clonedInput">
+<div id="entry0" class="clonedInput">
   <h2 id="reference" name="reference" class="heading-reference">Data #1</h2>
   <fieldset>
 
@@ -197,10 +188,16 @@
   <button type="button" id="btnAdd" name="btnAdd" class="btn btn-info">Adicionar Dia</button>
   <button type="button" id="btnDel" name="btnDel" class="btn btn-danger">Remover dia acima</button>
 </p>
-
+<br><br>
 <div class="field">
+  <h2>Imagens</h2>
+  <label>Inserir imagem de capa</label>
+  <%= f.file_field :image, :multiple => false, name: "image[image][]" %>
+  <br>
+  <label>Inserir images para exibir na galeria</label>
   <%= f.file_field :image, :multiple => true, name: "image[image][]" %>
 </div>
+<br>
 <p>
   <%= f.submit'Criar Evento', :class => 'btn btn-default' %>
 </p>

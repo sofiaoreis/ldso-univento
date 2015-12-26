@@ -49,7 +49,7 @@
                          <a href="<%= @image.first.image %>" data-gallery><%= image_tag @image.first.image %></a>
                         <% end -%>
                         <div class="caption text-center">
-                            <h4><%= @event.preco %>€ - 23h</h4>
+                            <h4><%= @event.preco %>€ - Para todos os dias</h4>
                             <p>
                                 <a href="#" class="btn btn-lgg">Comprar!</a>
                             </p>
@@ -84,8 +84,10 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="heading<%=index%>">
                                 <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=index%>" aria-expanded="true" aria-controls="collapse<%=index%>">
-                                    Data: <%= data.startDate %> até <%= data.endDate %> - <%= data.preco %>€
+                                    <a role="button" class="colapseButton" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=index%>" aria-expanded="true" aria-controls="collapse<%=index%>">
+                                    Data: <%= data.startDate.strftime("%d/%m/%Y - %H:%M") %>
+
+                                     até <%= data.endDate.strftime("%d/%m/%Y - %H:%M") %> - <%= data.preco %>€
                                   </a>
                                 </h4>
                             </div>
@@ -97,10 +99,12 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <%= raw (data.descrition) %>
-                                        <strong>Local:</strong><%= data.local.address %> latitude: <%= data.local.latitude %> longitude <%= data.local.longitude %><br>
+                                        <label>Local: </label><%= data.local.address %> <br>
+                                        <label>Latitude: </label> <%= data.local.latitude %> <br>
+                                        <label>Longitude: </label> <%= data.local.longitude %><br>
                                         <fieldset class="gllpLatlonPicker" id="<%= index%>" >
-                                          <input value="<%= data.local.address %>" type="text" class="gllpSearchField">
-                                          <input type="button" class="gllpSearchButton" value="search">
+                                          <input type="hidden" value="<%= data.local.address %>" type="text" class="gllpSearchField">
+                                          <input type="button" class="gllpSearchButton" value="search" hidden>
                                           <div class="gllpMap">Google Maps</div>
                                           <input type="hidden" class="gllpLatitude" value="<%= data.local.latitude %>" />
                                           <input type="hidden" class="gllpLongitude" value="<%= data.local.longitude %>" />
@@ -113,7 +117,7 @@
                         <% end %>
                     </div>
                 </div>
-                <div class="row top-buffer ">
+                <div class="top-buffer ">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="grid-sizer"></div>
                         <div id="links">
@@ -131,7 +135,7 @@
                 </div>
                 <br>
                 <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
-                <div class="row top-buffer">
+                <div class="top-buffer">
                     <div class="fb-comments" data-href=<%= request.original_url %>  data-numposts="5"></div>
                     <div id="fb-root"></div>
                 </div>
@@ -156,3 +160,16 @@
         js.src = "//connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v2.5&appId=548043568677408";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
+    <script type="text/javascript">
+        function start(){
+            $(".colapseButton").on("click",function(){
+                window.setTimeout(loadMaps,500);
+            });
+        };
+        function loadMaps(){
+            $(".gllpLatlonPicker").each(function() {
+                $(document).gMapsLatLonPicker().init( $(this) );
+            });
+        };
+        $(start);
+    </script>

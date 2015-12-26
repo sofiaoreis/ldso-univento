@@ -96,11 +96,11 @@ class EventController < ApplicationController
 				@event.normalID = current_user.userID
 	 		end
  		end
- 			
-
-
-
-        @event.activeDate = params["activeDate"]
+ 		
+ 		if params["activeDate"].present?
+        	@event.activeDate = params["activeDate"]
+        else @event.activeDate = Time.now
+        end
 
        	if saveOrDestroy(@event) 
        		return 
@@ -120,32 +120,46 @@ class EventController < ApplicationController
 
 	    if params[:youtube].present?
 	        params[:youtube].each do |link|
-	            youtube = Youtube.new
-	            youtube.videoID=link
-	            youtube.eventID=@event.eventID
-	            
-	            if saveOrDestroy(youtube) 
-	            	return 
-	            end
+	        	if link.present?
+		            youtube = Youtube.new
+		            youtube.videoID="https://www.youtube.com/embed/" + link.sub("https://www.youtube.com/watch?v=", "").gsub("&","?")
+		            youtube.eventID=@event.eventID
+					#y:		https://www.youtube.com/watch?v=pxMy-QB-yP4
+					#ye:	https://www.youtube.com/embed/pxMy-QB-yP4
+		            if saveOrDestroy(youtube) 
+		            	return 
+		            end
+		        end
 	        end
 	    end
 	    if params[:spotify].present?
 	        params[:spotify].each do |link|
-	            spotify = Spotify.new
-	            spotify.playListLink=link
-	            spotify.eventID=@event.eventID
-	            
-	            if saveOrDestroy(spotify) 
-	            	return 
-	            end
+	        	if link.present?
+		            spotify = Spotify.new
+		            spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub("https://open.spotify.com/","").gsub("/",":")
+		            spotify.eventID=@event.eventID
+					#s: 	https://open.spotify.com/track/5cR7culxUEPLhzIC0KWAH1
+					#se:	https://embed.spotify.com/?uri=spotify:track:5cR7culxUEPLhzIC0KWAH1
+		            if saveOrDestroy(spotify) 
+		            	return 
+		            end
+		        end
 	        end
 	    end
 
 	    if params[:dates].present?
 		    params[:dates].each_with_index do |date, k|
 		        eventDate = EventDate.new
-		        eventDate.startDate = params[:dates][k.to_s]["startDate"]
-		        eventDate.endDate = params[:dates][k.to_s]["endDate"]
+		        if params[:dates][k.to_s]["startDate"].present?
+		        	eventDate.startDate = params[:dates][k.to_s]["startDate"]
+		        else eventDate.startDate = Time.now
+		        end
+
+		        if params[:dates][k.to_s]["endDate"].present?
+		        	eventDate.endDate = params[:dates][k.to_s]["endDate"]
+		        else eventDate.endDate = Time.now
+		        end
+
 		        eventDate.eventID=@event.eventID
 		        eventDate.preco=params["price"][k].to_f
 		       	eventDate.descrition = params[:page]["info"<<k.to_s]
@@ -374,9 +388,28 @@ class EventController < ApplicationController
 # ========================================================
 
 	def search
-		@event = Event.where(['name LIKE ?', params[:search]]).take
-		@image = @event.image.all
-		redirect_to @event
+		numEventos = 16
+		if !params[:numPage].present?
+			params[:numPage]=1
+		end
+		if params[:commit].present?
+			if params[:commit]==">"
+				params[:numPage]=params[:numPage].to_i+1
+			elsif params[:commit]=="<"
+				params[:numPage]=params[:numPage].to_i-1
+			end
+		end
+
+		if params[:numPage]<1
+			params[:numPage]=1
+		end
+
+		@events = Event.where('name LIKE ?', "%"+params[:search]+"%").offset(numEventos*(params[:numPage].to_i-1)).first(numEventos)
+
+		while @events.blank?
+			params[:numPage]=params[:numPage].to_i-1
+			@events = Event.where('name LIKE ?', "%"+params[:search]+"%").offset(numEventos*(params[:numPage].to_i-1)).first(numEventos)
+		end
 	end
 
 # ========================================================
@@ -431,7 +464,7 @@ class EventController < ApplicationController
 	      format.html
 	      format.json { 
 	      	if params[:accao] == "getEventInfo"
-	      		render :json => [@event.name, @event.eventID,@event.docsID].to_json 
+	      		render :json => [@event.name, @event.eventID,@event.docsID,current_user.email].to_json 
 	      	elsif params[:accao] == "saveDocsID"
 	      		@event.docsID = params[:docsID]
 	      		render :json => @event.save!.to_json
