@@ -1,7 +1,7 @@
 body {
     background-color: #f8f8f8;
     font-family: 'Open Sans', sans-serif;
-    /* background:url('http://192.168.58.74/assets/arraial.jpg'); */
+    background:url('http://192.168.58.74/assets/arraial.jpg');
 }
 p {
     font-weight: 200;
@@ -561,4 +561,17 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
 {
      text-align: left;
     padding-left: 100px;
+}
+
+.thumbnail{
+    border: none;
+    padding: 0px;
+    background-color: none;
+    margin-bottom: 0px;
+    border-radius: 0px;
+}
+
+#evento{
+    padding-right: 0px;
+    padding-left: 0px;
 }
