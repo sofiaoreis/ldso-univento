@@ -18,6 +18,15 @@
     </div>
   <% end -%>
 
+
+
+  <%if params[:colaborator] %>
+    <input type="hidden" hidden name="colaborator" value="<%=params[:colaborator]%>">
+  <%end%>
+  <%if params[:email] %>
+    <input type="hidden" hidden name="email" value="<%=params[:email]%>">
+  <%end%>
+
   <div class="actions">
     <%= f.submit "Log in" %>
   </div>
