@@ -26,23 +26,23 @@ DROP TABLE IF EXISTS ckeditor_assets CASCADE;
 
 CREATE TABLE NormalTags
 (
-	normalID INTEGER NULL,
-	tagsID INTEGER NULL,
+	normalID INTEGER ,
+	tagsID INTEGER ,
 	PRIMARY KEY(normalID,tagsID)
 ) ;
 
 
 CREATE TABLE NormalCategory
 (
-	normalID INTEGER NULL,
-	categoryID INTEGER NULL,
+	normalID INTEGER ,
+	categoryID INTEGER ,
 	PRIMARY KEY(normalID,categoryID)
 ) ;
 
 
 CREATE TABLE Category
 (
-	name VARCHAR(50) NULL,
+	name VARCHAR(50) ,
 	categoryID INTEGER NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (categoryID)
 ) ;
@@ -50,7 +50,7 @@ CREATE TABLE Category
 
 CREATE TABLE Tags
 (
-	name VARCHAR(50) NULL,
+	name VARCHAR(50) ,
 	tagsID INTEGER NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (tagsID)
 
@@ -59,16 +59,16 @@ CREATE TABLE Tags
 
 CREATE TABLE CategoryTags
 (
-	tagsID INTEGER NULL,
-	categoryID INTEGER NULL,
+	tagsID INTEGER ,
+	categoryID INTEGER ,
 	PRIMARY KEY(tagsID,categoryID)
 ) ;
 
 
 CREATE TABLE Colaborator
 (
-	promoterID INTEGER NULL,
-	normalID INTEGER NULL,
+	promoterID INTEGER ,
+	normalID INTEGER ,
 	PRIMARY KEY (promoterID,normalID)
 ) ;
 
@@ -80,8 +80,8 @@ CREATE TABLE EventDate
 	preco DOUBLE NULL,
 	endDate DATETIME NULL,
 	dateID INTEGER NOT NULL AUTO_INCREMENT,
-	eventID INTEGER NULL,
-	localID INTEGER NULL,
+	eventID INTEGER ,
+	localID INTEGER ,
 	PRIMARY KEY (dateID),
 	KEY (eventID),
 	KEY (localID)
@@ -99,10 +99,10 @@ CREATE TABLE Event
 	activeDate DATETIME NULL,
 	docsID VARCHAR(255) NULL,
 	eventID INTEGER NOT NULL AUTO_INCREMENT,
-	categoryID INTEGER NULL,
-	promoterID INTEGER NULL,
+	categoryID INTEGER ,
+	promoterID INTEGER ,
 	preco DOUBLE NULL,
-	normalID INTEGER NULL,
+	normalID INTEGER NULL, -- normalID pode ser null, quando não tem um colaborador associado
 	PRIMARY KEY (eventID),
 	KEY (categoryID),
 	KEY (promoterID),
@@ -112,8 +112,8 @@ CREATE TABLE Event
 
 CREATE TABLE EventTags
 (
-	eventID INTEGER NULL,
-	tagsID INTEGER NULL,
+	eventID INTEGER ,
+	tagsID INTEGER ,
 	PRIMARY KEY (eventID,tagsID)
 
 ) ;
@@ -123,7 +123,7 @@ CREATE TABLE Image
 (
 	image varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 	imageID INTEGER NOT NULL AUTO_INCREMENT,
-	eventID INTEGER NULL,
+	eventID INTEGER ,
 	PRIMARY KEY (imageID),
 	KEY (eventID)
 
@@ -168,17 +168,8 @@ CREATE TABLE Promoter
 CREATE TABLE Rate
 (
 	rate int NULL,
-	eventID INTEGER NULL,
-	normalID INTEGER NULL,
-	PRIMARY KEY (eventID,normalID)
-
-) ;
-
-
-CREATE TABLE Registration
-(
-	eventID INTEGER NULL,
-	normalID INTEGER NULL,
+	eventID INTEGER ,
+	normalID INTEGER ,
 	PRIMARY KEY (eventID,normalID)
 
 ) ;
@@ -188,7 +179,7 @@ CREATE TABLE Spotify
 (
 	playListLink VARCHAR(255) NULL,
 	spotifyID INTEGER NOT NULL AUTO_INCREMENT,
-	eventID INTEGER NULL,
+	eventID INTEGER ,
 	PRIMARY KEY (spotifyID),
 	KEY (eventID)
 
@@ -223,7 +214,7 @@ CREATE TABLE Youtube
 (
 	videoID VARCHAR(255) NULL,
 	youtubeID INTEGER NOT NULL AUTO_INCREMENT,
-	eventID INTEGER NULL,
+	eventID INTEGER ,
 	PRIMARY KEY (youtubeID),
 	KEY (eventID)
 
@@ -310,12 +301,6 @@ ALTER TABLE Rate ADD CONSTRAINT FK_Rate_Event
 
 ALTER TABLE Rate ADD CONSTRAINT FK_Rate_Normal 
 	FOREIGN KEY (normalID) REFERENCES Normal (normalID);
-
-ALTER TABLE Registration ADD CONSTRAINT FK_Registration_Event 
-	FOREIGN KEY (eventID) REFERENCES Event (eventID) ON DELETE CASCADE;
-
-ALTER TABLE Registration ADD CONSTRAINT FK_Registration_Normal 
-	FOREIGN KEY (normalID) REFERENCES Normal (normalID) ON DELETE CASCADE;
 
 ALTER TABLE Spotify ADD CONSTRAINT FK_Spotify_Event 
 	FOREIGN KEY (eventID) REFERENCES Event (eventID) ON DELETE CASCADE;
