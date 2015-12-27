@@ -18,55 +18,55 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   create_table "CategoryTags", id: false, force: :cascade do |t|
-    t.integer "tagsID",     limit: 4
-    t.integer "categoryID", limit: 4
+    t.integer "tagsID",     limit: 4, default: 0, null: false
+    t.integer "categoryID", limit: 4, default: 0, null: false
   end
 
-  add_index "CategoryTags", ["categoryID"], name: "categoryID", using: :btree
-  add_index "CategoryTags", ["tagsID"], name: "tagsID", using: :btree
+  add_index "CategoryTags", ["categoryID"], name: "FK_CategoryTags_Category", using: :btree
 
   create_table "Colaborator", id: false, force: :cascade do |t|
-    t.integer "promoterID", limit: 4
-    t.integer "normalID",   limit: 4
+    t.integer "promoterID", limit: 4, default: 0, null: false
+    t.integer "normalID",   limit: 4, default: 0, null: false
   end
 
-  add_index "Colaborator", ["normalID"], name: "normalID", using: :btree
-  add_index "Colaborator", ["promoterID"], name: "promoterID", using: :btree
+  add_index "Colaborator", ["normalID"], name: "FK_Colaborator_Normal", using: :btree
 
   create_table "Event", primary_key: "eventID", force: :cascade do |t|
-    t.text    "descrition",  limit: 65535
-    t.string  "name",        limit: 50
-    t.boolean "propose"
-    t.float   "averageRate", limit: 53
-    t.integer "numRates",    limit: 4
-    t.boolean "active"
-    t.string  "docsID",      limit: 255
-    t.integer "categoryID",  limit: 4
-    t.integer "promoterID",  limit: 4
-    t.float   "preco",       limit: 53
+    t.text     "descrition",  limit: 65535
+    t.string   "name",        limit: 50
+    t.boolean  "propose"
+    t.float    "averageRate", limit: 53
+    t.integer  "numRates",    limit: 4
+    t.datetime "activeDate"
+    t.string   "docsID",      limit: 255
+    t.integer  "categoryID",  limit: 4
+    t.integer  "promoterID",  limit: 4
+    t.float    "preco",       limit: 53
+    t.integer  "normalID",    limit: 4
   end
 
   add_index "Event", ["categoryID"], name: "categoryID", using: :btree
+  add_index "Event", ["normalID"], name: "normalID", using: :btree
   add_index "Event", ["promoterID"], name: "promoterID", using: :btree
 
   create_table "EventDate", primary_key: "dateID", force: :cascade do |t|
+    t.text     "descrition", limit: 65535
     t.datetime "startDate"
-    t.float    "preco",     limit: 53
+    t.float    "preco",      limit: 53
     t.datetime "endDate"
-    t.integer  "eventID",   limit: 4
-    t.integer  "localID",   limit: 4
+    t.integer  "eventID",    limit: 4
+    t.integer  "localID",    limit: 4
   end
 
   add_index "EventDate", ["eventID"], name: "eventID", using: :btree
   add_index "EventDate", ["localID"], name: "localID", using: :btree
 
   create_table "EventTags", id: false, force: :cascade do |t|
-    t.integer "eventID", limit: 4
-    t.integer "tagsID",  limit: 4
+    t.integer "eventID", limit: 4, default: 0, null: false
+    t.integer "tagsID",  limit: 4, default: 0, null: false
   end
 
-  add_index "EventTags", ["eventID"], name: "eventID", using: :btree
-  add_index "EventTags", ["tagsID"], name: "tagsID", using: :btree
+  add_index "EventTags", ["tagsID"], name: "FK_EventTags_Tags", using: :btree
 
   create_table "Image", primary_key: "imageID", force: :cascade do |t|
     t.string  "image",   limit: 255
@@ -76,9 +76,9 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "Image", ["eventID"], name: "eventID", using: :btree
 
   create_table "Local", primary_key: "localID", force: :cascade do |t|
-    t.string  "address",   limit: 50
-    t.integer "latitude",  limit: 4
-    t.integer "longitude", limit: 4
+    t.string "address",   limit: 50
+    t.float  "latitude",  limit: 53
+    t.float  "longitude", limit: 53
   end
 
   create_table "Normal", primary_key: "normalID", force: :cascade do |t|
@@ -88,6 +88,20 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "last_name",  limit: 50
   end
 
+  create_table "NormalCategory", id: false, force: :cascade do |t|
+    t.integer "normalID",   limit: 4, default: 0, null: false
+    t.integer "categoryID", limit: 4, default: 0, null: false
+  end
+
+  add_index "NormalCategory", ["categoryID"], name: "FK_NormalCategory_Category", using: :btree
+
+  create_table "NormalTags", id: false, force: :cascade do |t|
+    t.integer "normalID", limit: 4, default: 0, null: false
+    t.integer "tagsID",   limit: 4, default: 0, null: false
+  end
+
+  add_index "NormalTags", ["tagsID"], name: "FK_NormalTags_Tags", using: :btree
+
   create_table "Promoter", primary_key: "promoterID", force: :cascade do |t|
     t.string "contact",     limit: 50
     t.string "institution", limit: 50
@@ -95,25 +109,23 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "website",     limit: 50
   end
 
-  create_table "Rate", primary_key: "rateID", force: :cascade do |t|
+  create_table "Rate", id: false, force: :cascade do |t|
     t.integer "rate",     limit: 4
-    t.integer "eventID",  limit: 4
-    t.integer "normalID", limit: 4
+    t.integer "eventID",  limit: 4, default: 0, null: false
+    t.integer "normalID", limit: 4, default: 0, null: false
   end
 
-  add_index "Rate", ["eventID"], name: "eventID", using: :btree
-  add_index "Rate", ["normalID"], name: "normalID", using: :btree
+  add_index "Rate", ["normalID"], name: "FK_Rate_Normal", using: :btree
 
   create_table "Registration", id: false, force: :cascade do |t|
-    t.integer "eventID",  limit: 4
-    t.integer "normalID", limit: 4
+    t.integer "eventID",  limit: 4, default: 0, null: false
+    t.integer "normalID", limit: 4, default: 0, null: false
   end
 
-  add_index "Registration", ["eventID"], name: "eventID", using: :btree
-  add_index "Registration", ["normalID"], name: "normalID", using: :btree
+  add_index "Registration", ["normalID"], name: "FK_Registration_Normal", using: :btree
 
   create_table "Spotify", primary_key: "spotifyID", force: :cascade do |t|
-    t.string  "playListLink", limit: 50
+    t.string  "playListLink", limit: 255
     t.integer "eventID",      limit: 4
   end
 
@@ -146,17 +158,34 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "User", ["uid"], name: "index_User_on_uid", using: :btree
 
   create_table "Youtube", primary_key: "youtubeID", force: :cascade do |t|
-    t.string  "videoID", limit: 50
+    t.string  "videoID", limit: 255
     t.integer "eventID", limit: 4
   end
 
   add_index "Youtube", ["eventID"], name: "eventID", using: :btree
+
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string   "data_file_name",    limit: 255, null: false
+    t.string   "data_content_type", limit: 255
+    t.integer  "data_file_size",    limit: 4
+    t.integer  "assetable_id",      limit: 4
+    t.string   "assetable_type",    limit: 30
+    t.string   "type",              limit: 30
+    t.integer  "width",             limit: 4
+    t.integer  "height",            limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
   add_foreign_key "CategoryTags", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_CategoryTags_Category", on_delete: :cascade
   add_foreign_key "CategoryTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_CategoryTags_Tags", on_delete: :cascade
   add_foreign_key "Colaborator", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Colaborator_Normal", on_delete: :cascade
   add_foreign_key "Colaborator", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Colaborator_Promoter", on_delete: :cascade
   add_foreign_key "Event", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_Event_Category", on_delete: :cascade
+  add_foreign_key "Event", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Event_Normal", on_delete: :nullify
   add_foreign_key "Event", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Event_Promoter", on_delete: :cascade
   add_foreign_key "EventDate", "Event", column: "eventID", primary_key: "eventID", name: "FK_Date_Event", on_delete: :cascade
   add_foreign_key "EventDate", "Local", column: "localID", primary_key: "localID", name: "FK_Date_Local", on_delete: :cascade
@@ -164,9 +193,13 @@ ActiveRecord::Schema.define(version: 0) do
   add_foreign_key "EventTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_EventTags_Tags", on_delete: :cascade
   add_foreign_key "Image", "Event", column: "eventID", primary_key: "eventID", name: "FK_Image_Event", on_delete: :cascade
   add_foreign_key "Normal", "User", column: "normalID", primary_key: "userID", name: "FK_Normal_User", on_delete: :cascade
+  add_foreign_key "NormalCategory", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_NormalCategory_Category", on_delete: :cascade
+  add_foreign_key "NormalCategory", "Normal", column: "normalID", primary_key: "normalID", name: "FK_NormalCategory_Normal", on_delete: :cascade
+  add_foreign_key "NormalTags", "Normal", column: "normalID", primary_key: "normalID", name: "FK_NormalTags_Normal", on_delete: :cascade
+  add_foreign_key "NormalTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_NormalTags_Tags", on_delete: :cascade
   add_foreign_key "Promoter", "User", column: "promoterID", primary_key: "userID", name: "FK_Promoter_User", on_delete: :cascade
   add_foreign_key "Rate", "Event", column: "eventID", primary_key: "eventID", name: "FK_Rate_Event", on_delete: :cascade
-  add_foreign_key "Rate", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Rate_Normal", on_delete: :cascade
+  add_foreign_key "Rate", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Rate_Normal"
   add_foreign_key "Registration", "Event", column: "eventID", primary_key: "eventID", name: "FK_Registration_Event", on_delete: :cascade
   add_foreign_key "Registration", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Registration_Normal", on_delete: :cascade
   add_foreign_key "Spotify", "Event", column: "eventID", primary_key: "eventID", name: "FK_Spotify_Event", on_delete: :cascade

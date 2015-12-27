@@ -2,33 +2,116 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
- 
-<p>
-  <strong>First Name:</strong>
-  <%= @user.normal.first_name %>
-</p>
 
-<p>
-  <strong>Last Name:</strong>
-  <%= @user.normal.last_name %>
-</p>
+<% if @user.normal != nil %>
+  <p>
+    <strong>First Name:</strong>
+    <%= @user.normal.first_name %>
+  </p>
 
-<p>
-  <strong>Gender:</strong>
-  <%= @user.normal.gender %>
-</p>
+  <p>
+    <strong>Last Name:</strong>
+    <%= @user.normal.last_name %>
+  </p>
 
-<p>
-  <strong>Birthday:</strong>
-  <%= @user.normal.birthday %>
-</p>
+  <p>
+    <strong>Gender:</strong>
+    <%= @user.normal.gender %>
+  </p>
+
+  <p>
+    <strong>Birthday:</strong>
+    <%= @user.normal.birthday %>
+  </p>
+
+  <strong>------ <%= link_to "Preferencias", root_url+"user/preferences?id="+@user.userID.to_s %> ------</strong>
+  <p>
+    <strong>Tags:</strong><br>
+    <% @tagsPrefs.each do |tag| %>
+      <%= tag.tags.name %><br>
+    <% end %>
+  </p>
+
+  <p>
+    <strong>Categorias:</strong><br>
+    <% @categoriesPrefs.each do |category| %>
+      <%= category.category.name %><br>
+    <% end %>
+  </p>
+
+  <p>
+    <% if @nightEventsPrefs.length != 0 %>
+      <strong>Prefere Eventos noturnos</strong><br>
+    <% end %>
+  </p>
+<% end %>
 
 <br>
 <p>
   <% if @colaborator != nil %>
     <strong>
-      <%= link_to "Colaborator", colaborator_path(@colaborator.normal) %> of 
+      User is: 
+      <%= link_to "Colaborador", colaborator_path(@colaborator.normal) %> of 
       <%= link_to @colaborator.promoter.name, promoter_path(@colaborator.promoter) %>
     </strong>
   <% end %>
+</p>
+
+<br>
+<p>
+  <% if @promoter != nil %>
+    <strong>
+      User is promoter: 
+      <%= link_to @promoter.name, promoter_path(@promoter) %>
+    </strong>
+  <% end %>
+</p>
+
+<p>
+  <strong>=============== User Info =======================</strong>
+  <br>
+  <strong>userID:</strong>
+  <%= @user.userID %>
+  <br>
+  <strong>email:</strong>
+  <%= mail_to @user.email, @user.email %>
+  <br>
+  <strong>encrypted_password:</strong>
+  <%= @user.encrypted_password %>
+  <br>
+  <strong>password:</strong>
+  <%= @user.password %>
+  <br>
+  <strong>admin:</strong>
+  <%= @user.admin %>
+  <br>
+  <strong>reset_password_token:</strong>
+  <%= @user.reset_password_token %>
+  <br>
+  <strong>reset_password_sent_at:</strong>
+  <%= @user.reset_password_sent_at %>
+  <br>
+  <strong>remember_created_at:</strong>
+  <%= @user.remember_created_at %>
+  <br>
+  <strong>sign_in_count:</strong>
+  <%= @user.sign_in_count %>
+  <br>
+  <strong>current_sign_in_at:</strong>
+  <%= @user.current_sign_in_at %>
+  <br>
+  <strong>last_sign_in_at:</strong>
+  <%= @user.last_sign_in_at %>
+  <br>
+  <strong>current_sign_in_ip:</strong>
+  <%= @user.current_sign_in_ip %>
+  <br>
+  <strong>last_sign_in_ip:</strong>
+  <%= @user.last_sign_in_ip %>
+  <br>
+  <strong>provider:</strong>
+  <%= @user.provider %>
+  <br>
+  <strong>uid:</strong>
+  <%= @user.uid %>
 </p>

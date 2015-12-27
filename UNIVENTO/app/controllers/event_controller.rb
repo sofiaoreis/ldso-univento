@@ -14,7 +14,6 @@ class EventController < ApplicationController
 		  redirect_to root_path
 		  return
 		end
-		render 'temp'
  	end
 
 # ========================================================
@@ -52,6 +51,15 @@ class EventController < ApplicationController
  		authorize! :create, @event, :message => "Não tem autorização para criar eventos"
  		@category = Category.all
  		@image = Image.new
+ 		if Colaborator.find_by_normalID(current_user.userID)
+ 			@associacoes = Array.new
+ 			Colaborator.where(normalID: current_user.userID).each do |promoter|
+ 				@associacoes.push(Promoter.find_by_promoterID(promoter.promoterID).name)
+ 			end
+ 		end
+
+		puts "new"
+		puts flash.inspect
  	end
 
 # ========================================================
@@ -66,6 +74,8 @@ class EventController < ApplicationController
 # ========================================================
 
 	def create_or_update_event(tipo)
+		#render plain: params.inspect
+		#return
 		event_params = params[:event]
  		@event.name = event_params[:name]
  		@event.descrition = event_params[:descrition]
@@ -82,14 +92,15 @@ class EventController < ApplicationController
 	 		elsif Colaborator.find_by_normalID(current_user.userID)
 	 			@event.propose=true
 #<!> 			#escolher o id do promotor conforme o valor do input referente à associação
+				@event.promoterID = Promoter.where(name: params[:promoter]).take.promoterID
 				@event.normalID = current_user.userID
 	 		end
  		end
- 			
-
-
-
-        @event.activeDate = (params["activeDate"]["activeDate(3i)"]<<"-"<<params["activeDate"]["activeDate(2i)"]<<"-"<<params["activeDate"]["activeDate(1i)"]<<" "<<params["activeDate"]["activeDate(4i)"]<<":"<<params["activeDate"]["activeDate(5i)"])
+ 		
+ 		if params["activeDate"].present?
+        	@event.activeDate = params["activeDate"]
+        else @event.activeDate = Time.now
+        end
 
        	if saveOrDestroy(@event) 
        		return 
@@ -109,32 +120,46 @@ class EventController < ApplicationController
 
 	    if params[:youtube].present?
 	        params[:youtube].each do |link|
-	            youtube = Youtube.new
-	            youtube.videoID=link
-	            youtube.eventID=@event.eventID
-	            
-	            if saveOrDestroy(youtube) 
-	            	return 
-	            end
+	        	if link.present?
+		            youtube = Youtube.new
+		            youtube.videoID="https://www.youtube.com/embed/" + link.sub("https://www.youtube.com/watch?v=", "").gsub("&","?")
+		            youtube.eventID=@event.eventID
+					#y:		https://www.youtube.com/watch?v=pxMy-QB-yP4
+					#ye:	https://www.youtube.com/embed/pxMy-QB-yP4
+		            if saveOrDestroy(youtube) 
+		            	return 
+		            end
+		        end
 	        end
 	    end
 	    if params[:spotify].present?
 	        params[:spotify].each do |link|
-	            spotify = Spotify.new
-	            spotify.playListLink=link
-	            spotify.eventID=@event.eventID
-	            
-	            if saveOrDestroy(spotify) 
-	            	return 
-	            end
+	        	if link.present?
+		            spotify = Spotify.new
+		            spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub("https://open.spotify.com/","").gsub("/",":")
+		            spotify.eventID=@event.eventID
+					#s: 	https://open.spotify.com/track/5cR7culxUEPLhzIC0KWAH1
+					#se:	https://embed.spotify.com/?uri=spotify:track:5cR7culxUEPLhzIC0KWAH1
+		            if saveOrDestroy(spotify) 
+		            	return 
+		            end
+		        end
 	        end
 	    end
 
 	    if params[:dates].present?
 		    params[:dates].each_with_index do |date, k|
 		        eventDate = EventDate.new
-		        eventDate.startDate = (params[:dates][k.to_s]["startDate(1i)"] << "-" << params[:dates][k.to_s]["startDate(2i)"]<< "-" << params[:dates][k.to_s]["startDate(3i)"]<< " "<<params[:dates][k.to_s]["startDate(4i)"]<<":"<<params[:dates][k.to_s]["startDate(5i)"])
-		        eventDate.endDate = (params[:dates][k.to_s]["endDate(1i)"] << "-" << params[:dates][k.to_s]["endDate(2i)"]<< "-" << params[:dates][k.to_s]["endDate(3i)"]<< " "<<params[:dates][k.to_s]["endDate(4i)"]<<":"<<params[:dates][k.to_s]["endDate(5i)"])
+		        if params[:dates][k.to_s]["startDate"].present?
+		        	eventDate.startDate = params[:dates][k.to_s]["startDate"]
+		        else eventDate.startDate = Time.now
+		        end
+
+		        if params[:dates][k.to_s]["endDate"].present?
+		        	eventDate.endDate = params[:dates][k.to_s]["endDate"]
+		        else eventDate.endDate = Time.now
+		        end
+
 		        eventDate.eventID=@event.eventID
 		        eventDate.preco=params["price"][k].to_f
 		       	eventDate.descrition = params[:page]["info"<<k.to_s]
@@ -156,15 +181,17 @@ class EventController < ApplicationController
 		end
 
         if params[:image].present?
-	        params[:image]['image'].each do |a|
-	          @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
+	        params[:image]['image'].each_with_index do |a,index|
+	        	if index <10
+			        @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
+			    end
 	        end
     	end
         redirect_to @event
 	end
 
 # ========================================================
-	def index
+	def index		
 
 		@eventDates = Array.new
 		eventDates2 = Array.new
@@ -238,6 +265,50 @@ class EventController < ApplicationController
 			@eventDates = eventDates2.clone
 			eventDates2.clear
 			pageLink = pageLink + "&local=" + local
+		end
+
+		# ------------------- Preferences -------------------------
+
+		prefs = params[:prefs]
+
+		if(prefs != nil)
+			if current_user != nil
+				user = User.find(current_user.id.to_s)
+				ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
+				musicCategoryID = Category.find_by(name: "Música").categoryID
+				nightCategoryID = Category.find_by(name: "Noturno").categoryID
+
+				tagsPrefs = NormalTags.all
+				categoriesPrefs = NormalCategory.all
+				nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID)
+
+				if categoriesPrefs.length != 0
+					@eventDates.each do |eventDate|
+						categoriesPrefs.each do |categoryPref|
+							if eventDate.event.categoryID == categoryPref.categoryID
+								eventDates2.push(eventDate)
+							end
+						end
+					end
+					@eventDates = eventDates2.clone
+					eventDates2.clear
+				end
+
+				if tagsPrefs.length != 0
+					@eventDates.each do |eventDate|
+						eventDate.event.tags.each do |eventTag|
+							tagsPrefs.each do |tagsPref|
+								if eventTag.tagsID == tagsPref.tagsID
+									eventDates2.push(eventDate)
+								end
+							end
+						end
+					end
+					@eventDates = eventDates2.clone
+					eventDates2.clear
+				end
+			end
+			pageLink = pageLink + "&prefs=1"
 		end
 
 		# ------------------- Paginate by 18 events -------------------------
@@ -317,9 +388,28 @@ class EventController < ApplicationController
 # ========================================================
 
 	def search
-		@event = Event.where(['name LIKE ?', params[:search]]).take
-		@image = @event.image.all
-		redirect_to @event
+		numEventos = 16
+		if !params[:numPage].present?
+			params[:numPage]=1
+		end
+		if params[:commit].present?
+			if params[:commit]==">"
+				params[:numPage]=params[:numPage].to_i+1
+			elsif params[:commit]=="<"
+				params[:numPage]=params[:numPage].to_i-1
+			end
+		end
+
+		if params[:numPage]<1
+			params[:numPage]=1
+		end
+
+		@events = Event.where('name LIKE ?', "%"+params[:search]+"%").offset(numEventos*(params[:numPage].to_i-1)).first(numEventos)
+
+		while @events.blank?
+			params[:numPage]=params[:numPage].to_i-1
+			@events = Event.where('name LIKE ?', "%"+params[:search]+"%").offset(numEventos*(params[:numPage].to_i-1)).first(numEventos)
+		end
 	end
 
 # ========================================================
@@ -374,7 +464,7 @@ class EventController < ApplicationController
 	      format.html
 	      format.json { 
 	      	if params[:accao] == "getEventInfo"
-	      		render :json => [@event.name, @event.eventID,@event.docsID].to_json 
+	      		render :json => [@event.name, @event.eventID,@event.docsID,current_user.email].to_json 
 	      	elsif params[:accao] == "saveDocsID"
 	      		@event.docsID = params[:docsID]
 	      		render :json => @event.save!.to_json
