@@ -16,6 +16,7 @@ class ColaboratorController < ApplicationController
 
   def new
     @colaborator = Colaborator.new
+    authorize! :create, @colaborator
   end
 
 # ========================================================

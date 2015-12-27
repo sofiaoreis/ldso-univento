@@ -1,76 +1,18 @@
 <script src="/addColaborador.js"></script>
 
+<div class="container">
+    <div class="jumbotron">
+        <%= form_for @colaborator, :url => '/colaborator' do |c| %>
+            <h2>Convidar Colaborador<h2>
 
-<div class="jumbotron">
-
-    <%= form_for @colaborator, :url => '/colaborator' do |c| %>
-
-        <% if @colaborator.errors.any? %>
-            <div id="error_explanation">
-              <h2>
-                <%= pluralize(@colaborator.errors.count, "error") %> prohibited this colaborator from being saved:
-              </h2>
-              <ul>
-                <% @colaborator.errors.full_messages.each do |msg| %>
-                  <li><%= msg %></li>
-                <% end %>
-              </ul>
+            <div class="form-group">
+              <%= email_field_tag :email, "", class: 'form-control', :placeholder => 'Email' %>
             </div>
+            <div class="form-group">
+              <%= text_area_tag :convite, "", class: 'form-control', :placeholder => 'Adicione uma mensagem ao convite' %>
+            </div>
+
+            <%= c.submit 'Convidar', :class => 'btn btn-primary active pull-right' %>
         <% end %>
-
-        <br>Dados do Colaborador<br><br>
-
-        <div class="form-group">
-          <%= text_field_tag :normalID, "", class: 'form-control', :placeholder => 'normalID' %>
-        </div>
-        <div class="form-group">
-          <% if params[:promoterID] != nil %>
-            <%= hidden_field_tag :promoterID, params[:promoterID], class: 'form-control', :placeholder => 'promoterID' %>
-          <% else %>
-            <%= text_field_tag :promoterID, "", class: 'form-control', :placeholder => 'promoterID' %>
-          <% end %>
-        </div>
-        <br>
-
-        <%= c.submit 'Submeter', :class => 'btn btn-primary active' %>
-    <% end %>
+    </div>
 </div>
-
-<div class="jumbotron">
-
-    <form id="surveyForm" method="post" class="form-horizontal">
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Question</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="question" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Options</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="option[]" />
-        </div>
-        <div class="col-xs-4">
-            <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
-        </div>
-    </div>
-
-    <!-- The option field template containing an option field and a Remove button -->
-    <div class="form-group hide" id="optionTemplate">
-        <div class="col-xs-offset-3 col-xs-5">
-            <input class="form-control" type="text" name="option[]" />
-        </div>
-        <div class="col-xs-4">
-            <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-xs-5 col-xs-offset-3">
-            <button type="submit" class="btn btn-default">Validate</button>
-        </div>
-    </div>
-</form>
-
-  </div>
