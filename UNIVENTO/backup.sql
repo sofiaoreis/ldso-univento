@@ -14,7 +14,7 @@ INSERT INTO `Tags` VALUES ('Workshop',1),('Palestra',2),('Futebol',3), ('Corrida
 ('Rock', 15), ('Eletrónica', 16), ('Indie', 17), ('Clássica', 18), ('Drum & Bass', 19), ('Chill', 20), ('Social', 21), ('Festa', 22);
 INSERT INTO `CategoryTags` VALUES (1,3),(2,3),(3,1), (4,1), (5,1), (6,1), (7,2), (8,2), (9,2), (10,4), (11,4), (12,5), (13,5), (14,6), (15,6), (16,6), (17,6), (18,6), (19,6), (20,7), (21,7), (22,7);
 INSERT INTO `User` VALUES (NULL,NULL,1,'feup@feup.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
-INSERT INTO `User` VALUES (NULL,NULL,2,'faup@faup.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
+INSERT INTO `User` VALUES (NULL,NULL,2,'faup@faup.pt','$2a$10$eD9LgxrbUZOHHft7QczMm.gjW9QksIDRkYDCYNDyGtZ1NhJbMeCk6',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 INSERT INTO `User` VALUES (NULL,NULL,3,'fdup@fdup.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 INSERT INTO `User` VALUES (NULL,NULL,4,'isep@isep.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 INSERT INTO `User` VALUES (NULL,NULL,5,'normal1@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
@@ -24,8 +24,8 @@ INSERT INTO `Promoter` VALUES ('afdup@fd.up.pt','FDUP','AEFDUP','http://aefdup.f
 INSERT INTO `Promoter` VALUES ('afisep@isep.ipp.pt','ISEP','AEISEP','http://aeisep.isep.pt',4);
 INSERT INTO `Normal` VALUES ('1981-06-21','Normal','Male','User 1',5);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 01',FALSE,10,1,'2015-11-01',NULL,1,1,1,15,NULL);
-INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 02',FALSE,10,1,'2015-11-01',NULL,2,2,1,15,NULL);
-INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 03',FALSE,10,1,'2015-11-01',NULL,3,3,1,15,NULL);
+INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 02',TRUE,10,1,'2015-11-01',NULL,2,2,1,15,NULL);
+INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 03',TRUE,10,1,'2015-11-01',NULL,3,3,1,15,NULL);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 04',FALSE,10,1,'2015-11-01',NULL,4,1,1,15,NULL);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 05',FALSE,10,1,'2015-11-01',NULL,5,2,1,15,NULL);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 06',FALSE,10,1,'2015-11-01',NULL,6,3,2,15,NULL);
@@ -47,7 +47,7 @@ INSERT INTO `EventTags` VALUES (1,1),(1,2),(1,3);
 INSERT INTO `Image` VALUES ('img1.jpg',1,1),('img2.jpg',2,1);
 INSERT INTO `Local` VALUES ('rua lá ao fundo',100,100,1);
 INSERT INTO `EventDate` VALUES ('0','2015-12-05',10,'2015-12-06',1,1,1),('0','2015-12-07',15,'2015-12-08',2,1,1);
-INSERT INTO `EventDate` VALUES ('1','2015-12-01',10,'2015-12-02',3,2,1),('0','2015-12-03',15,'2015-12-04',4,2,1);
+INSERT INTO `EventDate` VALUES ('1','2015-12-03',10,'2015-12-04',3,2,1),('0','2015-12-04',15,'2015-12-05',4,2,1);
 INSERT INTO `EventDate` VALUES ('1','2015-12-11',15,'2015-12-12',5,3,1),('0','2015-12-08',10,'2015-12-10',6,3,1);
 INSERT INTO `EventDate` VALUES ('1','2015-11-13',10,'2015-11-14',7,4,1),('0','2015-12-21',15,'2015-12-02',8,4,1);
 INSERT INTO `EventDate` VALUES ('1','2015-11-13',10,'2015-11-14',9,5,1),('0','2015-12-21',15,'2015-12-02',10,5,1);
