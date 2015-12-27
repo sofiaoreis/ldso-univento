@@ -1,7 +1,7 @@
 <div class="jumbotron">
 
     <div class="regist_title">Editar promotor</div>
-    <br><br>
+    <br>
 
     <%= form_for @user, :url => promoter_path(@user) , method: :patch do |u| %>
 
@@ -18,19 +18,21 @@
             </div>
         <% end %>
 
-        Dados do Promotor<br>
-
         <div class="form-group">
-            <%= text_field_tag :name, "", class: 'form-control', :placeholder => 'Nome' %>
+            <strong>Nome</strong>
+            <%= text_field_tag :name, @promoter.name, class: 'form-control', :placeholder => 'Nome' %>
         </div>
         <div class="form-group">
-            <%= text_field_tag :institution, "", class: 'form-control', :placeholder => 'Instituição' %>
+            <strong>Instituição</strong>
+            <%= text_field_tag :institution, @promoter.institution, class: 'form-control', :placeholder => 'Instituição' %>
         </div>
         <div class="form-group">
-            <%= text_field_tag :website, "", class: 'form-control', :placeholder => 'Website'%>
+            <strong>Website</strong>
+            <%= text_field_tag :website, @promoter.website, class: 'form-control', :placeholder => 'Website'%>
         </div>
         <div class="form-group">
-            <%= text_field_tag :contact, "", class: 'form-control', :placeholder => 'Contacto'%>
+            <strong>Email de Contato</strong>
+            <%= text_field_tag :contact, @promoter.contact, class: 'form-control', :placeholder => 'Contacto'%>
         </div>
 
         <br>Credenciais do Promotor<br>
@@ -45,4 +47,8 @@
 
         <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>
     <% end %>
+
+    <br><%= link_to 'Mudar Credenciais', root_path+"users/edit" %><br>
+
+    <br><%= link_to "Back", :back %><br>
 </div>

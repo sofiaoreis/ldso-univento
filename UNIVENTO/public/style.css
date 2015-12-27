@@ -1,7 +1,7 @@
 body {
     background-color: #f8f8f8;
     font-family: 'Open Sans', sans-serif;
-     background:url('http://192.168.58.74/assets/arraial.jpg');
+    /* background:url('http://192.168.58.74/assets/arraial.jpg'); */
 }
 p {
     font-weight: 200;
@@ -409,17 +409,6 @@ a:visited {
   background-color: #1AA69B;
 }
 
-.container {
-  width: auto;
-  max-width: 680px;
-  padding: 0 15px;
-}
-
-.container .text-muted {
-    color: #f1f1f1;
-    margin: 20px 0;
-}
-
 html {
   position: relative;
   min-height: 100%;
@@ -534,13 +523,13 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
   height: 60px;
   background-color: #1AA69B;
 }
-
+/*
 .container {
   width: auto;
   max-width: 680px;
   padding: 0 15px;
 }
-
+*/
 .container .text-muted {
     color: #f1f1f1;
     margin: 20px 0;

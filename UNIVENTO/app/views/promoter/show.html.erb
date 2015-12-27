@@ -17,10 +17,11 @@
   <%= mail_to @user.promoter.contact, @user.promoter.contact %>
   <br><br>
   <%= link_to 'Editar Promotor', root_path+"promoter/"+@user.promoter.promoterID.to_s+"/edit" %>
+  <br><%= link_to 'Mudar Credenciais', root_path+"users/edit" %><br>
 </p>
 
 <p>
-  <strong>=============== Inherited User =======================</strong>
+  <strong>=============== <%= link_to "Inherited User", user_path(@promoter.user) %>  =======================</strong>
   <br>
   <strong>userID:</strong>
   <%= @user.userID %>
@@ -69,7 +70,7 @@
 </p>
 
 
-<strong>=============== Colaborators =======================</strong>
+<strong>=============== Colaboradores =======================</strong>
 
 <% if @colaborators.length != 0 %>
 
@@ -89,7 +90,7 @@
         <td><%= link_to (colaborator.normal.first_name+" "+colaborator.normal.last_name), colaborator_path(colaborator.normal) %></td>
         <td><%= colaborator.promoterID %></td>
         <td><%= link_to colaborator.promoter.name, promoter_path(colaborator.promoter) %></td>
-        <td><%= link_to 'Despromover', root_path+"colaborator/"+colaborator.normalID.to_s+"/edit" %></td>
+        <td><%= button_to "Despromover", root_path+"colaborator/"+colaborator.normalID.to_s, data: { confirm: "Tem a certeza?", id: colaborator.normalID.to_s }, method: :delete %></td>
       </tr>
     <% end %>
   </table>
@@ -101,9 +102,9 @@
 <br><%= link_to 'Adicionar Colaborador', root_path + "colaborator/new?promoterID="+@user.promoter.promoterID.to_s %><br>
 
 <br>
-<strong>=============== Active Events =======================</strong>
+<strong>=============== Eventos Visiveis =======================</strong>
 
-<% if @activeEventDates.length != 0 %>
+<% if @shownEventDates.length != 0 %>
 
   <br><br>
   <table border="1">
@@ -119,10 +120,11 @@
       <th>spotify</th>
       <th>images</th>
       <th>start</th>
+      <th> </th>
       <th colspan="3"></th>
     </tr>
     
-    <% @activeEventDates.each do |eventDate| %>
+    <% @shownEventDates.each do |eventDate| %>
       <tr>
         <td><%= eventDate.event.eventID %></td>
         <td><%= link_to eventDate.event.name, event_path(eventDate.event) %></td>
@@ -153,16 +155,87 @@
         <td>
           <%= eventDate.startDate %>
         </td>
+        <td>
+          <%= button_to "Editar", root_path+"event/"+eventDate.eventID.to_s+"/edit", data: nil, method: :get %>
+        </td>
       </tr>
     <% end %>
   </table>
 
 <% else %>
-  <br>Não existe eventos ativos<br>
+  <br>Não existe eventos visiveis<br>
+<% end %>
+
+<br>
+<strong>=============== Eventos Invisiveis =======================</strong>
+
+<% if @hiddenEventDates.length != 0 %>
+
+  <br><br>
+  <table border="1">
+    <tr>
+      <th>eventID</th>
+      <th>name</th>
+      <th>descrition</th>
+      <th>priceTot</th>
+      <th>averageRate</th>
+      <th>category</th>
+      <th>tags</th>
+      <th>youtube</th>
+      <th>spotify</th>
+      <th>images</th>
+      <th>start</th>
+      <th> </th>
+      <th colspan="3"></th>
+    </tr>
+    
+    <% @hiddenEventDates.each do |eventDate| %>
+      <tr>
+        <td><%= eventDate.event.eventID %></td>
+        <td><%= link_to eventDate.event.name, event_path(eventDate.event) %></td>
+        <td><%= eventDate.event.descrition %></td>
+        <td><%= eventDate.event.preco %></td>
+        <td><%= eventDate.event.averageRate %></td>
+        <td><%= eventDate.event.category.name %></td>
+        <td>
+          <% eventDate.event.tags.each do |tag| %>
+              <%= tag.name %><br>
+          <% end %>
+        </td>
+        <td>
+          <% eventDate.event.youtube.each do |youtube| %>
+            <%= link_to youtube.videoID, youtube.videoID %><br>
+          <% end %>
+        </td>
+        <td>
+          <% eventDate.event.spotify.each do |spotify| %>
+            <%= link_to spotify.playListLink, spotify.playListLink %><br>
+          <% end %>
+        </td>
+        <td>
+          <% eventDate.event.image.each do |image| %>
+            <%= image.image%><br>
+          <% end %>
+        </td>
+        <td>
+          <%= eventDate.startDate %>
+        </td>
+        <td>
+          <%= button_to "Editar", root_path+"event/"+eventDate.eventID.to_s+"/edit", data: nil, method: :get %>
+        </td>
+        <td>
+          <%= button_to "Remover", root_path+"event/"+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?" }, method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+<% else %>
+  <br>Não existe eventos invisiveis<br>
 <% end %>
 
 <br><br>
-<strong>=============== Proposed Events =======================</strong>
+<strong>=============== Eventos Propostos =======================</strong>
 
 <% if @proposedEventDates.length != 0 %>
 
@@ -180,9 +253,9 @@
       <th>spotify</th>
       <th>images</th>
       <th>start</th>
-      <th>Editar</th>
-      <th>Remover</th>
-      <th>Aceitar</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
       <th colspan="3"></th>
     </tr>
     
@@ -218,13 +291,13 @@
           <%= eventDate.startDate %>
         </td>
         <td>
-          <%= link_to "Editar", root_path+"event/"+eventDate.eventID.to_s+"/edit" %>
+          <%= button_to "Editar", root_path+"event/"+eventDate.eventID.to_s+"/edit", data: nil, method: :get %>
         </td>
         <td>
-          <%= link_to "Remover", root_path+"event/"+eventDate.eventID.to_s, :method => :delete %>
+          <%= button_to "Remover", root_path+"event/"+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?" }, method: :delete %>
         </td>
         <td>
-          <%= link_to "Aceitar", root_path+"event/accept?id="+eventDate.eventID.to_s %>
+          <%= button_to "Aceitar", root_path+"event/accept?id="+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?", id: eventDate.eventID.to_s}, method: :post %>
         </td>
       </tr>
     <% end %>
@@ -232,6 +305,76 @@
 
 <% else %>
   <br>Não existe eventos propostos<br>
+<% end %>
+
+<br><br>
+<strong>=============== Eventos Propostos Obsoletos =======================</strong>
+
+<% if @ObsoletedProposedEventDates.length != 0 %>
+
+  <br><br>
+  <table border="1">
+    <tr>
+      <th>eventID</th>
+      <th>name</th>
+      <th>descrition</th>
+      <th>priceTot</th>
+      <th>averageRate</th>
+      <th>category</th>
+      <th>tags</th>
+      <th>youtube</th>
+      <th>spotify</th>
+      <th>images</th>
+      <th>start</th>
+      <th> </th>
+      <th> </th>
+      <th> </th>
+      <th colspan="3"></th>
+    </tr>
+    
+    <% @ObsoletedProposedEventDates.each do |eventDate| %>
+      <tr>
+        <td><%= eventDate.event.eventID %></td>
+        <td><%= link_to eventDate.event.name, event_path(eventDate.event) %></td>
+        <td><%= eventDate.event.descrition %></td>
+        <td><%= eventDate.event.preco %></td>
+        <td><%= eventDate.event.averageRate %></td>
+        <td><%= eventDate.event.category.name %></td>
+        <td>
+          <% eventDate.event.tags.each do |tag| %>
+              <%= tag.name %><br>
+          <% end %>
+        </td>
+        <td>
+          <% eventDate.event.youtube.each do |youtube| %>
+            <%= link_to youtube.videoID, youtube.videoID %><br>
+          <% end %>
+        </td>
+        <td>
+          <% eventDate.event.spotify.each do |spotify| %>
+            <%= link_to spotify.playListLink, spotify.playListLink %><br>
+          <% end %>
+        </td>
+        <td>
+          <% eventDate.event.image.each do |image| %>
+            <%= image.image%><br>
+          <% end %>
+        </td>
+        <td>
+          <%= eventDate.startDate %>
+        </td>
+        <td>
+          <%= button_to "Editar", root_path+"event/"+eventDate.eventID.to_s+"/edit", data: nil, method: :get %>
+        </td>
+        <td>
+          <%= button_to "Remover", root_path+"event/"+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?" }, method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+<% else %>
+  <br>Não existe eventos propostos obsoletos<br>
 <% end %>
 
 <br><%= link_to 'Criar Evento', root_path+"event/new" %><br>
