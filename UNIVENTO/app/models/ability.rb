@@ -10,7 +10,7 @@ class Ability
         can :manage, :all
     else
         can :read, Event do |e|
-            e.activeDate <= Time.now || e.promoterID==user.id
+            (e.activeDate <= Time.now && !e.propose) || e.promoterID==user.id || e.normalID==user.id
         end
         can :update, Event, :promoterID => user.id  # => promotor pode editar eventos os seus eventos
         can :update, Event, :propose => true, :normalID => user.id    # => colaborador pode editar as suas PROPOSTAS (só se ainda é uma proposta)
