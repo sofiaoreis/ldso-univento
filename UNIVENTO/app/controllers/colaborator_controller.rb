@@ -48,6 +48,10 @@ class ColaboratorController < ApplicationController
     @convite.email = params[:email]
     @convite.hashID = Digest::MD5.hexdigest(params[:email].to_s+current_user.userID.to_s+Time.now.to_s)
     if @convite.save
+      email = @convite.email
+      promoter = Promoter.find_by_promoterID(current_user.userID).name
+      url =  new_user_session_url+"?colaborator="+@convite.hashID+"&email="+@convite.email
+      UserMailer.convite_email(email, promoter, url, params[:convite]).deliver_now
       flash[:notice] = "Convite enviado"
       redirect_to root_path
       return

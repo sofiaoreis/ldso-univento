@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Você recebeu um convite de colaboração com: <%= @promoter %></h1>
+
+    <p>Mensagem de convite: </p>
+    <p><%=@msg%></p>
+
+    <p>
+      Para aceitar este convite precisa de ter uma conta com este email (<%= @email %>),<br/>
+      se ainda não tem poderá criar uma em <%= link_to "REGISTAR", new_user_url %>,<br/>
+      ou através do facebook em <%= link_to "REGISTAR COM FACEBOOK", user_omniauth_authorize_url("facebook") %>
+    </p>
+    <p>
+      Se já tem conta, para aceitar o convite clicando em <%= link_to "ACEITAR", @url %>
+    </p><br>
+    <p>Tenha um bom dia!</p>
+    <p>UNIVENTO</p>
+  </body>
+</html>
