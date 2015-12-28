@@ -57,9 +57,6 @@ class EventController < ApplicationController
  				@associacoes.push(Promoter.find_by_promoterID(promoter.promoterID).name)
  			end
  		end
-
-		puts "new"
-		puts flash.inspect
  	end
 
 # ========================================================
@@ -191,182 +188,194 @@ class EventController < ApplicationController
 	end
 
 # ========================================================
-	def index		
+	def index	
+		respond_to do |format|
+	      format.html {
+			@eventDates = Array.new
+			eventDates2 = Array.new
 
-		@eventDates = Array.new
-		eventDates2 = Array.new
+			# ------------------- DB query -------------------------
 
-		# ------------------- DB query -------------------------
+			# Find events ordered by most closest date for the next 4 years from now.
+			eventDates1 = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
 
-		# Find events ordered by most closest date for the next 4 years from now.
-		eventDates1 = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
+			# ----- Active Events & remove duplicated --------------
 
-		# ----- Active Events & remove duplicated --------------
+			eventsID = Array.new
 
-		eventsID = Array.new
-
-		eventDates1.each do |eventDate|
-			if eventDate.event.activeDate < Time.now && !eventDate.event.propose && eventDate.event.propose != nil
-				if !eventsID.include?(eventDate.eventID)
-					@eventDates.push(eventDate)
-				end
-				eventsID.push(eventDate.eventID)
-			end
-		end
-
-		# ------------------- Filters -------------------------
-
-		promoter = params[:promoter]
-		institution = params[:institution]
-		category = params[:category]
-		date = params[:date]
-		local = params[:local]
-		pageLink = ""
-
-		if promoter != nil
-			@eventDates.each do |eventDate|
-				if eventDate.event.promoter.name.upcase == promoter.upcase
-					eventDates2.push(eventDate)
-				end
-			end
-			@eventDates = eventDates2.clone
-			eventDates2.clear
-			pageLink = pageLink + "&promoter=" + promoter
-		end
-
-		if institution != nil
-			@eventDates.each do |eventDate|
-				if eventDate.event.promoter.institution.upcase == institution.upcase
-					eventDates2.push(eventDate)
-				end
-			end
-			@eventDates = eventDates2.clone
-			eventDates2.clear
-			pageLink = pageLink + "&institution=" + institution
-		end
-		
-		if category != nil
-			@eventDates.each do |eventDate|
-				if eventDate.event.category.name.upcase == category.upcase
-					eventDates2.push(eventDate)
-				end
-			end
-			@eventDates = eventDates2.clone
-			eventDates2.clear
-			pageLink = pageLink + "&category=" + category
-		end
-
-		if local != nil
-			@eventDates.each do |eventDate|
-				if eventDate.local.address.upcase.include?(local.upcase)
-					eventDates2.push(eventDate)
-				end
-			end
-			@eventDates = eventDates2.clone
-			eventDates2.clear
-			pageLink = pageLink + "&local=" + local
-		end
-
-		# ------------------- Preferences -------------------------
-
-		prefs = params[:prefs]
-
-		if(prefs != nil)
-			if current_user != nil
-				user = User.find(current_user.id.to_s)
-				ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
-				musicCategoryID = Category.find_by(name: "Música").categoryID
-				nightCategoryID = Category.find_by(name: "Noturno").categoryID
-
-				tagsPrefs = NormalTags.all
-				categoriesPrefs = NormalCategory.all
-				nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID)
-
-				if categoriesPrefs.length != 0
-					@eventDates.each do |eventDate|
-						categoriesPrefs.each do |categoryPref|
-							if eventDate.event.categoryID == categoryPref.categoryID
-								eventDates2.push(eventDate)
-							end
-						end
+			eventDates1.each do |eventDate|
+				if eventDate.event.activeDate < Time.now && !eventDate.event.propose && eventDate.event.propose != nil
+					if !eventsID.include?(eventDate.eventID)
+						@eventDates.push(eventDate)
 					end
-					@eventDates = eventDates2.clone
-					eventDates2.clear
+					eventsID.push(eventDate.eventID)
 				end
+			end
 
-				if tagsPrefs.length != 0
-					@eventDates.each do |eventDate|
-						eventDate.event.tags.each do |eventTag|
-							tagsPrefs.each do |tagsPref|
-								if eventTag.tagsID == tagsPref.tagsID
+			# ------------------- Filters -------------------------
+
+			promoter = params[:promoter]
+			institution = params[:institution]
+			category = params[:category]
+			date = params[:date]
+			local = params[:local]
+			pageLink = ""
+
+			if promoter != nil
+				@eventDates.each do |eventDate|
+					if eventDate.event.promoter.name.upcase == promoter.upcase
+						eventDates2.push(eventDate)
+					end
+				end
+				@eventDates = eventDates2.clone
+				eventDates2.clear
+				pageLink = pageLink + "&promoter=" + promoter
+			end
+
+			if institution != nil
+				@eventDates.each do |eventDate|
+					if eventDate.event.promoter.institution.upcase == institution.upcase
+						eventDates2.push(eventDate)
+					end
+				end
+				@eventDates = eventDates2.clone
+				eventDates2.clear
+				pageLink = pageLink + "&institution=" + institution
+			end
+			
+			if category != nil
+				@eventDates.each do |eventDate|
+					if eventDate.event.category.name.upcase == category.upcase
+						eventDates2.push(eventDate)
+					end
+				end
+				@eventDates = eventDates2.clone
+				eventDates2.clear
+				pageLink = pageLink + "&category=" + category
+			end
+
+			if local != nil
+				@eventDates.each do |eventDate|
+					if eventDate.local.address.upcase.include?(local.upcase)
+						eventDates2.push(eventDate)
+					end
+				end
+				@eventDates = eventDates2.clone
+				eventDates2.clear
+				pageLink = pageLink + "&local=" + local
+			end
+
+			# ------------------- Preferences -------------------------
+
+			prefs = params[:prefs]
+
+			if(prefs != nil)
+				if current_user != nil
+					user = User.find(current_user.id.to_s)
+					ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
+					musicCategoryID = Category.find_by(name: "Música").categoryID
+					nightCategoryID = Category.find_by(name: "Noturno").categoryID
+
+					tagsPrefs = NormalTags.all
+					categoriesPrefs = NormalCategory.all
+					nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID)
+
+					if categoriesPrefs.length != 0
+						@eventDates.each do |eventDate|
+							categoriesPrefs.each do |categoryPref|
+								if eventDate.event.categoryID == categoryPref.categoryID
 									eventDates2.push(eventDate)
 								end
 							end
 						end
+						@eventDates = eventDates2.clone
+						eventDates2.clear
 					end
-					@eventDates = eventDates2.clone
-					eventDates2.clear
+
+					if tagsPrefs.length != 0
+						@eventDates.each do |eventDate|
+							eventDate.event.tags.each do |eventTag|
+								tagsPrefs.each do |tagsPref|
+									if eventTag.tagsID == tagsPref.tagsID
+										eventDates2.push(eventDate)
+									end
+								end
+							end
+						end
+						@eventDates = eventDates2.clone
+						eventDates2.clear
+					end
+				end
+				pageLink = pageLink + "&prefs=1"
+			end
+
+			# ------------------- Paginate by 18 events -------------------------
+
+			maxShowCount = 18
+			@listSize = @eventDates.length
+			@startCount = 0
+			@endcount = @listSize - 1
+			@showCount = 0
+			@listCount = 0
+
+			# ------ Find pages count ----------
+
+			@maxPage = ((@listSize.to_f / maxShowCount.to_f).to_f).ceil
+
+			@page = params[:page].to_i
+			if @page == nil
+				@page = 1
+			end
+
+			if @page < 1
+				@page = 1
+			end
+
+			if @page > @maxPage
+				@page = @maxPage
+			end
+
+			# ------ Find List indexs for 1 page ----------
+
+			if @listSize > maxShowCount
+				@startCount = (@page - 1) * maxShowCount
+				@endcount = @startCount + maxShowCount - 1
+				if @endcount > @listSize - 1
+					@endcount = @listSize - 1
 				end
 			end
-			pageLink = pageLink + "&prefs=1"
-		end
 
-		# ------------------- Paginate by 18 events -------------------------
+			# ------ Create pages links ----------
 
-		maxShowCount = 18
-		@listSize = @eventDates.length
-		@startCount = 0
-		@endcount = @listSize - 1
-		@showCount = 0
-		@listCount = 0
+			@pagesLinks = Array.new
 
-		# ------ Find pages count ----------
-
-		@maxPage = ((@listSize.to_f / maxShowCount.to_f).to_f).ceil
-
-		@page = params[:page].to_i
-		if @page == nil
-			@page = 1
-		end
-
-		if @page < 1
-			@page = 1
-		end
-
-		if @page > @maxPage
-			@page = @maxPage
-		end
-
-		# ------ Find List indexs for 1 page ----------
-
-		if @listSize > maxShowCount
-			@startCount = (@page - 1) * maxShowCount
-			@endcount = @startCount + maxShowCount - 1
-			if @endcount > @listSize - 1
-				@endcount = @listSize - 1
+			for i in 1..@maxPage
+				link = "event?page=#{i}"
+				@pagesLinks.push(link + pageLink)
 			end
-		end
 
-		# ------ Create pages links ----------
+			# ------ Create a page of events ----------
 
-		@pagesLinks = Array.new
-
-		for i in 1..@maxPage
-			link = "event?page=#{i}"
-			@pagesLinks.push(link + pageLink)
-		end
-
-		# ------ Create a page of events ----------
-
-		@eventDates.each do |eventDate|
-			if @listCount >= @startCount && @listCount <= @endcount
-				eventDates2.push(eventDate)
-				@showCount = @showCount + 1
+			@eventDates.each do |eventDate|
+				if @listCount >= @startCount && @listCount <= @endcount
+					eventDates2.push(eventDate)
+					@showCount = @showCount + 1
+				end
+				@listCount = @listCount + 1
 			end
-			@listCount = @listCount + 1
-		end
-		@eventDates = eventDates2
-
+			@eventDates = eventDates2
+	      }
+	      format.json {
+	      	eventInfo = Array.new
+			EventDate.where('startDate <= ? AND endDate >= ?', Time.now, Time.now).distinct(:eventID).each do |data|
+				evento = Event.find_by_eventID(data.eventID)
+				local = Local.find_by_localID(data.localID)
+				categoria = Category.find_by_categoryID(evento.categoryID)
+				eventInfo.push([evento.name,evento.eventID,categoria.name,local.latitude, local.longitude, local.address, evento.descrition])
+			end
+	        render :json => eventInfo.to_json 
+	      }
+	    end
 	end
 
 # ========================================================
