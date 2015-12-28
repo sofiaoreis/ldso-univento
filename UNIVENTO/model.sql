@@ -195,8 +195,9 @@ CREATE TABLE Spotify
 
 
  CREATE TABLE User (
+  banned BOOL DEFAULT FALSE,
   password varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  admin tinyint(1) DEFAULT NULL,
+  admin BOOL DEFAULT FALSE,
   userID int(11) NOT NULL AUTO_INCREMENT,
   email varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   encrypted_password varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
