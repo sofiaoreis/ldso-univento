@@ -31,6 +31,13 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "Colaborator", ["normalID"], name: "FK_Colaborator_Normal", using: :btree
 
+  create_table "ConviteColaborator", primary_key: "hashID", force: :cascade do |t|
+    t.integer "promoterID", limit: 4,   null: false
+    t.string  "email",      limit: 255, null: false
+  end
+
+  add_index "ConviteColaborator", ["promoterID"], name: "FK_Convite_Promoter", using: :btree
+
   create_table "Event", primary_key: "eventID", force: :cascade do |t|
     t.text     "descrition",  limit: 65535
     t.string   "name",        limit: 50
@@ -117,13 +124,6 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "Rate", ["normalID"], name: "FK_Rate_Normal", using: :btree
 
-  create_table "Registration", id: false, force: :cascade do |t|
-    t.integer "eventID",  limit: 4, default: 0, null: false
-    t.integer "normalID", limit: 4, default: 0, null: false
-  end
-
-  add_index "Registration", ["normalID"], name: "FK_Registration_Normal", using: :btree
-
   create_table "Spotify", primary_key: "spotifyID", force: :cascade do |t|
     t.string  "playListLink", limit: 255
     t.integer "eventID",      limit: 4
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(version: 0) do
   add_foreign_key "CategoryTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_CategoryTags_Tags", on_delete: :cascade
   add_foreign_key "Colaborator", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Colaborator_Normal", on_delete: :cascade
   add_foreign_key "Colaborator", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Colaborator_Promoter", on_delete: :cascade
+  add_foreign_key "ConviteColaborator", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Convite_Promoter", on_delete: :cascade
   add_foreign_key "Event", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_Event_Category", on_delete: :cascade
   add_foreign_key "Event", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Event_Normal", on_delete: :nullify
   add_foreign_key "Event", "Promoter", column: "promoterID", primary_key: "promoterID", name: "FK_Event_Promoter", on_delete: :cascade
@@ -200,8 +201,6 @@ ActiveRecord::Schema.define(version: 0) do
   add_foreign_key "Promoter", "User", column: "promoterID", primary_key: "userID", name: "FK_Promoter_User", on_delete: :cascade
   add_foreign_key "Rate", "Event", column: "eventID", primary_key: "eventID", name: "FK_Rate_Event", on_delete: :cascade
   add_foreign_key "Rate", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Rate_Normal"
-  add_foreign_key "Registration", "Event", column: "eventID", primary_key: "eventID", name: "FK_Registration_Event", on_delete: :cascade
-  add_foreign_key "Registration", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Registration_Normal", on_delete: :cascade
   add_foreign_key "Spotify", "Event", column: "eventID", primary_key: "eventID", name: "FK_Spotify_Event", on_delete: :cascade
   add_foreign_key "Youtube", "Event", column: "eventID", primary_key: "eventID", name: "FK_Youtube_Event", on_delete: :cascade
 end

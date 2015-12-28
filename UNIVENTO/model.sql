@@ -2,6 +2,7 @@ SET FOREIGN_KEY_CHECKS=0;
 
 
 -- Drop Tables, Stored Procedures and Views //
+DROP TABLE IF EXISTS ConviteColaborator CASCADE;
 DROP TABLE IF EXISTS NormalTags CASCADE;
 DROP TABLE IF EXISTS NormalCategory CASCADE;
 DROP TABLE IF EXISTS EventTags CASCADE;
@@ -31,6 +32,13 @@ CREATE TABLE NormalTags
 	PRIMARY KEY(normalID,tagsID)
 ) ;
 
+CREATE TABLE ConviteColaborator
+(
+	hashID VARCHAR(255) NOT NULL,
+	promoterID INTEGER NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	PRIMARY KEY (hashID)
+);
 
 CREATE TABLE NormalCategory
 (
@@ -307,3 +315,6 @@ ALTER TABLE Spotify ADD CONSTRAINT FK_Spotify_Event
 
 ALTER TABLE Youtube ADD CONSTRAINT FK_Youtube_Event 
 	FOREIGN KEY (eventID) REFERENCES Event (eventID) ON DELETE CASCADE;
+
+ALTER TABLE ConviteColaborator ADD CONSTRAINT FK_Convite_Promoter 
+	FOREIGN KEY (promoterID) REFERENCES Promoter (promoterID) ON DELETE CASCADE;

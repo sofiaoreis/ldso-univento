@@ -41,6 +41,9 @@
 <% if notice %>
   <p class="alert alert-success"><%= notice %></p>
 <% end %>
+<% if flash[:sucess] %>
+  <p class="alert alert-success"><%= flash[:sucess] %></p>
+<% end %>
 <% if alert %>
   <p class="alert alert-danger"><%= alert %></p>
 <% end %>
