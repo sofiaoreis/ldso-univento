@@ -50,20 +50,26 @@ class UserController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
-    @colaborator = Colaborator.find_by normalID: params[:id]
-    @promoter = Promoter.find_by promoterID: params[:id]
+    @user = User.find_by_userID(params[:id])
 
-    if @promoter == nil
-      ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
-      musicCategoryID = Category.find_by(name: "Música").categoryID
-      nightCategoryID = Category.find_by(name: "Noturno").categoryID
+    if @user.present?
 
-      @tagsPrefs = NormalTags.all
-      @categoriesPrefs = NormalCategory.all
-      @nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID)
+      @colaborator = Colaborator.find_by normalID: params[:id]
+      @promoter = Promoter.find_by promoterID: params[:id]
+
+      if @promoter == nil
+        ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
+        musicCategoryID = Category.find_by(name: "Música").categoryID
+        nightCategoryID = Category.find_by(name: "Noturno").categoryID
+
+        @tagsPrefs = NormalTags.all
+        @categoriesPrefs = NormalCategory.all
+        @nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID)
+      end
+    else
+      flash[:alert] = "User não existe"
+      redirect_to root_path
     end
-
   end
 
   # ========================================================
@@ -173,5 +179,15 @@ class UserController < ApplicationController
   end
 
   # ========================================================
+
+  def destroy
+    user = User.find_by_userID(params[:id])
+
+    if user.present?
+      user.update_column("banned",true)
+      flash[:sucess] = "UserID: "+user.userID.to_s+" banido"
+    end
+    redirect_to root_path
+  end
 
 end
