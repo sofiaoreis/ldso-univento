@@ -6,7 +6,8 @@ INSERT INTO `Category` VALUES ('Artes',5);
 INSERT INTO `Category` VALUES ('Música',6);
 INSERT INTO `Category` VALUES ('Ambiente',7);
 INSERT INTO `Category` VALUES ('Saúde',8);
-INSERT INTO `Category` VALUES ('Empreendorismo',9);
+INSERT INTO `Category` VALUES ('Empreendorismo',9),('Chill',10),('Ciência',11),('Conferência',12),('Festa',13);
+INSERT INTO `Category` VALUES ('Filmes',14),('Gastronómico',15),('Jogos',16),('Palestras',17),('Workshop',18);
 INSERT INTO `Tags` VALUES ('Workshop',1),('Palestra',2),('Futebol',3), ('Corrida',4),
 ('Basquetebol',5), ('Voleibol',6), 
 ('Festa Académica', 7), ('Discoteca', 8), ('Erasmus', 9), ('Leitura', 10), ('Escrita', 11),

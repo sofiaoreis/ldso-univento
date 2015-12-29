@@ -39,16 +39,21 @@ function initialize() {
 	    // Info Window Content
 		var infoWindowContent = [];
 
-		var icons = [];
+		var pinImage = [];
 	    for (var k = 0; k < 2; k++) {
 
 			//Load markers and info window content values
 		    for (var j=0; j < eventos[k].length ; j++) {
-		    	icons.push(k);
 		    	evento = eventos[k][j];
+		    	if(k==0){
+		    		pinImage.push('imgs/google_maps/markers/'+evento[info.CATEGORIA]+'_d.png');
+		    	}else{
+					pinImage.push('imgs/google_maps/markers/'+evento[info.CATEGORIA]+'_1h.png');
+		    	}
+		    	
 		    	markers.push([evento[info.NAME],evento[info.LATITUDE],evento[info.LONGITUDE]]);
 		    	infoWindowContent.push(['<div class="info_content">' +
-		        '<a href="'+window.location.href+"event/"+evento[info.EVENT_ID]+'"><h3>'+evento[info.NAME]+'</h3></a>' +
+		        '<a href="'+window.location.href+"event/"+evento[info.EVENT_ID]+'" style="text-decoration: none; color: #19a69a; background-color: #1AA69B;"><h3 style="text-decoration: none; color: #19a69a;">'+evento[info.NAME]+'</h3></a>' +
 		        '<p>'+evento[info.DESCRIPTION]+'</p>' +
 		        '<p>'+evento[info.ADDRESS]+', '+evento[info.LATITUDE]+', '+evento[info.LONGITUDE]+'</p>'+
 		        '</div>']);
@@ -56,18 +61,19 @@ function initialize() {
 	    };
     	// Display multiple markers on a map
 	    var infoWindow = new google.maps.InfoWindow(), marker, i;
-	    
+
 	    // Loop through our array of markers & place each one on the map  
 	    for( i = 0; i < markers.length; i++ ) {
 	        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
 	        
+	        /*
 	        //var pinColor = ((1<<24)*Math.random()|0).toString(16);
 
 	        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + icons[i],
 													        new google.maps.Size(21, 34),
 													        new google.maps.Point(0,0),
 													        new google.maps.Point(10, 34));
-			
+			*/
 			//var pinImage = 'imgs/google_maps/markers/'+eventos[k][i][info.CATEGORIA]+'.png';
 	        bounds.extend(position);
 	        marker = new google.maps.Marker({
@@ -76,7 +82,7 @@ function initialize() {
 	            title: markers[i][0],
 	            draggable: true,
     			animation: google.maps.Animation.DROP,
-    			icon: pinImage
+    			icon: pinImage[i]
 	        });
 	        
 	        // Allow each marker to have an info window    
