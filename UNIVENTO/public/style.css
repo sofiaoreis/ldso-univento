@@ -213,14 +213,20 @@ p {
 
 }
 
-#btn-lgg {
+#btn-lgg-1 {
     margin-bottom: 20px;
     border-color: #2a2b2d;
     outline: 0 none;
-    padding: 6px 97px;
+    padding: 6px 60px;
     background-color: #2a2b2d ;
 }
-
+#btn-lgg-2 {
+    margin-bottom: 20px;
+    border-color: #1AA69B;
+    outline: 0 none;
+    padding: 6px 54px;
+    background-color: #1AA69B ;
+}
 
 #btn-lgg:hover {
      border-color: #1aa69b ;

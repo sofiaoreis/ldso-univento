@@ -32,37 +32,43 @@ function initialize() {
 	    // Display a map on the page
 	    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 	    map.setTilt(45);
-	    
-	    // Markers
+
+		// Markers
 	    var markers = [];
 
 	    // Info Window Content
 		var infoWindowContent = [];
 
-		//Load markers and info window content values
-	    eventos.forEach(function(evento){
-	    	markers.push([evento[info.NAME],evento[info.LATITUDE],evento[info.LONGITUDE]]);
-	    	infoWindowContent.push(['<div class="info_content">' +
-	        '<h3>'+evento[info.NAME]+'</h3>' +
-	        '<p>'+evento[info.DESCRIPTION]+'</p>' +
-	        '<p>'+evento[info.ADDRESS]+', '+evento[info.LATITUDE]+', '+evento[info.LONGITUDE]+'</p>'+
-	        '</div>']);
-	    });
-	        
-	    // Display multiple markers on a map
+		var icons = [];
+	    for (var k = 0; k < 2; k++) {
+
+			//Load markers and info window content values
+		    for (var j=0; j < eventos[k].length ; j++) {
+		    	icons.push(k);
+		    	evento = eventos[k][j];
+		    	markers.push([evento[info.NAME],evento[info.LATITUDE],evento[info.LONGITUDE]]);
+		    	infoWindowContent.push(['<div class="info_content">' +
+		        '<a href="'+window.location.href+"event/"+evento[info.EVENT_ID]+'"><h3>'+evento[info.NAME]+'</h3></a>' +
+		        '<p>'+evento[info.DESCRIPTION]+'</p>' +
+		        '<p>'+evento[info.ADDRESS]+', '+evento[info.LATITUDE]+', '+evento[info.LONGITUDE]+'</p>'+
+		        '</div>']);
+		    };
+	    };
+    	// Display multiple markers on a map
 	    var infoWindow = new google.maps.InfoWindow(), marker, i;
 	    
 	    // Loop through our array of markers & place each one on the map  
 	    for( i = 0; i < markers.length; i++ ) {
 	        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+	        
+	        //var pinColor = ((1<<24)*Math.random()|0).toString(16);
 
-	        var pinColor = ((1<<24)*Math.random()|0).toString(16);
-
-	        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+	        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + icons[i],
 													        new google.maps.Size(21, 34),
 													        new google.maps.Point(0,0),
 													        new google.maps.Point(10, 34));
-
+			
+			//var pinImage = 'imgs/google_maps/markers/'+eventos[k][i][info.CATEGORIA]+'.png';
 	        bounds.extend(position);
 	        marker = new google.maps.Marker({
 	            position: position,
@@ -83,7 +89,7 @@ function initialize() {
 
 	        // Automatically center the map fitting all markers on the screen
 	        map.fitBounds(bounds);
-	    }
+	    };
 
 	    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
 	    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {

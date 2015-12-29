@@ -364,14 +364,25 @@ class EventController < ApplicationController
 				@listCount = @listCount + 1
 			end
 			@eventDates = eventDates2
+
 	      }
 	      format.json {
 	      	eventInfo = Array.new
+			eventInfo.push(Array.new)
+			eventInfo.push(Array.new)
+			# EVENTOS A DECORRER
 			EventDate.where('startDate <= ? AND endDate >= ?', Time.now, Time.now).distinct(:eventID).each do |data|
 				evento = Event.find_by_eventID(data.eventID)
 				local = Local.find_by_localID(data.localID)
-				categoria = Category.find_by_categoryID(evento.categoryID)
-				eventInfo.push([evento.name,evento.eventID,categoria.name,local.latitude, local.longitude, local.address, evento.descrition])
+				#categoria = Category.find_by_categoryID(evento.categoryID)
+				eventInfo[0].push([evento.name,evento.eventID,evento.categoryID,local.latitude, local.longitude, local.address, evento.descrition])
+			end
+			# EVENTOS DENTRO DE 1H
+			EventDate.where('startDate > ? AND startDate <= ? AND endDate >= ?', Time.now, Time.now + 3600, Time.now).distinct(:eventID).each do |data|
+				evento = Event.find_by_eventID(data.eventID)
+				local = Local.find_by_localID(data.localID)
+				#categoria = Category.find_by_categoryID(evento.categoryID)
+				eventInfo[1].push([evento.name,evento.eventID,evento.categoryID,local.latitude, local.longitude, local.address, evento.descrition])
 			end
 	        render :json => eventInfo.to_json 
 	      }
