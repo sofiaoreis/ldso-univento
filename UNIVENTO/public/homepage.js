@@ -13,6 +13,7 @@ var info = {
 var markersArray = [];
 var map;
 var last_a_decorrer = 0;
+var activeCategories = new Set();
 
 function googlemaps () {
 	// Asynchronously Load the map API 
@@ -39,8 +40,29 @@ function initialize() {
 			clearMarkers();
 			showMarkers(last_a_decorrer,markersArray.length,map);
 		});
-		
+
+		$.ajax({
+		    url: window.location.href+"category",
+		  	type: "get",
+		   	dataType: "json",
+		}).done(function (categorias) {
+			var cssClass = "invertscale";
+			categorias.forEach(function(categoria){
+				cssClass = "invertscale";
+				if(activeCategories.has(categoria.categoryID)){
+					cssClass="";
+				}
+				$("#icons").append('<div class="col-xs-4 col-md-4 col-lg-4 categorias" id="cat_'+categoria.categoryID+'"><img src="imgs/google_maps/icons/'+categoria.categoryID+'_d.png" class="'+cssClass+'" alt=""><br>'+categoria.name+'</div>');
+			});
+			$(".categorias").on("click",function(e){
+				clearMarkers();
+				showMarkersWithCategory(this.id.split("_")[1],eventos);
+			});
+		});
+
+
 	});
+
 }
 
 function loadMarkers(eventos){
@@ -70,15 +92,17 @@ function loadMarkers(eventos){
 	    	}else{
 				pinImage.push('imgs/google_maps/markers/'+evento[info.CATEGORIA]+'_1h.png');
 	    	}
-	    	
 	    	markers.push([evento[info.NAME],evento[info.LATITUDE],evento[info.LONGITUDE]]);
 	    	infoWindowContent.push(['<div class="info_content">' +
 	        '<a href="'+window.location.href+"event/"+evento[info.EVENT_ID]+'" style="text-decoration: none; color: #19a69a; background-color: #1AA69B;"><h3 style="text-decoration: none; color: #19a69a;">'+evento[info.NAME]+'</h3></a>' +
 	        '<p>'+evento[info.DESCRIPTION]+'</p>' +
 	        '<p>'+evento[info.ADDRESS]+', '+evento[info.LATITUDE]+', '+evento[info.LONGITUDE]+'</p>'+
 	        '</div>']);
+
+	    	activeCategories.add(evento[info.CATEGORIA]);
 	    };
     };
+
 	// Display multiple markers on a map
     var infoWindow = new google.maps.InfoWindow(), marker, i;
 
@@ -130,3 +154,21 @@ function clearMarkers() {
 function showMarkers(index,last,mapa) {
   setMapOnAll(index,last,mapa);
 }
+
+function showMarkersWithCategory(id,eventos){
+	var pos = [];
+	var acc=0;
+	for (var k = 0; k < 2; k++) {
+	    for (var j=0; j < eventos[k].length ; j++) {
+	    	evento = eventos[k][j];
+	    	if(evento[info.CATEGORIA]==id){
+	    		pos.push(acc);
+	    	}
+	    	acc++;
+	    };
+	};
+
+	for (var i = 0; i < pos.length; i++) {
+		markersArray[pos[i]].setMap(map);
+	};
+};

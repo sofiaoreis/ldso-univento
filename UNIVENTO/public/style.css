@@ -591,3 +591,6 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
     width: 100%;
     height: 100%;
 }
+.invertscale {
+    -webkit-filter: invert(100%); filter: invert(100%);
+}
