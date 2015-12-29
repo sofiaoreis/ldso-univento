@@ -41,6 +41,11 @@ function initialize() {
 			showMarkers(last_a_decorrer,markersArray.length,map);
 		});
 
+		$("#btn-sm").on("click",function(e){
+			clearMarkers();
+			showMarkers(0,markersArray.length,map);
+		});
+
 		$.ajax({
 		    url: window.location.href+"category",
 		  	type: "get",
@@ -114,7 +119,7 @@ function loadMarkers(eventos){
             position: position,
             map: map,
             title: markers[i][0],
-            draggable: true,
+            draggable: false,
 			animation: google.maps.Animation.DROP,
 			icon: pinImage[i]
         });

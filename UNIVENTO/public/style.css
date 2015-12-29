@@ -594,3 +594,10 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
 .invertscale {
     -webkit-filter: invert(100%); filter: invert(100%);
 }
+
+#btn-sm{
+   margin-bottom: 20px;
+   border-color: #2a2b2d ;
+   outline: 0 none;
+   background-color: #2a2b2d  ;
+}
