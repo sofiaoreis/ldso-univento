@@ -425,11 +425,6 @@ class EventController < ApplicationController
 		end
 
 		@events = Event.where('name LIKE ?', "%"+params[:search]+"%").offset(numEventos*(params[:numPage].to_i-1)).first(numEventos)
-
-		while @events.blank?
-			params[:numPage]=params[:numPage].to_i-1
-			@events = Event.where('name LIKE ?', "%"+params[:search]+"%").offset(numEventos*(params[:numPage].to_i-1)).first(numEventos)
-		end
 	end
 
 # ========================================================
