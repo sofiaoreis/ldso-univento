@@ -1,4 +1,5 @@
 class HomepageController < ApplicationController
+
   def index
   	if !current_user.present?
       alert = flash[:alert]
@@ -7,6 +8,7 @@ class HomepageController < ApplicationController
       flash.now[:alert] = alert
       flash.now[:notice] = notice
   	end
+
   	if session[:normal].present?
     	session[:name] = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
   	elsif session[:promoter].present?
@@ -14,5 +16,8 @@ class HomepageController < ApplicationController
   	else
   		session[:name] = "Ocorreu um erro"
   	end
+
+    @categories = Category.all
   end
+
 end

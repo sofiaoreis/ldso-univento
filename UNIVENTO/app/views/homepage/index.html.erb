@@ -44,9 +44,11 @@
                         <li>
                             <a href="#"><i class="fa fa-list-ul"></i> Categoria<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="#"></a>
-                                </li>
+                                <% @categories.each do |category| %>
+                                    <li>
+                                        <a href="#"><%= category.name %></a>
+                                    </li>
+                                <% end %>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
