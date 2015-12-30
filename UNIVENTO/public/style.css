@@ -213,14 +213,20 @@ p {
 
 }
 
-#btn-lgg {
+#btn-lgg-1 {
     margin-bottom: 20px;
     border-color: #2a2b2d;
     outline: 0 none;
-    padding: 6px 97px;
+    padding: 6px 60px;
     background-color: #2a2b2d ;
 }
-
+#btn-lgg-2 {
+    margin-bottom: 20px;
+    border-color: #1AA69B;
+    outline: 0 none;
+    padding: 6px 54px;
+    background-color: #1AA69B ;
+}
 
 #btn-lgg:hover {
      border-color: #1aa69b ;
@@ -584,4 +590,14 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
 #map_canvas {
     width: 100%;
     height: 100%;
+}
+.invertscale {
+    -webkit-filter: invert(100%); filter: invert(100%);
+}
+
+#btn-sm{
+   margin-bottom: 20px;
+   border-color: #2a2b2d ;
+   outline: 0 none;
+   background-color: #2a2b2d  ;
 }
