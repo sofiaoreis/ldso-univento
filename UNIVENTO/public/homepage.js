@@ -29,6 +29,7 @@ function initialize() {
 	  	type: "get",
 	   	dataType: "json",
 	}).done(function (eventos) {
+		console.log(eventos);
 		loadMarkers(eventos);
 
 		$("#btn-lgg-1").on("click",function(e){
@@ -108,6 +109,23 @@ function loadMarkers(eventos){
 	    };
     };
 
+    if (eventos[0].length+eventos[1].length==0){
+		var img = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + "FF0000",
+															        new google.maps.Size(21, 34),
+															        new google.maps.Point(0,0),
+															        new google.maps.Point(10, 34));
+		pinImage.push(img);
+
+    	markers.push(["UNIVENTO", 41.1579438, -8.629105299999992]);
+    	infoWindowContent.push(['<div class="info_content">' +
+        '<h3>UNIVENTO</h3></a>' +
+        '<p>Não existem eventos a decorrer</p>' +
+        '<p>Não existem eventos a começar dentro de 1h</p>' +
+        '</div>']);
+
+    	activeCategories.add(evento[info.CATEGORIA]);
+    }
+
 	// Display multiple markers on a map
     var infoWindow = new google.maps.InfoWindow(), marker, i;
 
@@ -136,11 +154,13 @@ function loadMarkers(eventos){
         map.fitBounds(bounds);
     };
 
-    /*// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-        this.setZoom(12);
-        google.maps.event.removeListener(boundsListener);
-    }); */
+    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+    if((eventos[0].length+eventos[1].length)<=1){
+	    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+	        this.setZoom(12);
+	        google.maps.event.removeListener(boundsListener);
+	    });
+    } 
 }
 
 // Sets the map on all markers in the array.
