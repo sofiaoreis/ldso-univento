@@ -11,6 +11,13 @@ Rails.application.routes.draw do
     resources :normal
     get 'preferences', :on => :collection
     post 'savePreferences', :on => :collection
+    post 'requestfriend', :on => :collection
+    post 'acceptfriend', :on => :collection
+    post 'rejectfriend', :on => :collection
+    post 'cancelfriend', :on => :collection
+    post 'deletefriend', :on => :collection
+    post 'search', :on => :collection
+    get 'search', :on => :collection
   end
 
   resources :event do 

@@ -2,6 +2,7 @@ SET FOREIGN_KEY_CHECKS=0;
 
 
 -- Drop Tables, Stored Procedures and Views //
+DROP TABLE IF EXISTS Friendship CASCADE;
 DROP TABLE IF EXISTS ConviteColaborator CASCADE;
 DROP TABLE IF EXISTS NormalTags CASCADE;
 DROP TABLE IF EXISTS NormalCategory CASCADE;
@@ -146,6 +147,15 @@ CREATE TABLE Local
 	localID INTEGER NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (localID)
 
+) ;
+
+
+CREATE TABLE Friendship
+(
+	requesterNormalID INTEGER,
+	requestedNormalID INTEGER,
+	friends BOOL DEFAULT FALSE,
+	PRIMARY KEY (requesterNormalID, requestedNormalID)
 ) ;
 
 
@@ -319,3 +329,9 @@ ALTER TABLE Youtube ADD CONSTRAINT FK_Youtube_Event
 
 ALTER TABLE ConviteColaborator ADD CONSTRAINT FK_Convite_Promoter 
 	FOREIGN KEY (promoterID) REFERENCES Promoter (promoterID) ON DELETE CASCADE;
+
+ALTER TABLE Friendship ADD CONSTRAINT FK_Requester_Normal
+	FOREIGN KEY (requesterNormalID) REFERENCES Normal (normalID) ON DELETE CASCADE;
+
+ALTER TABLE Friendship ADD CONSTRAINT FK_Requested_Normal 
+	FOREIGN KEY (requestedNormalID) REFERENCES Normal (normalID) ON DELETE CASCADE;

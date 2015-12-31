@@ -33,8 +33,6 @@
       <label for="eventTime"></label>
         Diurnos<%= radio_button_tag 'eventTime', "dayTime", @eventTime == "dayTime", :checked => false %><br>
         Noturnos<%= radio_button_tag 'eventTime', "nightTime", @eventTime == "nightTime", :checked => false %><br>
-
-     	radio button para um ou outro... Se for noturno, apresentar inicialmente eventos da categoria Noturno, caso contrário das outras.
     </div>
 
     <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>

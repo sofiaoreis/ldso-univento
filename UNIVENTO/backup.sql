@@ -8,22 +8,48 @@ INSERT INTO `Category` VALUES ('Ambiente',7);
 INSERT INTO `Category` VALUES ('Saúde',8);
 INSERT INTO `Category` VALUES ('Empreendorismo',9),('Chill',10),('Ciência',11),('Conferência',12),('Festa',13);
 INSERT INTO `Category` VALUES ('Filmes',14),('Gastronómico',15),('Jogos',16),('Palestras',17),('Workshop',18);
+
 INSERT INTO `Tags` VALUES ('Workshop',1),('Palestra',2),('Futebol',3), ('Corrida',4),
 ('Basquetebol',5), ('Voleibol',6), 
 ('Festa Académica', 7), ('Discoteca', 8), ('Erasmus', 9), ('Leitura', 10), ('Escrita', 11),
 ('Pintura', 12), ('Design', 13), ('Pop', 14),
 ('Rock', 15), ('Eletrónica', 16), ('Indie', 17), ('Clássica', 18), ('Drum & Bass', 19), ('Chill', 20), ('Social', 21), ('Festa', 22);
+
 INSERT INTO `CategoryTags` VALUES (1,3),(2,3),(3,1), (4,1), (5,1), (6,1), (7,2), (8,2), (9,2), (10,4), (11,4), (12,5), (13,5), (14,6), (15,6), (16,6), (17,6), (18,6), (19,6), (20,7), (21,7), (22,7);
+
 INSERT INTO `User` VALUES (FALSE,NULL,NULL,1,'feup@feup.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 INSERT INTO `User` VALUES (FALSE,NULL,NULL,2,'faup@faup.pt','$2a$10$eD9LgxrbUZOHHft7QczMm.gjW9QksIDRkYDCYNDyGtZ1NhJbMeCk6',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 INSERT INTO `User` VALUES (FALSE,NULL,NULL,3,'fdup@fdup.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 INSERT INTO `User` VALUES (FALSE,NULL,NULL,4,'isep@isep.pt','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
-INSERT INTO `User` VALUES (FALSE,NULL,NULL,5,'normal1@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
+INSERT INTO `User` VALUES (FALSE,NULL,NULL,5,'leonel@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
+INSERT INTO `User` VALUES (FALSE,NULL,NULL,6,'luis@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
+INSERT INTO `User` VALUES (FALSE,NULL,NULL,7,'maria@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
+INSERT INTO `User` VALUES (FALSE,NULL,NULL,8,'miguel@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
+INSERT INTO `User` VALUES (FALSE,NULL,TRUE,9,'sofia@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
+INSERT INTO `User` VALUES (FALSE,NULL,NULL,10,'rui@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
+
 INSERT INTO `Promoter` VALUES ('afeup@fe.up.pt','FEUP','AEFEUP','http://aefeup.fe.pt',1);
 INSERT INTO `Promoter` VALUES ('afaup@fa.up.pt','FAUP','AEFAUP','http://aefaup.fa.pt',2);
 INSERT INTO `Promoter` VALUES ('afdup@fd.up.pt','FDUP','AEFDUP','http://aefdup.fd.pt',3);
 INSERT INTO `Promoter` VALUES ('afisep@isep.ipp.pt','ISEP','AEISEP','http://aeisep.isep.pt',4);
-INSERT INTO `Normal` VALUES ('1981-06-21','Normal','Male','User 1',5);
+
+INSERT INTO `Normal` VALUES ('2000-01-01','Leonel','Male','Peixoto',5);
+INSERT INTO `Normal` VALUES ('2000-01-01','Luis','Male','Reis',6);
+INSERT INTO `Normal` VALUES ('2000-01-01','Maria','Female','Marques',7);
+INSERT INTO `Normal` VALUES ('2000-01-01','Miguel','Male','Nunes',8);
+INSERT INTO `Normal` VALUES ('2000-01-01','Sofia','Female','Reis',9);
+INSERT INTO `Normal` VALUES ('2000-01-01','Rui','Male','Andrade',10);
+
+INSERT INTO `Colaborator` VALUES (1,7);
+INSERT INTO `Colaborator` VALUES (1,9);
+
+INSERT INTO `Friendship` VALUES (5,8,TRUE);
+INSERT INTO `Friendship` VALUES (10,5,TRUE);
+INSERT INTO `Friendship` VALUES (8,10,TRUE);
+INSERT INTO `Friendship` VALUES (5,6,FALSE);
+INSERT INTO `Friendship` VALUES (9,5,FALSE);
+INSERT INTO `Friendship` VALUES (7,5,FALSE);
+
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 01',FALSE,10,1,'2015-12-01',NULL,1,1,1,15,NULL);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 02',FALSE,10,1,'2015-12-02',NULL,2,2,1,15,NULL);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 03',FALSE,10,1,'2015-12-03',NULL,3,3,1,15,NULL);
@@ -44,10 +70,14 @@ INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 17',FALSE,10,
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 18',FALSE,10,1,'2015-12-16',NULL,18,3,4,15,NULL);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 19',FALSE,10,1,'2015-12-16',NULL,19,1,4,15,NULL);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 20',TRUE,10,1,'2015-12-16',NULL,20,2,4,15,NULL);
+
 INSERT INTO `EventTags` VALUES (1,1),(1,2),(1,3);
 INSERT INTO `EventTags` VALUES (2,8),(2,16),(2,19);
+
 INSERT INTO `Image` VALUES ('img1.jpg',1,1),('img2.jpg',2,1);
+
 INSERT INTO `Local` VALUES ('rua lá ao fundo',100,100,1);
+
 INSERT INTO `EventDate` VALUES ('0','2016-01-09',10,'2016-01-10',1,1,1),('0','2016-01-11',15,'2016-01-12',2,1,1);
 INSERT INTO `EventDate` VALUES ('1','2016-01-10',10,'2016-01-11',3,2,1),('0','2016-01-11',15,'2016-01-12',4,2,1);
 INSERT INTO `EventDate` VALUES ('1','2016-01-11',15,'2016-01-12',5,3,1),('0','2016-01-13',10,'2016-01-14',6,3,1);
@@ -68,5 +98,7 @@ INSERT INTO `EventDate` VALUES ('1','2016-01-25',10,'2016-01-26',33,17,1),('0','
 INSERT INTO `EventDate` VALUES ('1','2016-01-26',10,'2016-01-27',35,18,1),('0','2016-01-25',15,'2016-01-26',36,18,1);
 INSERT INTO `EventDate` VALUES ('1','2016-01-27',10,'2016-01-28',37,19,1),('0','2016-01-25',15,'2016-01-26',38,19,1);
 INSERT INTO `EventDate` VALUES ('1','2016-01-28',10,'2016-01-29',39,20,1),('0','2016-01-25',15,'2016-01-26',40,20,1);
+
 INSERT INTO `Spotify` VALUES ('http://spotify.com/playlist/1',1,1),('http://spotify.com/playlist/2',2,1);
+
 INSERT INTO `Youtube` VALUES ('http://youtube.com/link1',1,1),('http://youtube.com/link2',2,1),('http://youtube.com/link3',3,1);

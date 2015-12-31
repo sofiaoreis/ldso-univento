@@ -4,23 +4,23 @@
   <strong>normalID:</strong>
   <%= @colaborator.normalID %>
   <br>
-  <strong>colaborator Name:</strong>
-  <%= @colaborator.normal.first_name %> <%= @colaborator.normal.last_name %>
-  <br>
   <strong>promoterID:</strong>
   <%= @colaborator.promoterID %>
   <br>
-  <strong>promoter name:</strong>
+  <strong>Colaborador de:</strong>
   <%= link_to @colaborator.promoter.name, @colaborator.promoter %>
 </p>
 
 <p>
   <strong>=============== Inherited Normal =======================</strong>
   <br>
-  <strong>birthday:</strong>
+  <strong>Nome:</strong>
+  <%= link_to @colaborator.normal.first_name+" "+@colaborator.normal.last_name, user_path(@colaborator.normal.user) %>
+  <br>
+  <strong>Data de nascimento:</strong>
   <%= @colaborator.normal.birthday %>
   <br>
-  <strong>gender</strong>
+  <strong>Genero:</strong>
   <%= @colaborator.normal.gender %>
 </p>
 

@@ -75,6 +75,14 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "EventTags", ["tagsID"], name: "FK_EventTags_Tags", using: :btree
 
+  create_table "Friendship", id: false, force: :cascade do |t|
+    t.integer "requesterNormalID", limit: 4, default: 0,     null: false
+    t.integer "requestedNormalID", limit: 4, default: 0,     null: false
+    t.boolean "friends",                     default: false
+  end
+
+  add_index "Friendship", ["requestedNormalID"], name: "FK_Requested_Normal", using: :btree
+
   create_table "Image", primary_key: "imageID", force: :cascade do |t|
     t.string  "image",   limit: 255
     t.integer "eventID", limit: 4
@@ -136,14 +144,15 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   create_table "User", primary_key: "userID", force: :cascade do |t|
+    t.boolean  "banned",                             default: false
     t.string   "password",               limit: 255
-    t.boolean  "admin"
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.boolean  "admin",                              default: false
+    t.string   "email",                  limit: 255, default: "",    null: false
+    t.string   "encrypted_password",     limit: 255, default: "",    null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
@@ -192,6 +201,8 @@ ActiveRecord::Schema.define(version: 0) do
   add_foreign_key "EventDate", "Local", column: "localID", primary_key: "localID", name: "FK_Date_Local", on_delete: :cascade
   add_foreign_key "EventTags", "Event", column: "eventID", primary_key: "eventID", name: "FK_EventTags_Event", on_delete: :cascade
   add_foreign_key "EventTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_EventTags_Tags", on_delete: :cascade
+  add_foreign_key "Friendship", "Normal", column: "requestedNormalID", primary_key: "normalID", name: "FK_Requested_Normal", on_delete: :cascade
+  add_foreign_key "Friendship", "Normal", column: "requesterNormalID", primary_key: "normalID", name: "FK_Requester_Normal", on_delete: :cascade
   add_foreign_key "Image", "Event", column: "eventID", primary_key: "eventID", name: "FK_Image_Event", on_delete: :cascade
   add_foreign_key "Normal", "User", column: "normalID", primary_key: "userID", name: "FK_Normal_User", on_delete: :cascade
   add_foreign_key "NormalCategory", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_NormalCategory_Category", on_delete: :cascade
