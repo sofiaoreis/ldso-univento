@@ -469,10 +469,14 @@ class EventController < ApplicationController
 					end
 				end
 			end
+		else 
+			flash[:alert] = "Tem de estar logged in para se inscrever"
+			redirect_to (root_path) and return
 		end
 
 		if !@criarInscricao && !@event.docsID.present?
 			flash[:alert]= "Inscrição indisponível"
+			redirect_to (root_path) and return
 		end
 
 		respond_to do |format|
@@ -483,6 +487,20 @@ class EventController < ApplicationController
 	      	elsif params[:accao] == "saveDocsID"
 	      		@event.docsID = params[:docsID]
 	      		render :json => @event.save!.to_json
+	      	elsif params[:accao] == "saveRegistration"
+	      		registration = Registration.new
+	      		registration.normalID = current_user.userID
+	      		registration.eventID = @event.eventID
+	      		registration.save
+	      		flash[:notice] = "Está inscrito no evento"
+	      		render :json => "Done".to_json
+	      		return
+	      	elsif params[:accao] == "cancelRegistration"
+	      		puts "##################################################"
+	      		Registration.where("normalID = ? AND eventID = ?",current_user.userID, @event.eventID).delete_all
+		      	puts "##################################################"
+	      		render :json => "Done".to_json
+	      		return
 	      	end
 	      }
 	    end

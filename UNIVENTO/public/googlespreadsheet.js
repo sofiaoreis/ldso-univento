@@ -1,17 +1,6 @@
-/*  
-    Ficheiro com js para a inscrição em eventos:
-        - permite criar form personalizado
-        - carregar dados das inscrições
-        - registar inscrição
-        - editar inscrição
-        - cancelar inscrição
-        - verificar se user já está inscrito
-*/
-
-
 /*  -   vars globais DON'T TOUCH THIS :D  -   */
 
-var scriptLink = "https://script.google.com/macros/s/AKfycbxpb6ghoFH5Hyllkaq6DbmEepHU-nizHO6ukrOcJgLX4BRCAmM/exec";
+var scriptLink = "https://script.google.com/macros/s/AKfycbyOYScTQFQ5Fbx13NNxiOjy9OawbBDeuLj_hiw8TGm_gldF438/exec";
 var PERGUNTAS = ['Carimbo de data/hora',"[\"Email\",[]]"];
 
 var numQuestion = 1;
@@ -52,6 +41,7 @@ function start(){
 		
         /* botão para registar uma inscrição*/
 		$('#enviaDados').submit(function(e) {
+            e.preventDefault();
 			var inputs = $( this ).serializeArray();
 	    	var values = [];
 	    	values.push(getDateTime());
@@ -66,31 +56,19 @@ function start(){
                     values.push(input.value);
                 }
 	    	});
-            //console.log(values);
-            /*
-            if(ValidateEmail(userEmail)==false){
-                $("#inscreverEmailDiv").addClass("has-error");
-                $("#verificaEmail").get(0).scrollIntoView();
-                return;
-            }
-            */
+
             values[1]=userEmail; // apenas por segurança :)
-            sendData(values,eventInfo[2],userEmail);
-	    	e.preventDefault();
-		});  
-
-        //$("#Inscrever").hide();
-        /*$("#verificaEmail").on("click",function(){*/
-            /*
-            $("#inscreverEmailDiv").removeClass("has-error");
-            userEmail = $("#inscreverEmailInput").val();
-
-            if(ValidateEmail(userEmail)==false){
-                $("#inscreverEmailDiv").addClass("has-error");
-                $("#verificaEmail").get(0).scrollIntoView();
-                return;
+            if ($('#Inscrever').val()=="Inscrever"){
+                 $.ajax({
+                    url: window.location.href,
+                    type: "get",
+                    dataType: "json",
+                    data: {accao:"saveRegistration"}
+                });
             }
-            */
+            sendData(values,eventInfo[2],userEmail);
+	    	
+		});  
 
         $.ajax({
             url: scriptLink,
@@ -134,9 +112,16 @@ function start(){
                                 email: userEmail
                             }
                         }).done(function (data){
-                            //console.log(data);
+                            $.ajax({
+                                url: window.location.href,
+                                type: "get",
+                                dataType: "json",
+                                data: {accao:"cancelRegistration"}
+                            });
+                            
                             window.location.reload();
                         });
+
                     });
                     for (var i = 1; i < firstInscription.length; i++) {
                         var pergunta = JSON.parse(data[i]);
@@ -157,7 +142,6 @@ function start(){
                 $("#inscreverEmailDiv").remove();
             });
         });
-        /*});*/
 	});
 }
 
@@ -234,7 +218,7 @@ function sendData(values,docID, user_email){
     	}
     });
     window.alert("Inscrição submetida");
-    window.location.replace("/");
+    window.location.reload();
 }
 
 /*----------------------------------------------*//*----------------------------------------------*/

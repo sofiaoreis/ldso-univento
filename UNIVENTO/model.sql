@@ -262,8 +262,7 @@ CREATE TABLE Registration
 (
 	eventID INTEGER,
 	normalID INTEGER,
-	KEY (eventID),
-	KEY (normalID)
+	PRIMARY KEY (eventID,normalID)
 
 ) ;
 
