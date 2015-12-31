@@ -1,14 +1,44 @@
 Teste DB CONNECTION
-<table>
+<br><br>
+List of Normal Users:
+<br><br>
+
+<table border="1">
   <tr>
+    <th>UserID</th>
+    <th>Name</th>
     <th>Email</th>
-    <th>Password</th>
+    <th>Banned</th>
     <th colspan="3"></th>
   </tr>
-  <% @users.each do |user| %>
+  <% @normals.each do |normal| %>
     <tr>
-      <td><%= user.email %></td>
-      <td><%= user.password %></td>
+      <td><%= normal.normalID %></td>
+      <td><%= link_to normal.first_name+" "+normal.last_name, user_path(normal) %></td>
+      <td><%= mail_to normal.user.email, normal.user.email %></td>
+      <td><%= normal.user.banned %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br><br>
+List of Promoters:
+<br><br>
+
+<table border="1">
+  <tr>
+    <th>UserID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Banned</th>
+    <th colspan="3"></th>
+  </tr>
+  <% @promoters.each do |promoter| %>
+    <tr>
+      <td><%= promoter.promoterID %></td>
+      <td><%= link_to promoter.name, user_path(promoter) %></td>
+      <td><%= mail_to promoter.contact, promoter.contact %></td>
+      <td><%= promoter.user.banned %></td>
     </tr>
   <% end %>
 </table>

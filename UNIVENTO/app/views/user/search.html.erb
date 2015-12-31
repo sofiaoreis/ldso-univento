@@ -1,0 +1,33 @@
+<div class="container">
+
+    <%= form_tag search_user_index_path, :method => 'post' do %>
+        <%= text_field_tag :search, params[:search] %>
+        <%= submit_tag "Search" %>
+    <% end %>
+
+    <br><br>
+
+    <div class="row">
+        <% @normals.each do |normal| %>
+            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                <%= link_to normal.first_name+" "+normal.last_name, user_path(normal), :class => "thumbnail" %>
+            </div>
+        <% end %>
+    </div>
+
+    <br><br>
+
+    <div class="row">
+        <%= form_tag search_user_index_path, :method => 'post' do %>
+            <input type="hidden" name="search" value="<%=params[:search]%>">
+            <% if params[:numPage].present? %>
+                <input type="hidden" name="numPage" value="<%=params[:numPage]%>">
+            <%else%>
+                <input type="hidden" name="numPage" value="1">
+            <%end%>
+            <%= submit_tag "<" , :class => "btn btn-default" %>
+            <%= submit_tag ">" , :class => "btn btn-default" %>
+        <% end %>
+    </div>
+
+</div>

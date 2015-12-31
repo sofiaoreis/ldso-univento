@@ -5,53 +5,141 @@
 
 <% if @user.normal != nil %>
   <p>
-    <strong>First Name:</strong>
-    <%= @user.normal.first_name %>
+    <strong>Nome:</strong>
+    <%= @user.normal.first_name + " " + @user.normal.last_name %>
   </p>
 
   <p>
-    <strong>Last Name:</strong>
-    <%= @user.normal.last_name %>
-  </p>
-
-  <p>
-    <strong>Gender:</strong>
+    <strong>Genero:</strong>
     <%= @user.normal.gender %>
   </p>
 
   <p>
-    <strong>Birthday:</strong>
+    <strong>Data de nascimento:</strong>
     <%= @user.normal.birthday %>
   </p>
 
-  <strong>------ <%= link_to "Preferencias", root_url+"user/preferences?id="+@user.userID.to_s %> ------</strong>
+  <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i %>
+    <strong>------ <%= link_to "Alterar Preferencias", root_url+"user/preferences?id="+@user.userID.to_s %> ------</strong>
+  <% else %>
+    <strong>------ Preferencias ------</strong>
+  <% end %>
   <p>
-    <strong>Tags:</strong><br>
-    <% @tagsPrefs.each do |tag| %>
-      <%= tag.tags.name %><br>
+    <% if @tagsPrefs.length != 0 %>
+      <strong>Tags:</strong><br>
+      <% @tagsPrefs.each do |tag| %>
+        <%= tag.tags.name %><br>
+      <% end %>
     <% end %>
   </p>
 
   <p>
-    <strong>Categorias:</strong><br>
-    <% @categoriesPrefs.each do |category| %>
-      <%= category.category.name %><br>
+  <% if @categoriesPrefs.length != 0 %>
+      <strong>Categorias:</strong><br>
+      <% @categoriesPrefs.each do |category| %>
+        <%= category.category.name %><br>
+      <% end %>
     <% end %>
   </p>
 
   <p>
     <% if @nightEventsPrefs.length != 0 %>
-      <strong>Prefere Eventos noturnos</strong><br>
+        <strong>Prefere Eventos noturnos</strong><br>
     <% end %>
   </p>
+
+  <strong>------------- Amigos -------------</strong>
+  <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i && @friends.length != 0 %>
+    <br> Tem <%= @friends.length %> amigo(s):
+    <table>
+      <% @friends.each do |normal| %>
+        <tr>
+          <td>
+            <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
+          </td>
+          <td>
+            <%= button_to "Anular", root_path+"user/deletefriend", data: { confirm: "Tem a certeza?"}, params: {id1: @user.userID.to_s, id2: normal.normalID.to_s}, method: :post %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <br> <%= @friends.length %> amigos <br>
+  <% end %>
+
+  <br>
+
+  <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i && @friendRequestsReceived.length != 0 %>
+  <strong>------ Pedidos de Amizade Recebidos ------</strong>
+    <table>
+      <% @friendRequestsReceived.each do |normal| %>
+        <tr>
+          <td>
+            <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
+          </td>
+          <td>
+          <%= button_to "Aceitar", root_path+"user/acceptfriend", data: { confirm: "Tem a certeza?"}, params: {receiver: @user.userID.to_s, sender: normal.normalID.to_s}, method: :post %>
+          </td>
+          <td>
+          <%= button_to "Rejeitar", root_path+"user/rejectfriend", data: { confirm: "Tem a certeza?"}, params: { receiver: @user.userID.to_s, sender: normal.normalID.to_s}, method: :post %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <br>
+
+  <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i && @friendRequestsSended.length != 0 %>
+    <strong>------ Pedidos de Amizade Enviados ------</strong>
+    <table>
+      <% @friendRequestsSended.each do |normal| %>
+        <tr>
+          <td>
+            <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
+          </td>
+          <td>
+            <%= button_to "Anular", root_path+"user/cancelfriend", data: { confirm: "Tem a certeza?"}, params: {sender: @user.userID.to_s, receiver: normal.normalID.to_s}, method: :post %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <% if user_signed_in? && @commonFriends.length != 0 %>
+    <strong>------ Amigos em Comum ------</strong>
+    <br> Tem <%= @commonFriends.length %> amigo(s) em comum:
+    <table>
+      <% @commonFriends.each do |normal| %>
+        <tr>
+          <td>
+            <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <br> <%= link_to "Pesquisar Amigos", search_user_index_path %> <br>
+
+  <% if user_signed_in? && current_user.userID.to_i != @user.userID.to_i && !@alreadyFriend %>
+    <%= button_to "Adicionar como amigo", root_path+"user/requestfriend", data: { confirm: "Tem a certeza?"}, params: {sender: current_user.userID.to_s, receiver: @user.userID.to_s}, method: :post %>
+  <% elsif user_signed_in? && current_user.userID.to_i != @user.userID.to_i && @alreadyFriend %>
+    <% if @maybeFriend%>
+      <br> O teu pedido de amizade está pendente <br>
+    <% else %>
+      <br> Já és amigo(a) de <%= @user.normal.first_name + " " + @user.normal.last_name %> <br>
+    <% end %>
+  <% end %>
+
 <% end %>
 
 <br>
 <p>
   <% if @colaborator != nil %>
     <strong>
-      User is: 
-      <%= link_to "Colaborador", colaborator_path(@colaborator.normal) %> of 
+      Utilizador é 
+      <%= link_to "Colaborador", colaborator_path(@colaborator.normal) %> do promotor de eventos:
       <%= link_to @colaborator.promoter.name, promoter_path(@colaborator.promoter) %>
     </strong>
   <% end %>
@@ -61,7 +149,7 @@
 <p>
   <% if @promoter != nil %>
     <strong>
-      User is promoter: 
+      Utilizador é o promotor de eventos: 
       <%= link_to @promoter.name, promoter_path(@promoter) %>
     </strong>
   <% end %>

@@ -32,9 +32,10 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <%= link_to ' Definições', edit_user_registration_path, :class => 'fa fa-gear fa-fw' %> 
-
-
+                            <%= link_to ' Meu Perfil', user_path(current_user.userID), :class => 'fa fa-user fa-fw' %>
+                        </li>
+                        <li>
+                            <%= link_to ' Definições', edit_user_registration_path, :class => 'fa fa-gear fa-fw' %>
                         </li>
                         <li class="divider"></li>
                         <li>
