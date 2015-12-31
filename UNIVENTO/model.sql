@@ -247,6 +247,16 @@ CREATE TABLE ckeditor_assets (
   KEY idx_ckeditor_assetable (assetable_type,assetable_id)
 );
 
+
+CREATE TABLE Registration
+(
+	eventID INTEGER,
+	normalID INTEGER,
+	KEY (eventID),
+	KEY (normalID)
+
+) ;
+
 SET FOREIGN_KEY_CHECKS=1;
 
 
@@ -319,3 +329,9 @@ ALTER TABLE Youtube ADD CONSTRAINT FK_Youtube_Event
 
 ALTER TABLE ConviteColaborator ADD CONSTRAINT FK_Convite_Promoter 
 	FOREIGN KEY (promoterID) REFERENCES Promoter (promoterID) ON DELETE CASCADE;
+
+ALTER TABLE Registration ADD CONSTRAINT FK_Registration_Event 
+	FOREIGN KEY (eventID) REFERENCES Event (eventID) ON DELETE CASCADE;
+
+ALTER TABLE Registration ADD CONSTRAINT FK_Registration_Normal 
+	FOREIGN KEY (normalID) REFERENCES Normal (normalID) ON DELETE CASCADE;
