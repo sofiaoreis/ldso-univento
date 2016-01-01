@@ -123,7 +123,7 @@ function loadMarkers(eventos){
         '<p>Não existem eventos a começar dentro de 1h</p>' +
         '</div>']);
 
-    	activeCategories.add(evento[info.CATEGORIA]);
+    	//activeCategories.add(-1);
     }
 
 	// Display multiple markers on a map
