@@ -5,6 +5,18 @@
 
 <% if @user.normal != nil %>
   <p>
+    <% if @user.uid != nil %>
+      <img src="http://graph.facebook.com/<%=@user.uid%>/picture" class="img-responsive img-circle">
+    <% else %>
+      <% if @user.normal.gender == 'Male' %>
+        <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+      <% else %>
+        <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+      <% end %>
+    <% end %>
+  </p>
+
+  <p>
     <strong>Nome:</strong>
     <%= @user.normal.first_name + " " + @user.normal.last_name %>
   </p>
@@ -55,6 +67,17 @@
       <% @friends.each do |normal| %>
         <tr>
           <td>
+            <% if normal.user.uid != nil %>
+              <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% else %>
+              <% if normal.user.normal.gender == 'Male' %>
+                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+              <% else %>
+                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+              <% end %>
+            <% end %>
+          </td>
+          <td>
             <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
           </td>
           <td>
@@ -74,6 +97,17 @@
     <table>
       <% @friendRequestsReceived.each do |normal| %>
         <tr>
+          <td>
+            <% if normal.user.uid != nil %>
+              <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% else %>
+              <% if normal.user.normal.gender == 'Male' %>
+                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+              <% else %>
+                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+              <% end %>
+            <% end %>
+          </td>
           <td>
             <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
           </td>
@@ -96,6 +130,17 @@
       <% @friendRequestsSended.each do |normal| %>
         <tr>
           <td>
+            <% if normal.user.uid != nil %>
+              <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% else %>
+              <% if normal.user.normal.gender == 'Male' %>
+                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+              <% else %>
+                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+              <% end %>
+            <% end %>
+          </td>
+          <td>
             <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
           </td>
           <td>
@@ -112,6 +157,17 @@
     <table>
       <% @commonFriends.each do |normal| %>
         <tr>
+          <td>
+            <% if normal.user.uid != nil %>
+              <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% else %>
+              <% if normal.user.normal.gender == 'Male' %>
+                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+              <% else %>
+                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+              <% end %>
+            <% end %>
+          </td>
           <td>
             <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
           </td>

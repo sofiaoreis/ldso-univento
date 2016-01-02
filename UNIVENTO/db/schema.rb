@@ -132,6 +132,13 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "Rate", ["normalID"], name: "FK_Rate_Normal", using: :btree
 
+  create_table "Registration", id: false, force: :cascade do |t|
+    t.integer "eventID",  limit: 4, default: 0, null: false
+    t.integer "normalID", limit: 4, default: 0, null: false
+  end
+
+  add_index "Registration", ["normalID"], name: "FK_Registration_Normal", using: :btree
+
   create_table "Spotify", primary_key: "spotifyID", force: :cascade do |t|
     t.string  "playListLink", limit: 255
     t.integer "eventID",      limit: 4
@@ -212,6 +219,8 @@ ActiveRecord::Schema.define(version: 0) do
   add_foreign_key "Promoter", "User", column: "promoterID", primary_key: "userID", name: "FK_Promoter_User", on_delete: :cascade
   add_foreign_key "Rate", "Event", column: "eventID", primary_key: "eventID", name: "FK_Rate_Event", on_delete: :cascade
   add_foreign_key "Rate", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Rate_Normal"
+  add_foreign_key "Registration", "Event", column: "eventID", primary_key: "eventID", name: "FK_Registration_Event", on_delete: :cascade
+  add_foreign_key "Registration", "Normal", column: "normalID", primary_key: "normalID", name: "FK_Registration_Normal", on_delete: :cascade
   add_foreign_key "Spotify", "Event", column: "eventID", primary_key: "eventID", name: "FK_Spotify_Event", on_delete: :cascade
   add_foreign_key "Youtube", "Event", column: "eventID", primary_key: "eventID", name: "FK_Youtube_Event", on_delete: :cascade
 end
