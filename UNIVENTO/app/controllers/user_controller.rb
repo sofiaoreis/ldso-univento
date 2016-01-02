@@ -133,8 +133,15 @@ class UserController < ApplicationController
               end
             end
           end
-
         end
+
+        @assistedEvents = Array.new
+        registrations = Registration.where(:normalID => @user.userID)
+
+        registrations.each do |registration|
+          @assistedEvents.push(Event.find_by eventID: registration.eventID)
+        end
+
       end
     else
       flash[:alert] = "User não existe"

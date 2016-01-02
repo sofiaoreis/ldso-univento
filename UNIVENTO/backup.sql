@@ -102,3 +102,6 @@ INSERT INTO `EventDate` VALUES ('1','2016-01-28',10,'2016-01-29',39,20,1),('0','
 INSERT INTO `Spotify` VALUES ('http://spotify.com/playlist/1',1,1),('http://spotify.com/playlist/2',2,1);
 
 INSERT INTO `Youtube` VALUES ('http://youtube.com/link1',1,1),('http://youtube.com/link2',2,1),('http://youtube.com/link3',3,1);
+
+INSERT INTO `Registration` VALUES (1,5);
+INSERT INTO `Registration` VALUES (3,5);

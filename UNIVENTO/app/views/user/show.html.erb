@@ -188,6 +188,21 @@
     <% end %>
   <% end %>
 
+  <% if user_signed_in? && current_user.userID.to_i != @user.userID.to_i && @alreadyFriend && !@maybeFriend %>
+    <strong>------ Eventos que já frequentou ------</strong>
+    <table>
+      <% @assistedEvents.each do |assistedEvent| %>
+        <% if assistedEvent.image.first.present? %>
+            <a href="<%= event_path(assistedEvent)%>" class="thumbnail">
+                <%=image_tag assistedEvent.image.first.image , :class => "img-responsive"%>
+            </a>
+        <% else %>
+            <%= link_to assistedEvent.name, event_path(assistedEvent), :class => "thumbnail" %>
+        <% end %>
+      <% end %>
+    </table>
+  <% end %>
+
 <% end %>
 
 <br>
