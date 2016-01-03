@@ -119,7 +119,7 @@
                   </div>
                     <div class="row">
                         <div class="small-2 large-4 columns">
-                           <h3>Classificação:</h3>  <%= rating_for @event, "event_rate" , enable_half: true, imdb_avg: true,  space: true %>
+                           <h3>Classificação:</h3>  <%= rating_for @event, "event_rate" , stars: 10, space: true , disable_after_rate: false , cancel_place: 'right', cancel_hint: 'Cancel this vote!' %>
                             <br>
                         </div>
                     </div>
