@@ -58,7 +58,7 @@ function initialize() {
 				if(activeCategories.has(categoria.categoryID)){
 					cssClass="";
 				}
-				$("#icons").append('<div class="col-xs-4 col-md-4 col-lg-4 categorias text-center" id="cat_'+categoria.categoryID+'"><img src="imgs/google_maps/icons/'+categoria.categoryID+'_d.png" class="'+cssClass+'" alt=""><br>'+categoria.name+'</div>');
+				$("#icons").append('<div class="col-xs-2 col-md-2 col-lg-2 categorias text-center" id="cat_'+categoria.categoryID+'"><img src="imgs/google_maps/icons/'+categoria.categoryID+'_d.png" class="'+cssClass+'" alt=""><br><p>'+categoria.name+'</p></div>');
 			});
 			$(".categorias").on("click",function(e){
 				clearMarkers();

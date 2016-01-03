@@ -1,7 +1,6 @@
 body {
     background-color: #f8f8f8;
     font-family: 'Open Sans', sans-serif;
-    background:url('http://192.168.58.74/assets/arraial.jpg');
 }
 p {
     font-weight: 200;
@@ -22,7 +21,7 @@ p {
         position: inherit;
         margin: 0 0 0 250px;
         /*padding: 0 30px;*/
-        border-left: 1px solid grey;
+        border-left: none;
     }
 }
 #page-wrapper {
@@ -184,11 +183,6 @@ p {
     padding-left: 0px;
 }
 
-.carousel-controls {
-    background-color: none;
-    box-shadow: none;
-}
-
 .signin {
     border-color: #484b50 ;
     font-style: italic;
@@ -208,10 +202,6 @@ p {
     padding-right: 10px;
 }
 
-.thumbnail{
-    position:relative;
-
-}
 
 #btn-lgg-1 {
     margin-bottom: 20px;
@@ -406,15 +396,6 @@ a:visited {
      border-bottom-right-radius: 5px;
 }
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: auto;
-  background-color: #1AA69B;
-}
-
 html {
   position: relative;
   min-height: 100%;
@@ -507,7 +488,7 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
 
 .glyphicon
 {
-    font-size: 12px;
+    /*font-size: 12px;*/
 }
 
 .mrg-bottom
@@ -518,6 +499,13 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
 .dropdown-menu>li>a {
     color: #f1f1f1;
 }
+
+/*.thumbnail {
+    padding-left: 15px;
+    float:left;
+    padding-right: 15px;
+    margin-bottom: 0px;
+}*/
 
 
 
@@ -569,19 +557,6 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
     padding-left: 100px;
 }
 
-.thumbnail{
-    border: none;
-    padding: 0px;
-    background-color: none;
-    margin-bottom: 0px;
-    border-radius: 0px;
-}
-
-#evento{
-    padding-right: 0px;
-    padding-left: 0px;
-}
-
  /* GOOGLE MAPS */
  #map_wrapper {
     height: 400px;
@@ -601,3 +576,206 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
    outline: 0 none;
    background-color: #2a2b2d  ;
 }
+/*alterações mj !!!!! alterar thumbnail acima!!*/
+.row#aviso {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#eventos {
+    /* apagar #eventos acima */
+    padding-top: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* carousel events @begin */
+/* Removes the default 20px margin and creates some padding space for the indicators and controls */
+.carousel #carEventos{
+    margin-bottom: 0;
+    padding: 0 40px 30px 40px;
+}
+
+.carousel-control {
+    width: 5%;
+}
+
+/* Reposition the controls slightly */
+.carousel-control .glyphicon-circle-arrow-left, 
+.carousel-control .glyphicon-circle-arrow-right {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+}
+
+.carousel-control.left, .carousel-control.right {
+    background-image: none;
+    background-color: transparent;
+}
+#carEventos .carousel-indicators {
+    bottom: -20px;
+}
+/* Changes the position of the indicators */
+.carousel-indicators {
+    right: 50%;
+    top: auto;
+    bottom: 0px;
+    margin-right: -19px;
+}
+/* Changes the colour of the indicators */
+.carousel-indicators li {
+    border: 2px solid rgba(42,43,45, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.carousel-indicators .active {
+    background: #1AA69B;
+}
+
+.categorias {
+    padding-bottom: 10px;
+}
+
+.categorias p {
+    padding-top: 5px;
+    font-size: 10px;
+}
+
+.maps-buttons, .maps-select {
+    padding-bottom: 1em;
+}
+
+.glowing-border form input {
+    background-color: white;
+    border: 2px solid #dadada;
+    border-radius: 7px;
+    border-style: none;
+}
+
+.glowing-border form input:focus { 
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #1AA69B;
+}
+
+
+.animate {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.home-events {
+  text-align: center;
+  padding: 10px 0 20px;
+  background: #f0f5f6;
+}
+
+.text-content a {
+    text-decoration: none;
+}
+
+.home-events h2 {
+    font-weight: normal;
+}
+
+.home-events .common-event {
+  background-color: #fff;
+}
+.home-events .common-event figure {
+  overflow: hidden;
+  width: 100%;
+}
+
+.home-events img {
+    width: 100%;
+    height: auto;
+}
+
+.home-events .common-event h5 {
+  margin: 0 0 7px;
+  font-size: 18px;
+    font-weight: 700;
+    color: #3a3c41;
+}
+.home-events .common-event .text-content {
+  padding: 19px 14px 13px;
+}
+
+.home-events .common-event h5 small {
+    color: #1AA69B;
+    font-weight: bold;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.home-events .common-event ul{
+    list-style-type: none;
+    position: absolute;
+    top: 30%;
+    left: 0;
+    width: 100%;
+    margin-top: -28px;
+    text-align: center;
+    margin-top: 10em;
+    opacity: 0;
+    z-index: 1;   
+}
+
+.hover-list {
+    padding-left: 0;}
+
+.home-events .common-event li {
+    padding-bottom: 10px;
+}
+
+.home-events .common-event li a {
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+}
+
+
+.doc-img{
+     /* Webkit for Chrome and Safari */
+  -webkit-transform: scale(1, 1); // This is the scale for the normal size of the image.
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+ 
+  /* Webkit for Mozila Firefox */
+  -moz-transform: scale(1, 1);
+  -moz-transition-duration: 500ms;
+  -moz-transition-timing-function: ease-out;
+ 
+  /* Webkit for IE( Version: 11, 10 ) */
+  -ms-transform: scale(1, 1);
+  -ms-transition-duration: 500ms;
+  -ms-transition-timing-function: ease-out;
+}
+
+.doc-item:hover .doc-img{
+     /* Webkit for Chrome and Safari */
+  -webkit-transform: scale(1.2, 1.2); // This is the enlarged size scale of the image.
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: ease-out;
+ 
+  /* Webkit for Mozila Firefox */
+  -moz-transform: scale(1.2, 1.2);
+  -moz-transition-duration: 500ms;
+  -moz-transition-timing-function: ease-out;
+ 
+  /* Webkit for IE( Version: 11, 10 ) */
+  -ms-transform: scale(1.20, 1.20);
+  -ms-transition-duration: 500ms;
+  -ms-transition-timing-function: ease-out;
+
+  opacity: 0.3;
+}
+
+.doc-item:hover .hover-list{
+    margin-top: -2em;
+    opacity: 1;
+}
+
