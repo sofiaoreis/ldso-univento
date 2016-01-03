@@ -24,8 +24,7 @@ DROP TABLE IF EXISTS Promoter CASCADE;
 DROP TABLE IF EXISTS User CASCADE;
 DROP TABLE IF EXISTS ckeditor_assets CASCADE;
 DROP TABLE IF EXISTS overall_averages CASCADE;
-DROP TABLE IF EXISTS Rate CASCADE;
-DROP TABLE average_caches CASCADE;
+DROP TABLE IF EXISTS average_caches CASCADE;
 DROP TABLE IF EXISTS rates CASCADE;
 DROP TABLE IF EXISTS rating_caches CASCADE;
 DROP TABLE IF EXISTS average_caches CASCADE;
@@ -281,16 +280,6 @@ CREATE TABLE overall_averages
   rateable_id int(11) DEFAULT NULL,
   rateable_type varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   overall_avg float NOT NULL,
-  created_at datetime DEFAULT NULL,
-  updated_at datetime DEFAULT NULL,
-  PRIMARY KEY (id)
-);
-
-  id int(11) NOT NULL AUTO_INCREMENT,
-  rater_id int(11) DEFAULT NULL,
-  rateable_id int(11) DEFAULT NULL,
-  rateable_type varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  avg float NOT NULL,
   created_at datetime DEFAULT NULL,
   updated_at datetime DEFAULT NULL,
   PRIMARY KEY (id)
