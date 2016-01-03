@@ -117,6 +117,12 @@
                           <% end %>
                       </div>
                   </div>
+                    <div class="row">
+                        <div class="small-2 large-4 columns">
+                            Classificação: <%= rating_for @event, "event_rate" , enable_half: true %>
+                            <br>
+                        </div>
+                    </div>
                   <div class="top-buffer ">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <div class="grid-sizer"></div>
@@ -141,18 +147,6 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-          <div class="small-2 large-2 columns">
-              <%= imdb_style_rating_for @event, current_user%>
-          </div>
-          <br>
-          <div class="small-2 large-4 columns">
-            <% if current_user %>
-            Event Rate: <%= rating_for @event, "event_rate" , enable_half: true %>
-            <br>
-            <% end %>
-        </div>
-    </div>
 </div>
 
 <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
