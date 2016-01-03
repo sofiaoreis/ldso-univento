@@ -371,7 +371,7 @@ a:visited {
 .modal-header {
     padding:9px 15px;
     border:none;
-    background-color: rgba(26,166,155,0.5);
+    background-color: rgba(26,166,155,0.9);
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
@@ -777,5 +777,92 @@ input#name, input#institution, input#website, input#contact, input#user_email, i
 .doc-item:hover .hover-list{
     margin-top: -2em;
     opacity: 1;
+}
+
+/* MODALS */
+
+.form_row i{
+  color: rgba(26,166,155,0.8);
+}
+
+input[type='radio'] {
+  -webkit-appearance:none;
+  width:15px;
+  height:15px;
+  border-radius:100%;
+  outline:none;
+  box-shadow:0 0 5px 0px gray inset;
+}
+
+input[type='radio']:hover {
+  box-shadow:0 0 5px 0px orange inset;
+}
+
+input[type='radio']:before {
+  content:'';
+  display:block;
+  width:60%;
+  height:60%;
+  margin: 20% auto;    
+  border-radius:50%;    
+}
+input[type='radio']:checked:before {
+  background:rgba(26,166,155,0.6);
+}
+
+.form_row select {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+}
+
+.form_row select {
+    padding:2px;
+    margin: 0;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:2px;
+    -webkit-box-shadow: 0 3px 0 #989898, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 rgba(26,166,155,0.4), 0 -1px rgba(26,166,155,0.8) inset;
+    background: rgba(42 ,43,48,0.6);
+    color:#989898;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+
+/* Targetting Webkit browsers only. FF will show the dropdown arrow with so much padding. */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select {padding-right:18px}
+}
+
+.form_row label {position:relative}
+.form_row label:after {
+    content:'<>';
+    font:11px "Consolas", monospace;
+    color:#aaa;
+    -webkit-transform:rotate(90deg);
+    -moz-transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    transform:rotate(90deg);
+    right:8px; top:2px;
+    padding:0 0 2px;
+    border-bottom:1px solid #ddd;
+    position:absolute;
+    pointer-events:none;
+}
+.form_row label:before {
+    content:'';
+    right:6px; top:0px;
+    width:20px; height:20px;
+    background:#989898;
+    position:absolute;
+    pointer-events:none;
+    display:block;
 }
 
