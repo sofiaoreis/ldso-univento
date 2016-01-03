@@ -70,6 +70,7 @@ INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 17',FALSE,10,
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 18',FALSE,10,1,'2015-12-16',NULL,18,3,4,15,NULL);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 19',FALSE,10,1,'2015-12-16',NULL,19,1,4,15,NULL);
 INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 20',TRUE,10,1,'2015-12-16',NULL,20,2,4,15,NULL);
+INSERT INTO `Event` VALUES ('descricao do evento de teste','Evento 21',FALSE,10,1,'2015-12-16',NULL,21,2,4,15,NULL);
 
 INSERT INTO `EventTags` VALUES (1,1),(1,2),(1,3);
 INSERT INTO `EventTags` VALUES (2,8),(2,16),(2,19);
@@ -98,10 +99,10 @@ INSERT INTO `EventDate` VALUES ('1','2016-01-25',10,'2016-01-26',33,17,1),('0','
 INSERT INTO `EventDate` VALUES ('1','2016-01-26',10,'2016-01-27',35,18,1),('0','2016-01-25',15,'2016-01-26',36,18,1);
 INSERT INTO `EventDate` VALUES ('1','2016-01-27',10,'2016-01-28',37,19,1),('0','2016-01-25',15,'2016-01-26',38,19,1);
 INSERT INTO `EventDate` VALUES ('1','2016-01-28',10,'2016-01-29',39,20,1),('0','2016-01-25',15,'2016-01-26',40,20,1);
+INSERT INTO `EventDate` VALUES ('1','2015-12-28',10,'2015-12-29',41,21,1),('0','2015-12-30',15,'2015-12-31',42,21,1);
 
 INSERT INTO `Spotify` VALUES ('http://spotify.com/playlist/1',1,1),('http://spotify.com/playlist/2',2,1);
 
 INSERT INTO `Youtube` VALUES ('http://youtube.com/link1',1,1),('http://youtube.com/link2',2,1),('http://youtube.com/link3',3,1);
 
-INSERT INTO `Registration` VALUES (1,5);
-INSERT INTO `Registration` VALUES (3,5);
+INSERT INTO `Registration` VALUES (21,5);
