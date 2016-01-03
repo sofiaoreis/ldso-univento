@@ -28,10 +28,10 @@ INSERT INTO `User` VALUES (FALSE,NULL,NULL,8,'miguel@mail.com','$2a$10$Ey3UWycqy
 INSERT INTO `User` VALUES (FALSE,NULL,TRUE,9,'sofia@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 INSERT INTO `User` VALUES (FALSE,NULL,NULL,10,'rui@mail.com','$2a$10$Ey3UWycqy/xngTlHZOZwXu/AQukzNG5wOjB2z/EfPKxKmMNPlN3Tq',NULL,NULL,NULL,1,'2015-11-11 15:43:13','2015-11-11 15:43:13','127.0.0.1','127.0.0.1',NULL,NULL);
 
-INSERT INTO `Promoter` VALUES ('afeup@fe.up.pt','FEUP','AEFEUP','http://aefeup.fe.pt',1);
-INSERT INTO `Promoter` VALUES ('afaup@fa.up.pt','FAUP','AEFAUP','http://aefaup.fa.pt',2);
-INSERT INTO `Promoter` VALUES ('afdup@fd.up.pt','FDUP','AEFDUP','http://aefdup.fd.pt',3);
-INSERT INTO `Promoter` VALUES ('afisep@isep.ipp.pt','ISEP','AEISEP','http://aeisep.isep.pt',4);
+INSERT INTO `Promoter` VALUES ('aefeup@fe.up.pt','FEUP','AEFEUP','http://aefeup.fe.pt',1);
+INSERT INTO `Promoter` VALUES ('aefaup@fa.up.pt','FAUP','AEFAUP','http://aefaup.fa.pt',2);
+INSERT INTO `Promoter` VALUES ('aefdup@fd.up.pt','FDUP','AEFDUP','http://aefdup.fd.pt',3);
+INSERT INTO `Promoter` VALUES ('aeisep@isep.ipp.pt','ISEP','AEISEP','http://aeisep.isep.pt',4);
 
 INSERT INTO `Normal` VALUES ('2000-01-01','Leonel','Male','Peixoto',5);
 INSERT INTO `Normal` VALUES ('2000-01-01','Luis','Male','Reis',6);

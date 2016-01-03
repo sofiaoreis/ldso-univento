@@ -226,7 +226,7 @@
   <% end %>
 </p>
 
-<% if user_signed_in? && current_user.admin == true %>
+<% if user_signed_in? && current_user.admin %>
   
   <%= link_to 'Banir Utilizador',  user_path(params[:id]),  method: :delete, data: { confirm: 'Are you sure?' } %>
   <br><br>

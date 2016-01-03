@@ -17,6 +17,8 @@ class PromoterController < ApplicationController
     @promoter = Promoter.find(params[:id])
     @colaborators = Colaborator.where(:promoterID => params[:id])
 
+    @owner = user_signed_in? && current_user.userID.to_i == params[:id].to_i
+
     # Find events ordered by most closest date for the next 4 years from now.
     eventDates1 = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
 
