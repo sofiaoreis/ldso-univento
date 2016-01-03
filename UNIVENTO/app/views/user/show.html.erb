@@ -5,6 +5,18 @@
 
 <% if @user.normal != nil %>
   <p>
+    <% if @user.uid != nil %>
+      <img src="http://graph.facebook.com/<%=@user.uid%>/picture" class="img-responsive img-circle">
+    <% else %>
+      <% if @user.normal.gender == 'Male' %>
+        <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+      <% else %>
+        <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+      <% end %>
+    <% end %>
+  </p>
+
+  <p>
     <strong>Nome:</strong>
     <%= @user.normal.first_name + " " + @user.normal.last_name %>
   </p>
@@ -55,6 +67,17 @@
       <% @friends.each do |normal| %>
         <tr>
           <td>
+            <% if normal.user.uid != nil %>
+              <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% else %>
+              <% if normal.user.normal.gender == 'Male' %>
+                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+              <% else %>
+                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+              <% end %>
+            <% end %>
+          </td>
+          <td>
             <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
           </td>
           <td>
@@ -74,6 +97,17 @@
     <table>
       <% @friendRequestsReceived.each do |normal| %>
         <tr>
+          <td>
+            <% if normal.user.uid != nil %>
+              <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% else %>
+              <% if normal.user.normal.gender == 'Male' %>
+                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+              <% else %>
+                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+              <% end %>
+            <% end %>
+          </td>
           <td>
             <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
           </td>
@@ -96,6 +130,17 @@
       <% @friendRequestsSended.each do |normal| %>
         <tr>
           <td>
+            <% if normal.user.uid != nil %>
+              <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% else %>
+              <% if normal.user.normal.gender == 'Male' %>
+                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+              <% else %>
+                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+              <% end %>
+            <% end %>
+          </td>
+          <td>
             <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
           </td>
           <td>
@@ -112,6 +157,17 @@
     <table>
       <% @commonFriends.each do |normal| %>
         <tr>
+          <td>
+            <% if normal.user.uid != nil %>
+              <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% else %>
+              <% if normal.user.normal.gender == 'Male' %>
+                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+              <% else %>
+                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+              <% end %>
+            <% end %>
+          </td>
           <td>
             <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
           </td>
@@ -130,6 +186,21 @@
     <% else %>
       <br> Já és amigo(a) de <%= @user.normal.first_name + " " + @user.normal.last_name %> <br>
     <% end %>
+  <% end %>
+
+  <% if (user_signed_in? && current_user.userID.to_i == @user.userID.to_i) or (user_signed_in? && current_user.userID.to_i != @user.userID.to_i && @alreadyFriend && !@maybeFriend) %>
+    <strong>------ Eventos que já frequentou ------</strong>
+    <table>
+      <% @assistedEvents.each do |assistedEvent| %>
+        <% if assistedEvent.image.first.present? %>
+            <a href="<%= event_path(assistedEvent)%>" class="thumbnail">
+                <%=image_tag assistedEvent.image.first.image , :class => "img-responsive"%>
+            </a>
+        <% else %>
+            <%= link_to assistedEvent.name, event_path(assistedEvent), :class => "thumbnail" %>
+        <% end %>
+      <% end %>
+    </table>
   <% end %>
 
 <% end %>
@@ -155,60 +226,61 @@
   <% end %>
 </p>
 
-<p>
-  <strong>=============== User Info =======================</strong>
-  <br>
-  <strong>userID:</strong>
-  <%= @user.userID %>
-  <br>
-  <strong>email:</strong>
-  <%= mail_to @user.email, @user.email %>
-  <br>
-  <strong>encrypted_password:</strong>
-  <%= @user.encrypted_password %>
-  <br>
-  <strong>password:</strong>
-  <%= @user.password %>
-  <br>
-  <strong>admin:</strong>
-  <%= @user.admin %>
-  <br>
-  <strong>reset_password_token:</strong>
-  <%= @user.reset_password_token %>
-  <br>
-  <strong>reset_password_sent_at:</strong>
-  <%= @user.reset_password_sent_at %>
-  <br>
-  <strong>remember_created_at:</strong>
-  <%= @user.remember_created_at %>
-  <br>
-  <strong>sign_in_count:</strong>
-  <%= @user.sign_in_count %>
-  <br>
-  <strong>current_sign_in_at:</strong>
-  <%= @user.current_sign_in_at %>
-  <br>
-  <strong>last_sign_in_at:</strong>
-  <%= @user.last_sign_in_at %>
-  <br>
-  <strong>current_sign_in_ip:</strong>
-  <%= @user.current_sign_in_ip %>
-  <br>
-  <strong>last_sign_in_ip:</strong>
-  <%= @user.last_sign_in_ip %>
-  <br>
-  <strong>provider:</strong>
-  <%= @user.provider %>
-  <br>
-  <strong>uid:</strong>
-  <%= @user.uid %>
-  <br>
-  <strong>banned:</strong>
-  <%= @user.banned %>
-</p>
+<% if user_signed_in? && current_user.admin %>
+  
+  <%= link_to 'Banir Utilizador',  user_path(params[:id]),  method: :delete, data: { confirm: 'Are you sure?' } %>
+  <br><br>
 
-<% if user_signed_in? %>
-  <% if current_user.admin == true %>
-    <%= link_to 'Banir Utilizador',  user_path(params[:id]),  method: :delete, data: { confirm: 'Are you sure?' } %>
-  <%end%>
+  <p>
+    <strong>=============== User Info =======================</strong>
+    <br>
+    <strong>userID:</strong>
+    <%= @user.userID %>
+    <br>
+    <strong>email:</strong>
+    <%= mail_to @user.email, @user.email %>
+    <br>
+    <strong>encrypted_password:</strong>
+    <%= @user.encrypted_password %>
+    <br>
+    <strong>password:</strong>
+    <%= @user.password %>
+    <br>
+    <strong>admin:</strong>
+    <%= @user.admin %>
+    <br>
+    <strong>reset_password_token:</strong>
+    <%= @user.reset_password_token %>
+    <br>
+    <strong>reset_password_sent_at:</strong>
+    <%= @user.reset_password_sent_at %>
+    <br>
+    <strong>remember_created_at:</strong>
+    <%= @user.remember_created_at %>
+    <br>
+    <strong>sign_in_count:</strong>
+    <%= @user.sign_in_count %>
+    <br>
+    <strong>current_sign_in_at:</strong>
+    <%= @user.current_sign_in_at %>
+    <br>
+    <strong>last_sign_in_at:</strong>
+    <%= @user.last_sign_in_at %>
+    <br>
+    <strong>current_sign_in_ip:</strong>
+    <%= @user.current_sign_in_ip %>
+    <br>
+    <strong>last_sign_in_ip:</strong>
+    <%= @user.last_sign_in_ip %>
+    <br>
+    <strong>provider:</strong>
+    <%= @user.provider %>
+    <br>
+    <strong>uid:</strong>
+    <%= @user.uid %>
+    <br>
+    <strong>banned:</strong>
+    <%= @user.banned %>
+  </p>
+
 <%end%>

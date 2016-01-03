@@ -23,6 +23,13 @@ DROP TABLE IF EXISTS Category CASCADE;
 DROP TABLE IF EXISTS Promoter CASCADE;
 DROP TABLE IF EXISTS User CASCADE;
 DROP TABLE IF EXISTS ckeditor_assets CASCADE;
+DROP TABLE IF EXISTS overall_averages CASCADE;
+DROP TABLE IF EXISTS average_caches CASCADE;
+DROP TABLE IF EXISTS rates CASCADE;
+DROP TABLE IF EXISTS rating_caches CASCADE;
+DROP TABLE IF EXISTS average_caches CASCADE;
+
+
 
 -- Create Tables //
 
@@ -183,13 +190,14 @@ CREATE TABLE Promoter
 ) ;
 
 
-CREATE TABLE Rate
-(
-	rate int NULL,
-	eventID INTEGER ,
-	normalID INTEGER ,
-	PRIMARY KEY (eventID,normalID)
-
+CREATE TABLE Rate (
+  rate int(11) DEFAULT NULL,
+  eventID int(11) NOT NULL DEFAULT '0',
+  normalID int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (eventID,normalID),
+  KEY FK_Rate_Normal (normalID),
+  CONSTRAINT FK_Rate_Event FOREIGN KEY (eventID) REFERENCES Event (eventID) ON DELETE CASCADE,
+  CONSTRAINT FK_Rate_Normal FOREIGN KEY (normalID) REFERENCES Normal (normalID)
 ) ;
 
 
@@ -265,6 +273,56 @@ CREATE TABLE Registration
 	PRIMARY KEY (eventID,normalID)
 
 ) ;
+
+CREATE TABLE overall_averages 
+(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  rateable_id int(11) DEFAULT NULL,
+  rateable_type varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  overall_avg float NOT NULL,
+  created_at datetime DEFAULT NULL,
+  updated_at datetime DEFAULT NULL,
+  PRIMARY KEY (id)
+);
+
+
+CREATE TABLE rates (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  rater_id int(11) DEFAULT NULL,
+  rateable_id int(11) DEFAULT NULL,
+  rateable_type varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  stars float NOT NULL,
+  dimension varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  created_at datetime DEFAULT NULL,
+  updated_at datetime DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY index_rates_on_rater_id (rater_id),
+  KEY index_rates_on_rateable_id_and_rateable_type (rateable_id,rateable_type)
+);
+
+CREATE TABLE rating_caches (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  cacheable_id int(11) DEFAULT NULL,
+  cacheable_type varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  avg float NOT NULL,
+  qty int(11) NOT NULL,
+  dimension varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  created_at datetime DEFAULT NULL,
+  updated_at datetime DEFAULT NULL,
+  PRIMARY KEY (id),
+  KEY index_rating_caches_on_cacheable_id_and_cacheable_type (cacheable_id,cacheable_type)
+);
+
+CREATE TABLE average_caches (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  rater_id int(11) DEFAULT NULL,
+  rateable_id int(11) DEFAULT NULL,
+  rateable_type varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  avg float NOT NULL,
+  created_at datetime DEFAULT NULL,
+  updated_at datetime DEFAULT NULL,
+  PRIMARY KEY (id)
+);
 
 SET FOREIGN_KEY_CHECKS=1;
 

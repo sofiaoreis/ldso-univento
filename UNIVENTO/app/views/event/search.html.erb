@@ -4,7 +4,7 @@
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <% if event.image.first.present? %>
                     <a href="<%= event_path(event)%>" class="thumbnail">
-                        <%=image_tag event.image.first.image , :class => "img-responsive"%>
+                        <%=image_tag event.image.first.image.square , :class => "img-responsive"%>
                     </a>
                 <%else%>
                     <%= link_to event.name, event_path(event), :class => "thumbnail" %>

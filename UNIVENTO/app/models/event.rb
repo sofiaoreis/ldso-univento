@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
     self.table_name = 'Event'
     self.primary_key = :eventID
-
+    ratyrate_rateable 'event_rate'
     validates_length_of :name,
                :minimum => 1,           # more than 8 characters
                :maximum => 50,          # shorter than 16 characters
@@ -20,7 +20,7 @@ class Event < ActiveRecord::Base
     has_many :eventtags, :class_name => 'EventTags', :foreign_key => :eventID, dependent: :delete_all
     has_many :image, :class_name => 'Image', :foreign_key => :eventID, dependent: :delete_all
     accepts_nested_attributes_for :image
-    has_many :rate, :class_name => 'Rate', :foreign_key => :eventID, dependent: :delete_all
+    #has_many :rate, :class_name => 'Rate', :foreign_key => :eventID, dependent: :delete_all
     #has_many :registration, :class_name => 'Registration', :foreign_key => :eventID
     has_many :spotify, :class_name => 'Spotify', :foreign_key => :eventID, dependent: :delete_all
     has_many :youtube, :class_name => 'Youtube', :foreign_key => :eventID, dependent: :delete_all

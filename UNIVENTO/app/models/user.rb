@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   self.table_name = 'User'
   self.primary_key = :userID
+  ratyrate_rater
   has_one :normal, :class_name => 'Normal', :foreign_key => :normalID
   has_one :promoter, :class_name => 'Promoter', :foreign_key => :promoterID
 

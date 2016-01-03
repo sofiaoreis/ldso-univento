@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  post '/rate' => 'rater#create', :as => 'rate'
   get 'category/index'
 
   mount Ckeditor::Engine => '/ckeditor'

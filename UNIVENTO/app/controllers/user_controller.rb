@@ -68,9 +68,9 @@ class UserController < ApplicationController
         musicCategoryID = Category.find_by(name: "Música").categoryID
         nightCategoryID = Category.find_by(name: "Noturno").categoryID
 
-        @tagsPrefs = NormalTags.all
-        @categoriesPrefs = NormalCategory.all
-        @nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID)
+        @tagsPrefs = NormalTags.where(normalID: @user.userID)
+        @categoriesPrefs = NormalCategory.where(normalID: @user.userID)
+        @nightEventsPrefs = NormalCategory.where(categoryID: nightCategoryID, normalID: @user.userID)
 
         # -------------------  Friendships  -----------------------------------
         @alreadyFriend = false
@@ -133,8 +133,27 @@ class UserController < ApplicationController
               end
             end
           end
-
         end
+
+        # -----------  Assisted Events  -----------
+        @assistedEvents = Array.new
+        assistedEvents1 = Array.new
+        registrations = Registration.where(:normalID => @user.userID)
+
+        registrations.each do |registration|
+          assistedEvents1.push(registration.eventID)
+        end
+
+        maxCount = 15
+        count = 0
+
+        assistedEvents1.each do |eventID|
+          if count < maxCount
+            @assistedEvents.push(Event.find_by eventID: eventID)
+            count = count + 1
+          end
+        end
+
       end
     else
       flash[:alert] = "User não existe"
