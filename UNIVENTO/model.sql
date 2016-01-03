@@ -195,9 +195,7 @@ CREATE TABLE Rate (
   eventID int(11) NOT NULL DEFAULT '0',
   normalID int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (eventID,normalID),
-  KEY FK_Rate_Normal (normalID),
-  CONSTRAINT FK_Rate_Event FOREIGN KEY (eventID) REFERENCES Event (eventID) ON DELETE CASCADE,
-  CONSTRAINT FK_Rate_Normal FOREIGN KEY (normalID) REFERENCES Normal (normalID)
+  KEY FK_Rate_Normal (normalID)
 ) ;
 
 
