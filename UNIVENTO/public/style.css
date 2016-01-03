@@ -866,3 +866,11 @@ input[type='radio']:checked:before {
     display:block;
 }
 
+#promoter_forms {
+  background: url("fundo1.jpg") center fixed; 
+  
+  width:100%;
+  height: auto
+}
+
+
