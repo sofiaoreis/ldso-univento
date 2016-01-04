@@ -58,7 +58,7 @@ CREATE TABLE NormalCategory
 
 CREATE TABLE Category
 (
-	name VARCHAR(50) ,
+	name VARCHAR(100) ,
 	categoryID INTEGER NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (categoryID)
 ) ;
@@ -66,7 +66,7 @@ CREATE TABLE Category
 
 CREATE TABLE Tags
 (
-	name VARCHAR(50) ,
+	name VARCHAR(100) ,
 	tagsID INTEGER NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (tagsID)
 
@@ -108,7 +108,7 @@ CREATE TABLE EventDate
 CREATE TABLE Event
 (
 	descrition TEXT NULL,
-	name VARCHAR(50) NULL,
+	name VARCHAR(100) NULL,
 	propose BOOL NULL,
 	averageRate DOUBLE NULL,
 	numRates int NULL,
@@ -148,7 +148,7 @@ CREATE TABLE Image
 
 CREATE TABLE Local
 (
-	address VARCHAR(50) NULL,
+	address VARCHAR(255) NULL,
 	latitude DOUBLE NULL,
 	longitude DOUBLE NULL,
 	localID INTEGER NOT NULL AUTO_INCREMENT,
@@ -169,9 +169,9 @@ CREATE TABLE Friendship
 CREATE TABLE Normal
 (
 	birthday DATE NULL,
-	first_name VARCHAR(50) NULL,
+	first_name VARCHAR(100) NULL,
 	gender VARCHAR(50) NULL,
-	last_name VARCHAR(50) NULL,
+	last_name VARCHAR(100) NULL,
 	normalID INTEGER NOT NULL,
 	PRIMARY KEY (normalID)
 
@@ -180,10 +180,10 @@ CREATE TABLE Normal
 
 CREATE TABLE Promoter
 (
-	contact VARCHAR(50) NULL,
-	institution VARCHAR(50) NULL,
-	name VARCHAR(50) NULL,
-	website VARCHAR(50) NULL,
+	contact VARCHAR(255) NULL,
+	institution VARCHAR(255) NULL,
+	name VARCHAR(255) NULL,
+	website VARCHAR(255) NULL,
 	promoterID INTEGER NOT NULL,
 	PRIMARY KEY (promoterID)
 
