@@ -133,8 +133,15 @@ class EventController < ApplicationController
 	        params[:spotify].each do |link|
 	        	if link.present?
 		            spotify = Spotify.new
-		            spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub("https://open.spotify.com/","").gsub("/",":")
+		            if link.include? "https://open.spotify.com/"
+		            	replace = "https://open.spotify.com/"
+		            elsif link.include? "https://play.spotify.com/"
+		            	replace = "https://play.spotify.com/"
+		            end
+		            spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub(replace,"").gsub("/",":")
 		            spotify.eventID=@event.eventID
+		            # 		https://open.spotify.com/track/10DZlRWwiTuxSeM9EJAi7z
+		            # 		https://play.spotify.com/track/1fgxA3kGqP5RBIvgNJNryu
 					#s: 	https://open.spotify.com/track/5cR7culxUEPLhzIC0KWAH1
 					#se:	https://embed.spotify.com/?uri=spotify:track:5cR7culxUEPLhzIC0KWAH1
 		            if saveOrDestroy(spotify) 
@@ -367,24 +374,43 @@ class EventController < ApplicationController
 
 	      }
 	      format.json {
-	      	eventInfo = Array.new
-			eventInfo.push(Array.new)
-			eventInfo.push(Array.new)
-			# EVENTOS A DECORRER
-			EventDate.where('startDate <= ? AND endDate >= ?', Time.now, Time.now).distinct(:eventID).each do |data|
-				evento = Event.find_by_eventID(data.eventID)
-				local = Local.find_by_localID(data.localID)
-				#categoria = Category.find_by_categoryID(evento.categoryID)
-				eventInfo[0].push([evento.name,evento.eventID,evento.categoryID,local.latitude, local.longitude, local.address, evento.descrition])
-			end
-			# EVENTOS DENTRO DE 1H
-			EventDate.where('startDate > ? AND startDate <= ? AND endDate >= ?', Time.now, Time.now + 3600, Time.now).distinct(:eventID).each do |data|
-				evento = Event.find_by_eventID(data.eventID)
-				local = Local.find_by_localID(data.localID)
-				#categoria = Category.find_by_categoryID(evento.categoryID)
-				eventInfo[1].push([evento.name,evento.eventID,evento.categoryID,local.latitude, local.longitude, local.address, evento.descrition])
-			end
-	        render :json => eventInfo.to_json 
+	      	if params[:func] == "google_maps"
+		      	eventInfo = Array.new
+				eventInfo.push(Array.new)
+				eventInfo.push(Array.new)
+				# EVENTOS A DECORRER
+				EventDate.where('startDate <= ? AND endDate >= ?', Time.now, Time.now).distinct(:eventID).each do |data|
+					evento = Event.find_by_eventID(data.eventID)
+					local = Local.find_by_localID(data.localID)
+					#categoria = Category.find_by_categoryID(evento.categoryID)
+					eventInfo[0].push([evento.name,evento.eventID,evento.categoryID,local.latitude, local.longitude, local.address, evento.descrition])
+				end
+				# EVENTOS DENTRO DE 1H
+				EventDate.where('startDate > ? AND startDate <= ? AND endDate >= ?', Time.now, Time.now + 3600, Time.now).distinct(:eventID).each do |data|
+					evento = Event.find_by_eventID(data.eventID)
+					local = Local.find_by_localID(data.localID)
+					#categoria = Category.find_by_categoryID(evento.categoryID)
+					eventInfo[1].push([evento.name,evento.eventID,evento.categoryID,local.latitude, local.longitude, local.address, evento.descrition])
+				end
+		        render :json => eventInfo.to_json
+		    elsif params[:func] == "homepage"
+		    	eventInfo = Array.new
+				# ------------------- DB query -------------------------
+				# Find events ordered by most closest date for the next 4 years from now.
+				eventDates = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
+
+				# ----- Active Events & remove duplicated --------------
+				eventsID = Array.new
+				eventDates.each do |eventDate|
+					if eventDate.event.activeDate < Time.now && !eventDate.event.propose && eventDate.event.propose != nil
+						if !eventsID.include?(eventDate.eventID)
+							eventInfo.push([eventDate.event.eventID, eventDate.event.name, eventDate.event.category.name, eventDate.event.promoter.name, eventDate.local.address, eventDate.startDate])
+						end
+						eventsID.push(eventDate.eventID)
+					end
+				end
+				render :json => eventInfo.to_json
+		    end
 	      }
 	    end
 	end
@@ -496,9 +522,9 @@ class EventController < ApplicationController
 	      		render :json => "Done".to_json
 	      		return
 	      	elsif params[:accao] == "cancelRegistration"
-	      		puts "##################################################"
+	      		#puts "##################################################"
 	      		Registration.where("normalID = ? AND eventID = ?",current_user.userID, @event.eventID).delete_all
-		      	puts "##################################################"
+		      	#puts "##################################################"
 	      		render :json => "Done".to_json
 	      		return
 	      	end
