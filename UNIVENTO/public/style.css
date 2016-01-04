@@ -867,10 +867,117 @@ input[type='radio']:checked:before {
 }
 
 #promoter_forms {
-  background: url("fundo1.jpg") center fixed; 
-  
+  background: url("fundo1.jpg") center fixed;
   width:100%;
   height: auto
 }
+
+/* second */
+
+.center {
+    margin: auto;
+    width: 80%;
+    padding: 10px;
+}
+
+.cat{
+  border-bottom: none;
+  margin-bottom: 0px;
+}
+
+#btnAdd
+{
+  float:right;
+  background-color: rgba(26,166,155,0.8);
+}
+
+#btnAdd .fa
+{
+  background-color: white;
+}
+
+#btnDel{
+  float:right;
+  margin-left: 2px;
+
+}
+
+.divider{
+    width:1px;
+    height:auto;
+    display:inline-block;
+}
+
+#sub{
+    background-color: #2A2B2D;
+    border-color: #1AA69B;
+    float: right;
+    color: white;
+}
+
+.input-group-addon {
+  background-color: #1AA69B;
+  color: white;
+
+}
+
+
+.cke_toolbar
+{
+   color: #1AA69B;
+}
+
+.gllpSearchButton{
+  background-color: #2A2B2D;
+    border-color: #1AA69B;
+    float: right;
+    color: white;
+}
+
+.fileUpload{
+    background-color: #1AA69B;
+    border-color: #1AA69B;
+    color: white;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    
+}
+
+.cat select {
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   appearance: none;
+}
+
+.cat select {
+    padding:2px;
+    margin: 0;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:2px;
+    -webkit-box-shadow: 0 3px 0 #989898, 0 -1px #fff inset;
+    -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    box-shadow: 0 3px 0 rgba(26,166,155,0.4), 0 -1px rgba(26,166,155,0.8) inset;
+    background: rgba(42 ,43,48,1);
+    color:white;
+    border:none;
+    outline:none;
+    display: inline-block;
+    text-align: center;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+
 
 
