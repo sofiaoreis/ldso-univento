@@ -22,6 +22,17 @@ class EventController < ApplicationController
     	@event = Event.find(params[:id])
     	authorize! :update, @event, :message => "Não tem autorização para editar este evento"
     	@category = Category.all
+    	if @event.youtube.first.present?
+    		@youtube = @event.youtube.first.videoID
+		else
+			@youtube = ""
+    	end
+
+    	if @event.spotify.first.present?
+    		@spotify = @event.spotify.first.playListLink
+		else
+			@spotify = ""
+    	end
  	end
 
 # ========================================================
@@ -119,7 +130,11 @@ class EventController < ApplicationController
 	        params[:youtube].each do |link|
 	        	if link.present?
 		            youtube = Youtube.new
-		            youtube.videoID="https://www.youtube.com/embed/" + link.sub("https://www.youtube.com/watch?v=", "").gsub("&","?")
+		            if link.include? "https://www.youtube.com/embed/"
+		            	youtube.videoID = link
+		            else 
+		            	youtube.videoID="https://www.youtube.com/embed/" + link.sub("https://www.youtube.com/watch?v=", "").gsub("&","?")
+		            end
 		            youtube.eventID=@event.eventID
 					#y:		https://www.youtube.com/watch?v=pxMy-QB-yP4
 					#ye:	https://www.youtube.com/embed/pxMy-QB-yP4
@@ -136,10 +151,13 @@ class EventController < ApplicationController
 		            replace=""
 		            if link.include? "https://open.spotify.com/"
 		            	replace = "https://open.spotify.com/"
+		            	spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub(replace,"").gsub("/",":")
 		            elsif link.include? "https://play.spotify.com/"
 		            	replace = "https://play.spotify.com/"
+		            	spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub(replace,"").gsub("/",":")
+		            elsif link.include? "https://embed.spotify.com/?uri=spotify:"
+		            	spotify.playListLink=link
 		            end
-		            spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub(replace,"").gsub("/",":")
 		            spotify.eventID=@event.eventID
 		            # 		https://open.spotify.com/track/10DZlRWwiTuxSeM9EJAi7z
 		            # 		https://play.spotify.com/track/1fgxA3kGqP5RBIvgNJNryu
