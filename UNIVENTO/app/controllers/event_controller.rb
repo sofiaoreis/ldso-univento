@@ -217,7 +217,7 @@ class EventController < ApplicationController
 	def index	
 		respond_to do |format|
 	      format.html {
-	      	redirect_to root_path and return
+	      	#redirect_to root_path and return
 			@eventDates = Array.new
 			eventDates2 = Array.new
 
@@ -419,17 +419,18 @@ class EventController < ApplicationController
 				like_tags_IDs = Set.new
 
 		    	if user_signed_in?
-		    		user = Normal.find(current_user.id.to_s)
+		    		user = Normal.find_by_normalID(current_user.id)
+			    		if user.present?
+						tagsPrefs = user.normal_tags.all
+						categoriesPrefs = user.normal_category.all
 
-					tagsPrefs = user.normal_tags.all
-					categoriesPrefs = user.normal_category.all
+						categoriesPrefs.each do |categoryPref|
+							like_cat_IDs.add(categoryPref.categoryID)
+						end
 
-					categoriesPrefs.each do |categoryPref|
-						like_cat_IDs.add(categoryPref.categoryID)
-					end
-
-					tagsPrefs.each do |tagsPref|
-						like_tags_IDs.add(tagsPref.tagsID)
+						tagsPrefs.each do |tagsPref|
+							like_tags_IDs.add(tagsPref.tagsID)
+						end
 					end
 		    	end
 
