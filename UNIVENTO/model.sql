@@ -173,6 +173,8 @@ CREATE TABLE Normal
 	gender VARCHAR(50) NULL,
 	last_name VARCHAR(100) NULL,
 	normalID INTEGER NOT NULL,
+	photo varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+	background varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 	PRIMARY KEY (normalID)
 
 ) ;

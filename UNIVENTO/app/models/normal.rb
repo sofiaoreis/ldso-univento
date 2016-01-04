@@ -1,5 +1,8 @@
 class Normal < ActiveRecord::Base
     self.table_name = 'Normal'
+
+	mount_uploader :photo, ImageUploader
+
     self.primary_key = :normalID
     
     has_many :colaborator, :class_name => 'Colaborator', :foreign_key => :normalID
@@ -9,4 +12,5 @@ class Normal < ActiveRecord::Base
 
     has_many :normal_category, :class_name => 'NormalCategory', :foreign_key => :normalID
     has_many :normal_tags, :class_name => 'NormalTags', :foreign_key => :normalID
+
 end

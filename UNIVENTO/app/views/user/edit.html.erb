@@ -1,9 +1,8 @@
 <div class="jumbotron">
 
-    <div class="regist_title">Editar perfil de utilizador</div>
-    <br>
+    <h2 class="regist_title">Editar perfil de utilizador</h2>
 
-    <%= form_for @normal, :url => user_path(@user) , method: :patch do |u| %>
+    <%= form_for @normal, :url => user_path(@user), :authenticity_token => true, :html => { :multipart => true }, method: :patch do |u| %>
 
         <% if @normal.errors.any? %>
             <div id="error_explanation">
@@ -17,6 +16,19 @@
               </ul>
             </div>
         <% end %>
+
+        <div class="field">
+            <h3>Foto</h3>
+            <label>Inserir fotografia</label>
+            <%= u.file_field :image, :multiple => false, name: "image[image][]" %>
+            <br>
+            <% if false %>
+            <label>Inserir image de fundo do perfil</label>
+            <%= u.file_field :image, :multiple => false, name: "image[image][]" %>
+            <% end %>
+        </div>
+
+        <br><br>
 
         <div class="form-group">
             <strong>Nome</strong>
@@ -40,14 +52,24 @@
             <% end %>
         </div>
 
-        <br><label>Data de nascimento:
+        <br>
+        <label>Data de nascimento:
         <%=  u.date_select :birthday, order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year %>
-        </label><br>
+        </label>
+
+        <br><br>
 
         <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>
     <% end %>
 
-    <br><%= link_to 'Mudar Credenciais', root_path+"users/edit" %><br>
+    <br><br>
+    <strong>
+        <%= link_to 'Mudar Credenciais', root_path+"users/edit" %>
+    </strong>
+    <br><br>
 
-    <br><%= link_to "Back", :back %><br>
+    <br>
+    <%= link_to "Back", :back %>
+    <br>
+
 </div>
