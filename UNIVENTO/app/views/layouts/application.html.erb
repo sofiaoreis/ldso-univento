@@ -59,7 +59,20 @@
         </div>
     </footer>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.js"></script>
-     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.2.0/metisMenu.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular.min.js"></script>
+
+<script type="text/javascript">
+  $(ocultaAlerts);
+  function ocultaAlerts()
+  {
+    setTimeout(ocultaAlerts2, 5000) //wait ten seconds before continuing
+  }
+
+  function ocultaAlerts2()
+  {
+     $(".alert").fadeOut(1000);
+  }
+</script>
 
 </html>

@@ -199,6 +199,7 @@ class EventController < ApplicationController
 	def index	
 		respond_to do |format|
 	      format.html {
+	      	redirect_to root_path and return
 			@eventDates = Array.new
 			eventDates2 = Array.new
 
@@ -280,8 +281,8 @@ class EventController < ApplicationController
 			if(prefs != nil)
 				if current_user != nil
 					user = User.find(current_user.id.to_s)
-					ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
-					musicCategoryID = Category.find_by(name: "Música").categoryID
+					#ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
+					#musicCategoryID = Category.find_by(name: "Música").categoryID
 					nightCategoryID = Category.find_by(name: "Noturno").categoryID
 
 					tagsPrefs = NormalTags.all
@@ -395,6 +396,25 @@ class EventController < ApplicationController
 				end
 		        render :json => eventInfo.to_json
 		    elsif params[:func] == "homepage"
+				require 'set'
+				like_cat_IDs = Set.new
+				like_tags_IDs = Set.new
+
+		    	if user_signed_in?
+		    		user = User.find(current_user.id.to_s)
+
+					tagsPrefs = NormalTags.all
+					categoriesPrefs = NormalCategory.all
+
+					categoriesPrefs.each do |categoryPref|
+						like_cat_IDs.add(categoryPref.categoryID)
+					end
+
+					tagsPrefs.each do |tagsPref|
+						like_tags_IDs.add(tagsPref.tagsID)
+					end
+		    	end
+
 		    	eventInfo = Array.new
 				# ------------------- DB query -------------------------
 				# Find events ordered by most closest date for the next 4 years from now.
@@ -419,7 +439,14 @@ class EventController < ApplicationController
 							elsif eventDate.startDate >= (DateTime.now.beginning_of_day + 7.day) &&  eventDate.startDate <= (DateTime.now.beginning_of_day + 14.day)
 								day = 2 #daqui a 1 semana
 							end
-							eventInfo.push([eventDate.event.name, eventDate.event.eventID, eventDate.event.category.name, 0,0, eventDate.local.address, '',eventDate.event.promoter.name, eventDate.startDate, img, day])
+							like = (like_cat_IDs.include?(eventDate.event.category.categoryID))
+							if !like
+								eventDate.event.eventtags.each do |tag|
+									like = like_tags_IDs.include?(tag.tagsID)
+									break if like
+								end
+							end
+							eventInfo.push([eventDate.event.name, eventDate.event.eventID, eventDate.event.category.name, 0,0, eventDate.local.address, '',eventDate.event.promoter.name, eventDate.startDate, img, day, like])
 						end
 						eventsID.push(eventDate.eventID)
 					end
