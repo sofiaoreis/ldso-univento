@@ -83,7 +83,7 @@
     <div class="col-md-10 column">
     <label for="category">Categoria</label>
     <fieldset>
-      <legend class="cat"><%= select_tag 'category', options_from_collection_for_select(@category, "categoryID", "name") %></legend>
+      <legend class="cat"><%= select_tag 'category', options_from_collection_for_select(@category, "categoryID", "name"), class: "fa fa-chevron-down" %></legend>
       <% @category.each_with_index do |category,index| %>
         <% if index > 0%>
           <span id="catID_<%=category.categoryID%>" class="cat_options" style="display: none;">
@@ -211,7 +211,7 @@
 <div class="row">
   <div class="col-md-10 column">
   <button type="button" id="btnAdd" name="btnAdd" class="btn fa fa-plus"></button>
-  <div class="divider"/></div>
+  &nbsp;
   <button type="button" id="btnDel" name="btnDel" class="btn fa fa-minus"></button>
 </div>
 </div>
