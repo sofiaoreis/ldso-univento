@@ -18,6 +18,7 @@ class HomepageController < ApplicationController
   	end
 
     @categories = Category.all
+    @promoters = Promoter.all
   end
 
 end

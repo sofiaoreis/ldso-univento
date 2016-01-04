@@ -133,6 +133,7 @@ class EventController < ApplicationController
 	        params[:spotify].each do |link|
 	        	if link.present?
 		            spotify = Spotify.new
+		            replace=""
 		            if link.include? "https://open.spotify.com/"
 		            	replace = "https://open.spotify.com/"
 		            elsif link.include? "https://play.spotify.com/"
@@ -186,7 +187,7 @@ class EventController < ApplicationController
 
         if params[:image].present?
 	        params[:image]['image'].each_with_index do |a,index|
-	        	if index <10
+	        	if index <9
 			        @image = @event.image.create!(:image => a ,:eventID => @event.eventID)
 			    end
 	        end
@@ -402,9 +403,23 @@ class EventController < ApplicationController
 				# ----- Active Events & remove duplicated --------------
 				eventsID = Array.new
 				eventDates.each do |eventDate|
-					if eventDate.event.activeDate < Time.now && !eventDate.event.propose && eventDate.event.propose != nil
+					if eventDate.event.activeDate <= Time.now && !eventDate.event.propose && eventDate.event.propose != nil
 						if !eventsID.include?(eventDate.eventID)
-							eventInfo.push([eventDate.event.eventID, eventDate.event.name, eventDate.event.category.name, eventDate.event.promoter.name, eventDate.local.address, eventDate.startDate])
+							img = nil
+							if eventDate.event.image.present?
+								if eventDate.event.image.first.image.square.present?
+									img = eventDate.event.image.first.image.square.url
+								end
+							end
+							day = 3
+							if eventDate.startDate >= DateTime.now.beginning_of_day && eventDate.startDate < DateTime.now.end_of_day
+								day = 0 # hoje
+							elsif eventDate.startDate >= (DateTime.now.beginning_of_day+1.day) && eventDate.startDate <= (DateTime.now.end_of_day+1.day)
+								day = 1 # amanha
+							elsif eventDate.startDate >= (DateTime.now.beginning_of_day + 7.day) &&  eventDate.startDate <= (DateTime.now.beginning_of_day + 14.day)
+								day = 2 #daqui a 1 semana
+							end
+							eventInfo.push([eventDate.event.name, eventDate.event.eventID, eventDate.event.category.name, 0,0, eventDate.local.address, '',eventDate.event.promoter.name, eventDate.startDate, img, day])
 						end
 						eventsID.push(eventDate.eventID)
 					end

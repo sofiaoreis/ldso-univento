@@ -1,4 +1,4 @@
-$(googlemaps);
+$(start);
 // enum
 var info = {
 	NAME : 0,
@@ -7,7 +7,11 @@ var info = {
 	LATITUDE : 3,
 	LONGITUDE : 4,
 	ADDRESS : 5,
-	DESCRIPTION: 6
+	DESCRIPTION: 6,
+	PROMOTER: 7,
+	START_DATE: 8,
+	IMG_URL: 9,
+	DAY: 10
 }
 
 var markersArray = [];
@@ -15,11 +19,13 @@ var map;
 var last_a_decorrer = 0;
 var activeCategories = new Set();
 
-function googlemaps () {
+function start () {
 	// Asynchronously Load the map API 
     var script = document.createElement('script');
     script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
     document.body.appendChild(script);
+
+    loadEvents();
 }
 
 function initialize() {
@@ -28,8 +34,9 @@ function initialize() {
 	    url: window.location.href+"event",
 	  	type: "get",
 	   	dataType: "json",
+	   	data: {func:"google_maps"}
 	}).done(function (eventos) {
-		console.log(eventos);
+		//console.log(eventos);
 		loadMarkers(eventos);
 
 		$("#btn-lgg-1").on("click",function(e){
@@ -65,8 +72,6 @@ function initialize() {
 				showMarkersWithCategory(this.id.split("_")[1],eventos);
 			});
 		});
-
-
 	});
 
 }
@@ -196,4 +201,123 @@ function showMarkersWithCategory(id,eventos){
 	for (var i = 0; i < pos.length; i++) {
 		markersArray[pos[i]].setMap(map);
 	};
+};
+
+function loadEvents(){
+	$.ajax({
+	    url: window.location.href+"event",
+	  	type: "get",
+	   	dataType: "json",
+	   	data: {func:"homepage"}
+	}).done(function (eventos) {
+		console.log(eventos);
+/*		for (var i = 0; i < eventos.length; i++) {
+			console.log(eventos[i][info.NAME]);
+		};
+*/
+		showEvents(eventos);
+		$(".filter_promoter").on("click",function(e){
+			e.preventDefault();
+			var txt = $(e.target).text();
+			filter("PROMOTER",txt,eventos);
+		});
+		$(".filter_cat").on("click",function(e){
+			e.preventDefault();
+			var txt = $(e.target).text();
+			filter("CAT",txt,eventos);
+		});
+		$(".filter_day").on("click",function(e){
+			e.preventDefault();
+			var txt = $(e.target).text();
+			filter("DAY",txt,eventos);
+		});
+	});
+};
+
+function showEvents(eventos){
+	for (var i = 1; i < eventos.length/12 ; i++) {
+			$("#carEventos .carousel-indicators").append('<li data-target="#carEventos" data-slide-to="'+i+'"></li>');
+		};
+		
+
+		var carousel_inner = $("#carEventos .carousel-inner");
+		var div_item, div_row;
+		for (var i = 0; i < eventos.length; i++) {
+			evento = eventos[i];
+			if (i%12 == 0) {// 12 eventos por item
+				active = "";
+				if (i==0) {
+					active="active"
+				};
+				carousel_inner.append('<div class="item '+active+'" id="div_item_'+i+'"></div>');
+				div_item = $('#div_item_'+i);
+			};
+			if (i%4==0){
+				div_item.append('<div class="row-fluid home-events clearfix" id="div_row_'+i+'"> </div>');
+				div_row = $('#div_row_'+i);
+			}
+			link = window.location.href+"event/"+evento[info.EVENT_ID];
+			dataFields = evento[info.START_DATE].split('T');
+			data = dataFields[0].replace(/-/g,'/')+' '+dataFields[1].split(':')[0]+':'+dataFields[1].split(':')[1];
+			img = evento[info.IMG_URL];
+			if (evento[info.IMG_URL]==null){
+				img = 'imgs/404.jpg';
+			}
+			div_row.append('<div class="col-xs-3 col-sm-3 col-md-3  text-center doc-item">'
+							    +'<div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">'
+
+							        +'<ul class="hover-list animate">'
+							          +  '<li><a href="'+link+'"><i class="fa fa-clock-o"> '+data+'</i></a></li>'
+							          +  '<li><a href="'+link+'"><i class="fa fa-map-marker"> '+evento[info.ADDRESS]+'</i></a></li>'
+							           + '<li><a href="'+link+'"><i class="fa fa-tags"> '+evento[info.CATEGORIA]+'</i></a></li>'
+							       + '</ul>'
+
+							      +  '<a href="'+link+'">'
+							      +  '<figure>'
+							     +           '<img width="250" height="250" src="'+img+'" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">'
+							     +   '</figure>'
+							     +   '</a>'
+
+							      +  '<div class="text-content">'
+							      +      '<a href="'+link+'"><h5>'+evento[info.NAME]+'</h5>'
+							     +       '<h5><small>'+evento[info.PROMOTER]+'</small></h5></a>'
+							     +   '</div>'
+							   + '</div>'
+							+'</div>'
+			);
+		};
+};
+
+function filter(tipo,value,eventos){
+	novos = [];
+
+	if (tipo=="PROMOTER") {
+		for (var i = 0; i < eventos.length; i++) {
+			if (eventos[i][info.PROMOTER]==value) {
+				novos.push(eventos[i]);
+			};
+		};
+	}else if (tipo=="DAY"){
+		day = 2;
+		if (value=="Hoje") {
+		    day=0;
+		}else if (value=="Amanhã"){
+		    day=1;
+		}
+		for (var i = 0; i < eventos.length; i++) {
+			if (eventos[i][info.DAY]==day) {
+				novos.push(eventos[i]);
+			};
+		};
+	}else if (tipo=="CAT"){
+		for (var i = 0; i < eventos.length; i++) {
+			if (eventos[i][info.CATEGORIA]==value) {
+				novos.push(eventos[i]);
+			};
+		};
+	};
+	$("#carEventos .carousel-inner").fadeOut();
+	$("#carEventos .carousel-inner").empty();
+	showEvents(novos);
+	$("#carEventos .carousel-inner").fadeIn();
 };

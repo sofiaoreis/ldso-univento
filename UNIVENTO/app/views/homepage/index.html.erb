@@ -16,13 +16,11 @@
                     <li>
                         <a href="#"><i class="fa fa-graduation-cap"></i> Instituição<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">FEUP</a>
-                            </li>
-                            <li>
-                                <a href="#">FAUP</a>
-                            </li>
-
+                            <% @promoters.each do |promoter| %>
+                                <li>
+                                    <a href="#" class="filter_promoter"><%=promoter.name%></a>
+                                </li>
+                            <% end %>
                         </ul>
                         <!-- /.nav-second-level -->
                     </li>
@@ -30,13 +28,13 @@
                         <a href="#"><i class="fa fa-calendar"></i> Data<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="#">Hoje</a>
+                                <a href="#" class="filter_day">Hoje</a> <!-- SE MUDAREM ESTES TEXTOS ATUALIZEM O JS-->
                             </li>
                             <li>
-                                <a href="#">Amanhã</a>
+                                <a href="#" class="filter_day">Amanhã</a>
                             </li>
                             <li>
-                                <a href="#">Próxima Semana</a>
+                                <a href="#" class="filter_day">Próxima Semana</a>
                             </li>
                         </ul>
                         <!-- /.nav-second-level -->
@@ -46,7 +44,7 @@
                         <ul class="nav nav-second-level">
                             <% @categories.each do |category| %>
                             <li>
-                                <a href="#"><%= category.name %></a>
+                                <a href="#" class="filter_cat" ><%=category.name%></a>
                             </li>
                             <% end %>
                         </ul>
@@ -113,327 +111,16 @@
 
 
         <div class="row" id="eventos">
-
-
             <div class="span12">
                 <div class="well"> 
                     <div id="carEventos" class="carousel slide" data-interval="3000" data-pause="true">
 
                         <ol class="carousel-indicators">
                             <li data-target="#carEventos" data-slide-to="0" class="active"></li>
-                            <li data-target="#carEventos" data-slide-to="1"></li>
-                            <li data-target="#carEventos" data-slide-to="2"></li>
                         </ol>
 
                         <!-- Carousel items -->
                         <div class="carousel-inner">
-
-                            <div class="item active">
-                                <div class="row-fluid home-events clearfix">
-                                   <div class="col-xs-3 col-sm-3 col-md-3  text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e1.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="text-content">
-                                                <a href="#"><h5>Torneio FIFA AEFEUP</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <div class="col-xs-3 col-sm-3 col-md-3 text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e2.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="col-md-12 text-content">
-                                                <a href="#"><h5>Mega Campanha de Recolha</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e3.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="col-md-12 text-content">
-                                                <a href="#"><h5>Neon Run Solidária</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e4.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="col-md-12 text-content">
-                                                <a href="#"><h5>Super Mega Feup Caffé</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!--/row-fluid-->
-
-                            
-                                <div class="row-fluid home-events clearfix">
-                                    <div class="col-xs-3 col-sm-3 col-md-3  text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e5.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="text-content">
-                                                <a href="#"><h5>Torneio FIFA AEFEUP</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <div class="col-xs-3 col-sm-3 col-md-3 text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e6.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="col-md-12 text-content">
-                                                <a href="#"><h5>Mega Campanha de Recolha</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e7.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="col-md-12 text-content">
-                                                <a href="#"><h5>Neon Run Solidária</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e8.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="col-md-12 text-content">
-                                                <a href="#"><h5>Super Mega Feup Caffé</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!--/row-fluid-->
-
-                                <div class="row-fluid home-events clearfix">
-                                    <div class="col-xs-3 col-sm-3 col-md-3  text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e1.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="text-content">
-                                                <a href="#"><h5>Torneio FIFA AEFEUP</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   <div class="col-xs-3 col-sm-3 col-md-3 text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e2.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="col-md-12 text-content">
-                                                <a href="#"><h5>Mega Campanha de Recolha</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e3.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="col-md-12 text-content">
-                                                <a href="#"><h5>Neon Run Solidária</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-3 col-sm-3 col-md-3 text-center doc-item">
-                                        <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
-
-                                            <ul class="hover-list animate">
-                                                <li><a href="#"><i class="fa fa-clock-o"> 10h00</i></a></li>
-                                                <li><a href="#"><i class="fa fa-map-marker"> Porto</i></a></li>
-                                                <li><a href="#"><i class="fa fa-tags"> Desporto</i></a></li>
-                                            </ul>
-
-                                            <a href="#">
-                                            <figure>
-                                                    <img width="250" height="250" src="imgs/e4.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
-                                            </figure>
-                                            </a>
-
-                                            <div class="col-md-12 text-content">
-                                                <a href="#"><h5>Super Mega Feup Caffé</h5>
-                                                <h5><small>AEFEUP</small></h5></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!--/row-fluid-->
-                            </div><!--/item-->
-
-                            <div class="item">
-                                <div class="row-fluid">
-                                   <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e1.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e2.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e3.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e4.jpg" alt="#"></a></div>
-                                </div><!--/row-fluid-->
-                                <div class="row-fluid">
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e5.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e6.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e7.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e8.jpg" alt="#"></a></div>
-                                </div><!--/row-fluid-->
-                                <div class="row-fluid">
-                                   <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e1.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e2.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e3.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e4.jpg" alt="#"></a></div>
-                                </div><!--/row-fluid-->
-                            </div><!--/item-->
-
-                            <div class="item">
-                                <div class="row-fluid">
-                                   <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e1.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e2.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e3.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e4.jpg" alt="#"></a></div>
-                                </div><!--/row-fluid-->
-                                <div class="row-fluid">
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e5.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e6.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e7.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e8.jpg" alt="#"></a></div>
-                                </div><!--/row-fluid-->
-                                <div class="row-fluid">
-                                   <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e1.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e2.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e3.jpg" alt="#"></a></div>
-                                    <div class="col-sm-3 col-md-3"><a href="#x" class="thumbnail"><img src="imgs/e4.jpg" alt="#"></a></div>
-                                </div><!--/row-fluid-->
-                            </div><!--/item-->
-
                         </div><!--/carousel-inner-->
 
                         <a class="left carousel-control" href="#carEventos" data-slide="prev">
