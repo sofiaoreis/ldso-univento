@@ -19,29 +19,12 @@
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-calendar"></i> Data<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#">Hoje</a>
-                            </li>
-                            <li>
-                                <a href="#">Amanhã</a>
-                            </li>
-                            <li>
-                                <a href="#">Próxima Semana</a>
-                            </li>
-                        </ul>
+                        <%= link_to 'Novo Colaborador', root_path + "colaborator/new?promoterID="+@user.promoter.promoterID.to_s %>
+                        
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-list-ul"></i> Categoria<span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level">
-                            <li>
-                                <a href="#"></a>
-                            </li>
-                            
-                        </ul>
-                        <!-- /.nav-second-level -->
+                        <%= link_to 'Colaboradores', root_path + "colaborator/new?promoterID="+@user.promoter.promoterID.to_s %>
                     </li>
 
 
@@ -53,35 +36,19 @@
     </nav>
 
     <div id="page-wrapper-homepage">
-        
-        
-<p>
-  <strong>=============== Promoter Info =======================</strong>
-  <br>
-  <strong>promoterID:</strong>
-  <%= @user.promoter.promoterID %>
-  <br>
-  <strong>institution:</strong>
-  <%= @user.promoter.institution %>
-  <br>
-  <strong>name:</strong>
-  <%= link_to @user.promoter.name, @user.promoter %>
-  <br>
-  <strong>website:</strong>
-  <%= link_to @user.promoter.website, @user.promoter.website %>
-  <br>
-  <strong>contact:</strong>
-  <%= mail_to @user.promoter.contact, @user.promoter.contact %>
-  <br><br>
+  
   <% if @owner %>
     <%= link_to 'Editar Promotor', root_path+"promoter/"+@user.promoter.promoterID.to_s+"/edit" %>
     <br><%= link_to 'Mudar Credenciais', root_path+"users/edit" %><br>
   <% end %>
-</p>
+
 
 <% if user_signed_in? && current_user.admin %>
   <p>
     <strong>=============== <%= link_to "Inherited User", user_path(@promoter.user) %>  =======================</strong>
+
+    <h1 class="text-center">Criar Evento</h1>
+      <hr>
     <br>
     <strong>userID:</strong>
     <%= @user.userID %>
@@ -159,7 +126,7 @@
     <br>Não existem colaboradores<br>
   <% end %>
 
-  <br><%= link_to 'Adicionar Colaborador', root_path + "colaborator/new?promoterID="+@user.promoter.promoterID.to_s %><br>
+  <br><br>
 <% end %>
 
 <br>
@@ -381,7 +348,7 @@
 <% end %>
 
 <br><br>
-<strong>=============== Eventos Propostos Obsoletos =======================</strong>
+<strong>Eventos Propostos Obsoletos Passados</strong>
 
 <% if @ObsoletedProposedEventDates.length != 0 %>
 
@@ -453,13 +420,6 @@
 <% else %>
   <br>Não existe eventos propostos obsoletos<br>
 <% end %>
-
-<% if @owner %>
-  <br><%= link_to 'Criar Evento', root_path+"event/new" %><br>
-<% end %>
-
-        
-
         <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
