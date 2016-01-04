@@ -130,8 +130,9 @@
 <% end %>
 
 <br>
-<strong>=============== Eventos Visiveis =======================</strong>
 
+<h4 class="text-center">Eventos Activos</h4>
+<hr>
 <% if @shownEventDates.length != 0 %>
 
   <br><br>
@@ -197,7 +198,8 @@
 <% end %>
 
 <br>
-<strong>=============== Eventos Invisiveis =======================</strong>
+<h4 class="text-center">Eventos Inactivos</h4>
+<hr>
 
 <% if @hiddenEventDates.length != 0 %>
 
@@ -268,8 +270,8 @@
   <br>Não existe eventos invisiveis<br>
 <% end %>
 
-<br><br>
-<strong>=============== Eventos Propostos =======================</strong>
+<br><h4 class="text-center">Eventos Propostos por colaboradores</h4>
+<hr>
 
 <% if @proposedEventDates.length != 0 %>
 
@@ -347,8 +349,9 @@
   <br>Não existe eventos propostos<br>
 <% end %>
 
-<br><br>
-<strong>Eventos Propostos Obsoletos Passados</strong>
+<br>
+<h4 class="text-center">Eventos Antigos</h4>
+<hr>
 
 <% if @ObsoletedProposedEventDates.length != 0 %>
 
