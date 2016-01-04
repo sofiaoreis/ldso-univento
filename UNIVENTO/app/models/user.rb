@@ -5,8 +5,8 @@ class User < ActiveRecord::Base
   has_one :normal, :class_name => 'Normal', :foreign_key => :normalID
   has_one :promoter, :class_name => 'Promoter', :foreign_key => :promoterID
 
-  validates_length_of :password, :minimum => 5, :message => 'Inserir uma password de tamanho superior a 4'
-  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i , :message => "Inserir um email válido"
+  validates_length_of :password, :minimum => 5, :message => 'Password tem de ter mais do que 4 caracteres.'
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i , :message => "E-mail inválido."
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
