@@ -1,30 +1,54 @@
-<p>
-  <strong>=============== Promoter Info =======================</strong>
-  <br>
-  <strong>promoterID:</strong>
-  <%= @user.promoter.promoterID %>
-  <br>
-  <strong>institution:</strong>
-  <%= @user.promoter.institution %>
-  <br>
-  <strong>name:</strong>
-  <%= link_to @user.promoter.name, @user.promoter %>
-  <br>
-  <strong>website:</strong>
-  <%= link_to @user.promoter.website, @user.promoter.website %>
-  <br>
-  <strong>contact:</strong>
-  <%= mail_to @user.promoter.contact, @user.promoter.contact %>
-  <br><br>
+      
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="sidebar-search glowing-border">
+                        <%= form_tag search_event_index_path, :method => 'post' do %>
+                        <%= text_field_tag :search, params[:search] %>
+                        <%= submit_tag "Search" %>
+                        <% end %>
+
+                    </li>
+
+                    <li>
+                        <%= link_to 'Criar Evento', root_path+"event/new" %>
+                       
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <%= link_to 'Novo Colaborador', root_path + "colaborator/new?promoterID="+@user.promoter.promoterID.to_s %>
+                        
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <%= link_to 'Colaboradores', root_path + "colaborator/new?promoterID="+@user.promoter.promoterID.to_s %>
+                    </li>
+
+
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+
+    <div id="page-wrapper-homepage">
+  
   <% if @owner %>
     <%= link_to 'Editar Promotor', root_path+"promoter/"+@user.promoter.promoterID.to_s+"/edit" %>
     <br><%= link_to 'Mudar Credenciais', root_path+"users/edit" %><br>
   <% end %>
-</p>
+
 
 <% if user_signed_in? && current_user.admin %>
   <p>
     <strong>=============== <%= link_to "Inherited User", user_path(@promoter.user) %>  =======================</strong>
+
+    <h1 class="text-center">Criar Evento</h1>
+      <hr>
     <br>
     <strong>userID:</strong>
     <%= @user.userID %>
@@ -102,12 +126,13 @@
     <br>Não existem colaboradores<br>
   <% end %>
 
-  <br><%= link_to 'Adicionar Colaborador', root_path + "colaborator/new?promoterID="+@user.promoter.promoterID.to_s %><br>
+  <br><br>
 <% end %>
 
 <br>
-<strong>=============== Eventos Visiveis =======================</strong>
 
+<h4 class="text-center">Eventos Activos</h4>
+<hr>
 <% if @shownEventDates.length != 0 %>
 
   <br><br>
@@ -173,7 +198,8 @@
 <% end %>
 
 <br>
-<strong>=============== Eventos Invisiveis =======================</strong>
+<h4 class="text-center">Eventos Inactivos</h4>
+<hr>
 
 <% if @hiddenEventDates.length != 0 %>
 
@@ -244,8 +270,8 @@
   <br>Não existe eventos invisiveis<br>
 <% end %>
 
-<br><br>
-<strong>=============== Eventos Propostos =======================</strong>
+<br><h4 class="text-center">Eventos Propostos por colaboradores</h4>
+<hr>
 
 <% if @proposedEventDates.length != 0 %>
 
@@ -323,8 +349,9 @@
   <br>Não existe eventos propostos<br>
 <% end %>
 
-<br><br>
-<strong>=============== Eventos Propostos Obsoletos =======================</strong>
+<br>
+<h4 class="text-center">Eventos Antigos</h4>
+<hr>
 
 <% if @ObsoletedProposedEventDates.length != 0 %>
 
@@ -396,7 +423,10 @@
 <% else %>
   <br>Não existe eventos propostos obsoletos<br>
 <% end %>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
 
-<% if @owner %>
-  <br><%= link_to 'Criar Evento', root_path+"event/new" %><br>
-<% end %>
+
