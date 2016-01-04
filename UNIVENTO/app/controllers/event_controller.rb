@@ -401,10 +401,10 @@ class EventController < ApplicationController
 				like_tags_IDs = Set.new
 
 		    	if user_signed_in?
-		    		user = User.find(current_user.id.to_s)
+		    		user = Normal.find(current_user.id.to_s)
 
-					tagsPrefs = NormalTags.all
-					categoriesPrefs = NormalCategory.all
+					tagsPrefs = user.normal_tags.all
+					categoriesPrefs = user.normal_category.all
 
 					categoriesPrefs.each do |categoryPref|
 						like_cat_IDs.add(categoryPref.categoryID)
