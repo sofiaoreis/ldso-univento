@@ -180,15 +180,6 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "Youtube", ["eventID"], name: "eventID", using: :btree
 
-  create_table "average_caches", force: :cascade do |t|
-    t.integer  "rater_id",      limit: 4
-    t.integer  "rateable_id",   limit: 4
-    t.string   "rateable_type", limit: 255
-    t.float    "avg",           limit: 24,  null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",    limit: 255, null: false
     t.string   "data_content_type", limit: 255
@@ -204,39 +195,6 @@ ActiveRecord::Schema.define(version: 0) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
-
-  create_table "overall_averages", force: :cascade do |t|
-    t.integer  "rateable_id",   limit: 4
-    t.string   "rateable_type", limit: 255
-    t.float    "overall_avg",   limit: 24,  null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "rates", force: :cascade do |t|
-    t.integer  "rater_id",      limit: 4
-    t.integer  "rateable_id",   limit: 4
-    t.string   "rateable_type", limit: 255
-    t.float    "stars",         limit: 24,  null: false
-    t.string   "dimension",     limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "rates", ["rateable_id", "rateable_type"], name: "index_rates_on_rateable_id_and_rateable_type", using: :btree
-  add_index "rates", ["rater_id"], name: "index_rates_on_rater_id", using: :btree
-
-  create_table "rating_caches", force: :cascade do |t|
-    t.integer  "cacheable_id",   limit: 4
-    t.string   "cacheable_type", limit: 255
-    t.float    "avg",            limit: 24,  null: false
-    t.integer  "qty",            limit: 4,   null: false
-    t.string   "dimension",      limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "rating_caches", ["cacheable_id", "cacheable_type"], name: "index_rating_caches_on_cacheable_id_and_cacheable_type", using: :btree
 
   add_foreign_key "CategoryTags", "Category", column: "categoryID", primary_key: "categoryID", name: "FK_CategoryTags_Category", on_delete: :cascade
   add_foreign_key "CategoryTags", "Tags", column: "tagsID", primary_key: "tagsID", name: "FK_CategoryTags_Tags", on_delete: :cascade

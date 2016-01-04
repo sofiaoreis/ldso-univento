@@ -1,3 +1,8 @@
+<strong>
+  <%= link_to 'Editar o meu perfil', root_path+"user/"+@user.userID.to_s+"/edit" %>
+</strong>
+<br><br>
+
 <p>
   <strong>Email:</strong>
   <%= @user.email %>
@@ -8,7 +13,7 @@
     <% if @user.uid != nil %>
       <img src="http://graph.facebook.com/<%=@user.uid%>/picture" class="img-responsive img-circle">
     <% else %>
-      <% if @user.normal.gender == 'Male' %>
+      <% if @user.normal.gender.upcase == 'MALE' %>
         <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
       <% else %>
         <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
@@ -70,7 +75,7 @@
             <% if normal.user.uid != nil %>
               <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
             <% else %>
-              <% if normal.user.normal.gender == 'Male' %>
+              <% if normal.user.normal.gender.upcase == 'MALE' %>
                 <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
               <% else %>
                 <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
@@ -101,7 +106,7 @@
             <% if normal.user.uid != nil %>
               <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
             <% else %>
-              <% if normal.user.normal.gender == 'Male' %>
+              <% if normal.user.normal.gender.upcase == 'MALE' %>
                 <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
               <% else %>
                 <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
@@ -133,7 +138,7 @@
             <% if normal.user.uid != nil %>
               <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
             <% else %>
-              <% if normal.user.normal.gender == 'Male' %>
+              <% if normal.user.normal.gender.upcase == 'MALE' %>
                 <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
               <% else %>
                 <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
@@ -161,7 +166,7 @@
             <% if normal.user.uid != nil %>
               <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
             <% else %>
-              <% if normal.user.normal.gender == 'Male' %>
+              <% if normal.user.normal.gender.upcase == 'MALE' %>
                 <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
               <% else %>
                 <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
@@ -176,7 +181,9 @@
     </table>
   <% end %>
 
-  <br> <%= link_to "Pesquisar Amigos", search_user_index_path %> <br>
+  <strong>
+    <br> <%= link_to "Pesquisar Amigos", search_user_index_path %> <br><br>
+  </strong>
 
   <% if user_signed_in? && current_user.userID.to_i != @user.userID.to_i && !@alreadyFriend %>
     <%= button_to "Adicionar como amigo", root_path+"user/requestfriend", data: { confirm: "Tem a certeza?"}, params: {sender: current_user.userID.to_s, receiver: @user.userID.to_s}, method: :post %>
