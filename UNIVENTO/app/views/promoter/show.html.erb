@@ -12,7 +12,7 @@
                         <% end %>
 
                     </li>
-
+<% if @owner%>
                     <li>
                         <%= link_to 'Criar Evento', root_path+"event/new" %>
                        
@@ -26,7 +26,7 @@
                     <li>
                         <%= link_to 'Colaboradores', "#" %>
                     </li>
-
+<%end %>
 
                 </ul>
             </div>
@@ -211,7 +211,7 @@
   <br>Não existe eventos activos<br>
 <% end %>
 <hr>
-
+<% if @owner%>
 <br>
 <h4 class="text-center">Eventos Inactivos</h4>
 <hr>
@@ -463,6 +463,7 @@
 <% else %>
   <br>Não existe eventos propostos obsoletos<br>
 <% end %>
+<%end%>
         <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
