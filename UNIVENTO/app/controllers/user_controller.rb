@@ -39,11 +39,9 @@ class UserController < ApplicationController
       render 'edit'
     end
 
-    #@normal.update(:photo => "img")
-
     if params[:image].present?
        params[:image]['image'].each do |img|
-        @normal.update(:photo => "img")
+        @normal.update(:photo => img)
       end
     end
 

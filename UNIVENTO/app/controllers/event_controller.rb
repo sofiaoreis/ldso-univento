@@ -217,7 +217,7 @@ class EventController < ApplicationController
 	def index	
 		respond_to do |format|
 	      format.html {
-	      	#redirect_to root_path and return
+	      	redirect_to root_path and return
 			@eventDates = Array.new
 			eventDates2 = Array.new
 
