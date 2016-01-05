@@ -25,31 +25,18 @@
 
       <div class="row">
         <!-- Event Name -->
-        <div class="col-md-6 column">
+        <div class="col-md-5 column">
           <div class="form-group" id="title_box">
            <label class="label_fn control-label" for="event_name">Título</label>
            
            <%= f.text_field :name, class: "input_fn form-control", placeholder: "Título" %>
            <% if @event.errors[:name].any? %>
-           <span class="error"><%= @event.errors[:name].first %></div>
-           <% end %><br>
+           <span class="error"><%= @event.errors[:name].first %></span>
+           <% end %>
          </div>
+        </div>
 
-         <div class="form-group">
-      
-       <label class="label_fn control-label" for="event_name">Descrição</label>
-       <%= f.text_area :descrition, class: "form-control", placeholder: "Descrição" %>
-       <% if @event.errors[:descrition].any? %>
-       <span class="error"><%= @event.errors[:descrition].first %></span>
-       <% end %><br>
-     </div>
-       
-
-
-       </div>
-
-       <!-- Event Price -->
-       <div class="col-md-6 column">
+        <div class="col-md-5 column">
         <div class="form-group">
          <label class="label_fn control-label" for="event_tprice">Preço Total</label>
          <div class="input-group">
@@ -57,9 +44,35 @@
          <%= f.number_field :preco, :in => 0..999, :step => 0.01, class: "input_fn form-control", placeholder: "Preço Total" %>
        </div>
          <% if @event.errors[:preco].any? %>
-         <div class="btn btn-danger"><%= @event.errors[:preco].first %></div>
-         <% end %><br>
+         <span class="error"><%= @event.errors[:preco].first %></span>
+         <% end %>
        </div>
+     </div>
+
+
+        
+
+        
+      </div>
+
+      <div class="row">
+
+       <!-- Event Price -->
+       
+     <div class="col-md-5 column">
+         <div class="form-group">
+      
+       <label class="label_fn control-label" for="event_name">Descrição</label>
+       <%= f.text_area :descrition, class: "form-control", placeholder: "Descrição" %>
+       <% if @event.errors[:descrition].any? %>
+       <span class="error"><%= @event.errors[:descrition].first %></span>
+       <% end %>
+     </div>
+       
+
+
+       </div>
+ <div class="col-md-5 column">
         <div class="form-group">
       <label class="label_fn control-label" for="data_inicio">Data de Activação</label>
       <div class='input-group date' id=''>
@@ -69,10 +82,12 @@
         </span>
       </div>
     </div>
+  </div>
+       
 
 
 
-     </div>
+     
    </div><!-- row end-->
 
  
@@ -83,7 +98,7 @@
     <div class="col-md-10 column">
     <label for="category">Categoria</label>
     <fieldset>
-      <legend class="cat"><%= select_tag 'category', options_from_collection_for_select(@category, "categoryID", "name"), class: "fa fa-chevron-down" %></legend>
+      <legend class="cat"><%= select_tag 'category', options_from_collection_for_select(@category, "categoryID", "name") %></legend>
       <% @category.each_with_index do |category,index| %>
         <% if index > 0%>
           <span id="catID_<%=category.categoryID%>" class="cat_options" style="display: none;">
@@ -113,7 +128,7 @@
   <div class="col-md-8">
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1"><i class="fa fa-youtube"></i></span>
-      <%= text_field_tag 'youtube[]', nil, class: 'form-control', :placeholder=>"Insira um link do youtube" %>
+      <%= text_field_tag 'youtube[]', nil, class: 'form-control', :placeholder=>"Insira um url do youtube" %>
     </div>
     </div>
  
@@ -166,10 +181,13 @@
       <div class="col-md-2 column">
         <div class="form-group">
          <label class="label_fn control-label" for="event_price">Preço</label>
-         <% if @event.errors[:preco].any? %>
-         <div class="btn btn-danger"><%= @event.errors[:preco].first %></div>
-         <% end %><br>
+         <div class="input-group">
+         <span class="input-group-addon" id="basic-addon1"><i class="fa fa-eur"></i></span>
          <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01, class: "input_fn form-control"%>
+       </div>
+       <% if @event.errors[:preco].any? %>
+         <span class="error"><%= @event.errors[:preco].first %></span>
+         <% end %>
        </div>
      </div>
    </div>
