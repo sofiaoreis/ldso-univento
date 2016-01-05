@@ -47,7 +47,7 @@
                         <div class="caption text-center">
                             <h5>
                                 <ul>
-                                    <li><i class="fa fa-user"> <%= @event.promoter.name %> </i></li>
+                                    <li><i class="fa fa-user"><a style="color: inherit; text-decoration:none;" href="<%= promoter_url(@event.promoter) %>"> <%= @event.promoter.name %> </a></i> </li>
                                     <li><i class="fa fa-tags"> <%= @event.category.name %></i></li>
                                     <% if @event.tags.length > 0 %>
                                     <li><i class="fa fa-circle-o">
