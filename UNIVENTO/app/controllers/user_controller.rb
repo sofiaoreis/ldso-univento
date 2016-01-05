@@ -28,6 +28,8 @@ class UserController < ApplicationController
 # ========================================================
  
   def update
+    #render plain: params.inspect
+    #return
     if user_signed_in? && current_user.userID.to_i == params[:id].to_i
 
       @user = User.find(params[:id])

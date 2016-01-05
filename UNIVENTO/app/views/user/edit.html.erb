@@ -19,7 +19,7 @@
 
         <div class="field">
             <h3>Fotos</h3>
-            <% if @normal.user.uid == nil %>
+            <% if @normal.user.uid != nil %>
                 <label>Inserir fotografia</label>
                 <%= u.file_field :image, :multiple => false, name: "image[image][]" %>
             <% end %>
@@ -64,7 +64,7 @@
             <% if @normal.birthday != nil %>
                 <%=  u.date_select :birthday, order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year %>
             <% else %>
-                <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year) %>
+                <%=  date_select("normal", "birthday", order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year) %>
             <% end %>
         </label>
 
