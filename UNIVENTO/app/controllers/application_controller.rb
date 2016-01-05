@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
       flash[:alert] = "Você foi banido"
     end
 
-
+#http://localhost:3000/users/sign_in?colaborator=9d0407fb1e4ccef7d176a22eb6ec9979&email=miguelnunes_1994@hotmail.com
     if params[:colaborator].present? && params[:email].present?
       if params[:email] == resource.email
         if ConviteColaborator.accept(params[:colaborator], params[:email])
@@ -22,11 +22,15 @@ class ApplicationController < ActionController::Base
           flash[:alert] = "Erro ao aceitar o convite"
         end
       else
-        flash[:alert] = "Erro ao aceitar o convite"
+        flash[:alert] = "Erro: O convite não foi enviado para o email desta conta"
       end
+      session[:normal],session[:promoter] = User.getUserType(resource)
+      root_url
+    else 
+      session[:normal],session[:promoter] = User.getUserType(resource)
+      session[:back] = request.env['HTTP_REFERER']
+      root_url
     end
-  	session[:normal],session[:promoter] = User.getUserType(resource)
-  	session[:back] = request.env['HTTP_REFERER']
-    root_url
+
   end
 end

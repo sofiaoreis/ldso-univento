@@ -5,9 +5,6 @@ class ConviteColaborator < ActiveRecord::Base
 
     def self.accept(hashID,email)
     	convite = ConviteColaborator.find_by_hashID(hashID)
-    	puts "===================================="
-		puts convite.inspect   
-		puts "===================================="
     	if convite.present?
     		if convite.email == email
     			user = User.where(email: email).take
