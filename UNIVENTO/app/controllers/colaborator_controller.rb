@@ -25,9 +25,12 @@ class ColaboratorController < ApplicationController
 # ========================================================
 
   def edit
-    flash[:alert] = "Not implemented"
-    redirect_to root_path and return
-    @colaborator = Colaborator.find_by normalID: params[:id]
+    if user_signed_in?
+      @colaborator = Colaborator.find_by normalID: params[:id]
+    else
+      flash[:alert] = "Não tem permissões para editar colaboradores"
+      redirect_to root_path
+    end
   end
 
 # ========================================================
@@ -67,11 +70,19 @@ class ColaboratorController < ApplicationController
  
   def update
 
-    if Colaborator.delete_all(:normalID => params[:normalID])
-      user = User.find(params[:normalID])
-      redirect_to user
+    if user_signed_in?
+      if Colaborator.delete_all(:normalID => params[:normalID])
+        user = User.find(params[:normalID])
+        flash[:sucess] = "Colaborador despromovido com sucesso"
+        redirect_to user
+        return
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      flash[:alert] = "Não tem permissões para despromover colaboradores"
+      redirect_to root_path
+      return
     end
 
     if false
@@ -80,6 +91,7 @@ class ColaboratorController < ApplicationController
       if @colaborator.update(normalID: params[:id], promoterID: params[:promoterID])
         user = User.find(params[:normalID])
         redirect_to user
+        return
       else
         render 'edit'
       end
@@ -95,11 +107,19 @@ class ColaboratorController < ApplicationController
 # ========================================================
 
   def destroy
-    if Colaborator.delete_all(:normalID => params[:id])
-      user = User.find(params[:id])
-      redirect_to user
+    if user_signed_in?
+      if Colaborator.delete_all(:normalID => params[:id])
+        user = User.find(params[:id])
+        flash[:sucess] = "Colaborador removido com sucesso"
+        redirect_to user
+        return
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      flash[:alert] = "Não tem permissões para remover colaboradores"
+      redirect_to root_path
+      return
     end
   end
 
