@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/gallery/bootstrap-image-gallery.min.css">
 
     <div id="wrapper">
-        <div id="page-wrapper">
+        <div class="page-show" id="page-wrapper">
             <!---->
             <div id="blueimp-gallery" class="blueimp-gallery">
                 <!-- The container for the modal slides -->
@@ -42,66 +42,75 @@
             </div>
 
             <!---->
-            <div class="row row-centered" id="eventos">
+            <div class="row row-centered" id="show-evento">
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="thumbnail">
                         <% if @image.first.present?%>
                         <a href="<%= @image.first.image %>" data-gallery><%= image_tag @image.first.image %></a>
                         <% end -%>
                         <div class="caption text-center">
-                            <h4><%= @event.preco %>€ - Para todos os dias</h4>
-                            <p>
-                                <a href="#" class="btn btn-lgg">Comprar!</a>
-                            </p>
+                            <h5>
+                                <ul>
+                                    <li><i class="fa fa-user"> <%= @event.promoter.name %> </i></li>
+                                    <li><i class="fa fa-tags"> <%= @event.category.name %></i></li>
+                                    <li><i class="fa fa-circle-o">
+                                    <% @event.tags.each do |link| %> <%= link.name %></i>  <% end %></li>
+                                    <li><i class="fa fa-star-o"> <%= @event.averageRate %></i></li>
+                                </ul>
+                            </h5>
+                            <h4><%= @event.preco %>  <i class="fa fa-eur"></i> - Preço total</h4>
+                            <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
                         </div>
                     </div>
-                    <!-- VIDEOS YOUTUBE-->
-                    <% @event.youtube.each do |video| %>
-                    <div class="row top-buffer" >
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" id="player" src="<%= video.videoID %>" width="450" height="280" frameborder="0"></iframe>
-                        </div>
+                    <div class="row top-buffer classi text-center" >
+                       <h4>Classificação:</h4>  <%= rating_for @event, "event_rate" , stars: 10, space: true , disable_after_rate: false , cancel_place: 'right', cancel_hint: 'Cancel this vote!' %>
+                   </div>
+                   <!-- VIDEOS YOUTUBE-->
+                   <% @event.youtube.each do |video| %>
+                   <div class="row top-buffer yt" >
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" id="player" src="<%= video.videoID %>" width="450" height="280" frameborder="0"></iframe>
                     </div>
-                    <% end %>
-                    <!-- SPOTIFY -->
-                    <% @event.spotify.each do |playlist| %>
-                    <div class="row top-buffer" id="embed">
-                        <div class="embed-responsive" style="height : 80px">
-                            <iframe class="embed-responsive-item" src="<%= playlist.playListLink %>" frameborder="0" allowtransparency="true"></iframe>
-                        </div>
+                </div>
+                <% end %>
+                <!-- SPOTIFY -->
+                <% @event.spotify.each do |playlist| %>
+                <div class="row top-buffer spo" id="embed">
+                    <div class="embed-responsive" style="height : 80px">
+                        <iframe class="embed-responsive-item" src="<%= playlist.playListLink %>" frameborder="0" allowtransparency="true"></iframe>
                     </div>
-
-                    <% end %>
                 </div>
 
-                <div class="col-lg-8 col-md-12 col-sm-12">
+                <% end %>
+            </div>
 
-                    <h3><%= @event.name %></h3>
-                    <p><%= @event.descrition %></p>
+            <div class="col-lg-8 col-md-12 col-sm-12">
 
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <% @event.eventdate.each_with_index do |data, index| %>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="heading<%=index%>">
-                                <h4 class="panel-title">
-                                    <a role="button" class="colapseButton" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=index%>" aria-expanded="true" aria-controls="collapse<%=index%>">
-                                        Data: <%= data.startDate.strftime("%d/%m/%Y - %H:%M") %>
+                <h2><%= @event.name %></h2>
+                <p><%= @event.descrition %></p>
 
-                                        até <%= data.endDate.strftime("%d/%m/%Y - %H:%M") %> - <%= data.preco %>€
-                                    </a>
-                                </h4>
-                            </div>
-                            <% if index==0%>
-                            <div id="collapse<%=index%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%=index%>">
-                                <% else %>
-                                <div id="collapse<%=index%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%=index%>">
-                                    <% end -%>
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <%= raw (data.descrition) %>
-                                            <label>Local: </label><%= data.local.address %> <br>
-                                            <label>Latitude: </label> <%= data.local.latitude %> <br>
-                                            <label>Longitude: </label> <%= data.local.longitude %><br>
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <% @event.eventdate.each_with_index do |data, index| %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="heading<%=index%>">
+                            <h4 class="panel-title">
+                                <a role="button" class="colapseButton" data-toggle="collapse" data-parent="#accordion" href="#collapse<%=index%>" aria-expanded="true" aria-controls="collapse<%=index%>">
+                                    <i class="fa fa-calendar"></i>  <%= data.startDate.strftime("%d/%m/%Y - %H:%M") %> <i class="fa fa-angle-right"></i><i class="fa fa-angle-right"></i> <%= data.endDate.strftime("%d/%m/%Y - %H:%M") %>
+                                    <div class="pull-right"><%= data.preco %>  <i class="fa fa-eur"></i></div>
+                                </a>
+                            </h4>
+                        </div>
+                        <% if index==0%>
+                        <div id="collapse<%=index%>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<%=index%>">
+                            <% else %>
+                            <div id="collapse<%=index%>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%=index%>">
+                                <% end -%>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <%= raw (data.descrition) %>
+                                        <hr />
+                                        <label>Local: </label> <%= data.local.address %> <br>
+                                        <div class="google-maps">
                                             <fieldset class="gllpLatlonPicker" id="<%= index%>" >
                                               <input type="hidden" value="<%= data.local.address %>" type="text" class="gllpSearchField">
                                               <input type="button" class="gllpSearchButton" value="search" hidden>
@@ -114,39 +123,34 @@
                                   </div>
                               </div>
                           </div>
-                          <% end %>
                       </div>
+                      <% end %>
                   </div>
-                    <div class="row">
-                        <div class="small-2 large-4 columns">
-                           <h3>Classificação:</h3>  <%= rating_for @event, "event_rate" , stars: 10, space: true , disable_after_rate: false , cancel_place: 'right', cancel_hint: 'Cancel this vote!' %>
-                            <br>
-                        </div>
-                    </div>
-                  <div class="top-buffer ">
+              </div>
+
+              <div class="container">
+                  <div class="row top-buffer">
                     <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div class="grid-sizer"></div>
-                        <div id="links">
+                        <div class="centerBlock">
                             <% @image.each_with_index do |p,k| %>
                             <% if k>0%>
-                            <div class="grid-item">
-                                <a href="<%= p.image %>" data-gallery>
-                                    <%= image_tag p.image , :class => "img-responsive"%>
-                                </a>
-                            </div>
+                            <a href="<%= p.image %>" data-gallery>
+                                <%= image_tag p.image .square, :class => "img-responsive"%>
+                            </a>
                             <% end -%>
                             <% end %>
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
-                <div class="top-buffer">
-                    <div class="fb-comments" data-href=<%= request.original_url %>  data-numposts="5"></div>
-                    <div id="fb-root"></div>
-                </div>
+            </div>
+            <br>
+
+            <div class="top-buffer">
+                <div class="fb-comments" data-colorscheme="dark" data-href=<%= request.original_url %>  data-numposts="5"></div>
+                <div id="fb-root"></div>
             </div>
         </div>
+    </div>
 </div>
 
 <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
@@ -167,15 +171,15 @@
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <script type="text/javascript">
-    function start(){
-        $(".colapseButton").on("click",function(){
-            window.setTimeout(loadMaps,500);
-        });
-    };
-    function loadMaps(){
-        $(".gllpLatlonPicker").each(function() {
-            $(document).gMapsLatLonPicker().init( $(this) );
-        });
-    };
-    $(start);
+function start(){
+    $(".colapseButton").on("click",function(){
+        window.setTimeout(loadMaps,500);
+    });
+};
+function loadMaps(){
+    $(".gllpLatlonPicker").each(function() {
+        $(document).gMapsLatLonPicker().init( $(this) );
+    });
+};
+$(start);
 </script>

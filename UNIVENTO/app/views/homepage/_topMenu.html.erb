@@ -11,157 +11,155 @@
                 </button>
                 <a class="navbar-brand" href="/">
 
-                     <%= image_tag("logo_univento-01.svg", :alt => "Logo Univento", :style => "width: auto; height: 30px; max-width:100px; margin-top: -7px;") %>
-                </a>
+                   <%= image_tag("logo_univento-01.svg", :alt => "Logo Univento", :style => "width: auto; height: 30px; max-width:100px; margin-top: -7px;") %>
+               </a>
                
-            </div>
-            <!-- /.navbar-header -->
+           </div>
+           <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
-                
-                    <% if user_signed_in? %>
-                    <li><p class="navbar-text pull-right">
-                     
-                      <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+           <ul class="nav navbar-top-links navbar-right">
+            
+            <% if user_signed_in? %>
+            <li><div class="navbar-text pull-right">
+               
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                     <% if session[:image].present? %>
-                       <img alt="Assets" src= <%=session[:image]%> class="img-responsive img-circle">  <%= session[:name] %><i class="fa fa-caret-down"></i>
-                       <% else %>
-                            <i class="fa fa-user fa-fw"></i> <%= session[:name] %> <i class="fa fa-caret-down"></i>
-                       <% end %>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            <%= link_to ' Meu Perfil', user_path(current_user.userID), :class => 'fa fa-user fa-fw' %>
-                        </li>
-                        <li>
-                            <%= link_to ' Definições', edit_user_registration_path, :class => 'fa fa-gear fa-fw' %>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'fa fa-sign-out fa-fw'  %>
-                        </li>
-                        
-                    </ul>
-              <!-- /.dropdown-user -->
-                </li>
-                      </p></li>
+                    <img alt="Assets" src= <%=session[:image]%> class="img-responsive img-circle">   <%= session[:name] %> <i class="fa fa-caret-down"></i>
                     <% else %>
-                    <li>
-                        <a href="" data-toggle="modal" data-target="#RegisterModal"><i class="fa fa-pencil-square-o"></i></a>
-                    </li>
-                    <li>
-                    <a href="" data-toggle="modal" data-target="#loginModel"><i class="fa fa-sign-in"></i></a>
-                    </li>
-                    <li>
-                    <a class="btn-facebook" href="/users/auth/facebook" >
-                                              <span class="fa fa-facebook"></span>
-                                            </a>
-                       
-                      </li>
-
+                    <i class="fa fa-user fa-fw"></i> <%= session[:name] %> <i class="fa fa-caret-down"></i>
                     <% end %>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
-        </nav>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <%= link_to ' Meu Perfil', user_path(current_user.userID), :class => 'fa fa-user fa-fw' %>
+                    </li>
+                    <li>
+                        <%= link_to ' Definições', edit_user_registration_path, :class => 'fa fa-gear fa-fw' %>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'fa fa-sign-out fa-fw'  %>
+                    </li>
+                    
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+        </div></li>
+        <% else %>
+        <li>
+            <a href="" data-toggle="modal" data-target="#RegisterModal"><i class="fa fa-pencil-square-o"></i></a>
+        </li>
+        <li>
+            <a href="" data-toggle="modal" data-target="#loginModel"><i class="fa fa-sign-in"></i></a>
+        </li>
+        <li>
+            <a class="btn-facebook" href="/users/auth/facebook" >
+              <span class="fa fa-facebook"></span>
+          </a>
+          
+      </li>
+
+      <% end %>
+      <!-- /.dropdown -->
+  </ul>
+  <!-- /.navbar-top-links -->
+</nav>
+</div>
+<!-- /#wrapper -->
+
+<div class="modal fade" id="RegisterModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form class="new_user" id="new_user" action="/user" accept-charset="UTF-8" method="post">
+            <input name="utf8" value="✓" type="hidden">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Registar</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group" >
+                               <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
+                               <input name="first_name" id="first_name" value="" class="form-control" placeholder="Primeiro Nome" type="text" aria-describedby="basic-addon1">
+                           </div>
+                       </div>
+
+                       <div class="col-lg-6">
+                        <div class="form-group">
+                         
+                           <input name="last_name" id="last_name" value="" class="form-control" placeholder="Último Nome" type="text">
+                       </div>
+                   </div>
+               </div>
+
+               <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-at"></i></span>
+                <input class="form-control" placeholder="E-mail" value="" name="user[email]" id="user_email" type="email" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></i></span>
+                <input class="form-control" placeholder="Password" name="user[password]" id="user_password" type="password" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="row">
+               <div class="col-lg-6">
+                <div class="input-group">
+                    <div class="form_row">
+                        <% [ 'male','female'].each do |gender| %>
+                        <%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
+                        <i class="fa fa-<%= gender %>"></i>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <span><i class="fa fa-birthday-cake"></i></span>
+                <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br><br>
+            </div>
+        </div>
     </div>
-    <!-- /#wrapper -->
 
-     <div class="modal fade" id="RegisterModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <form class="new_user" id="new_user" action="/user" accept-charset="UTF-8" method="post">
-                                    <input name="utf8" value="✓" type="hidden">
-                                    <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <h4 class="modal-title" id="myModalLabel">Registar</h4>
-                                        </div>
+    <div class="modal-footer">
+       <input name="commit" value="Submeter" class="btn btn-primary active" type="submit" id="modalButon">
+   </div>
+</div>
+</form>
+</div>
+</div>
 
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="input-group" >
-                                                     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
-                                                    <input name="first_name" id="first_name" value="" class="form-control" placeholder="Primeiro Nome" type="text" aria-describedby="basic-addon1">
-                                                </div>
-                                            </div>
+<div class="modal fade" id="loginModel"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <form class="new_user" id="new_user" action="/users/sign_in" accept-charset="UTF-8" method="post">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+            <input name="utf8" value="✓" type="hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Entrar</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-at"></i></span>
+                        <input autofocus="autofocus" value="" name="user[email]" id="user_email" type="email" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1">
+                    </div>
 
-                                              <div class="col-lg-6">
-                                                    <div class="form-group">
-                                               
-                                                 <input name="last_name" id="last_name" value="" class="form-control" placeholder="Último Nome" type="text">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-at"></i></span>
-                                                <input class="form-control" placeholder="E-mail" value="" name="user[email]" id="user_email" type="email" aria-describedby="basic-addon1">
-                                            </div>
-
-                                            <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></i></span>
-                                                <input class="form-control" placeholder="Password" name="user[password]" id="user_password" type="password" aria-describedby="basic-addon1">
-                                            </div>
-
-                                            <div class="row">
-                                                 <div class="col-sm-6">
-                                            <div class="input-group">
-                                            <div class="form_row">
-                                                <% [ 'male','female'].each do |gender| %>
-                                                <%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
-                                                     <i class="fa fa-<%= gender %>"></i>
-                                                <% end %>
-                                            </div>
-                                            </div>
-                                        </div>
-                                         <div class="col-sm-6">
-                                             <div class="form_row">
-                                            <i class="fa fa-birthday-cake"></i>
-                                                <%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: 1900, end_year:2015) %><br><br>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                        <div class="modal-footer">
-                                             <input name="commit" value="Submeter" class="btn btn-primary active" type="submit" id="modalButon">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="loginModel"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <form class="new_user" id="new_user" action="/users/sign_in" accept-charset="UTF-8" method="post">
-                                    <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-                                    <input name="utf8" value="✓" type="hidden">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <h4 class="modal-title" id="myModalLabel">Entrar</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-at"></i></span>
-                                                <input autofocus="autofocus" value="" name="user[email]" id="user_email" type="email" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1">
-                                            </div>
-
-                                            <div class="input-group">
-                                                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
-                                                <input autocomplete="off" name="user[password]" id="user_password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                           
-                                            <input name="commit" value="Submeter" type="submit" class="btn btn-primary active" id="modalButon">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                        <input autocomplete="off" name="user[password]" id="user_password" type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                 
+                    <input name="commit" value="Submeter" type="submit" class="btn btn-primary active" id="modalButon">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
