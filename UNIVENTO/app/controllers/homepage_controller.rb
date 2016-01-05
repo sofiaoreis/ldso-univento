@@ -10,9 +10,13 @@ class HomepageController < ApplicationController
   	end
 
   	if session[:normal].present?
-    	session[:name] = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
-  	elsif session[:promoter].present?
-  		session[:name] = Promoter.find_by(promoterID: current_user.userID).name
+      if !session[:name].present?
+    	 session[:name] = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
+  	  end
+    elsif session[:promoter].present?
+      if !session[:name].present?
+  		  session[:name] = Promoter.find_by(promoterID: current_user.userID).name
+      end
   	else
   		session[:name] = "Ocorreu um erro"
   	end

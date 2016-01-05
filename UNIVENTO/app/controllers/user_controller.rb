@@ -85,8 +85,11 @@ class UserController < ApplicationController
       normal.birthday = Date.civil(*params[:birthday].sort.map(&:last).map(&:to_i))
       normal.normalID = @user.userID
       if normal.save
-        flash[:notice] = "Conta criada com sucesso! Pode agora fazer login!"
-        redirect_to root_path
+        flash[:notice] = "Conta criada com sucesso!"
+        session[:normal] = true
+        session[:name] = normal.first_name << " " << normal.last_name
+        sign_in @user
+        redirect_to preferences_user_index_path
       else 
         @user.destroy
         render 'new'
@@ -213,8 +216,8 @@ class UserController < ApplicationController
   # ========================================================
   
   def preferences
-    if user_signed_in? && current_user.userID.to_i == params[:id].to_i
-      @user = User.find(params[:id])
+    if user_signed_in?
+      @user = User.find(current_user.userID)
       categories1 = Category.all
       @ambianceTags = Category.find_by(name: "Ambiente").tags
       @musicTags = Category.find_by(name: "Música").tags
