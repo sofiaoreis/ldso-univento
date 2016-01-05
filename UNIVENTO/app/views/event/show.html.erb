@@ -1,9 +1,5 @@
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <link rel="stylesheet" type="text/css" href="/jquery-gmaps-latlon-picker.css"/>
-    <script src="/jquery-gmaps-latlon-picker.js"></script>
     <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-    <link rel="stylesheet" href="/gallery/bootstrap-image-gallery.min.css">
-
     <div id="wrapper">
         <div class="page-show" id="page-wrapper">
             <!---->
@@ -154,32 +150,11 @@
 </div>
 
 <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-<script src="/gallery/bootstrap-image-gallery.min.js"></script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/3.2.0/imagesloaded.pkgd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
-<script src="/grid.js"></script>
-
-<script src="/main.js"></script>
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v2.5&appId=548043568677408";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<script type="text/javascript">
-function start(){
-    $(".colapseButton").on("click",function(){
-        window.setTimeout(loadMaps,500);
-    });
-};
-function loadMaps(){
-    $(".gllpLatlonPicker").each(function() {
-        $(document).gMapsLatLonPicker().init( $(this) );
-    });
-};
-$(start);
-</script>
+<script type="text/javascript" src="/showEvent.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script src="/jquery-gmaps-latlon-picker.js"></script>
