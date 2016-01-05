@@ -51,15 +51,14 @@
                                     <li><i class="fa fa-tags"> <%= @event.category.name %></i></li>
                                     <li><i class="fa fa-circle-o">
                                     <% @event.tags.each do |link| %> <%= link.name %></i>  <% end %></li>
-                                    <li><i class="fa fa-star-o"> <%= @event.averageRate %></i></li>
                                 </ul>
                             </h5>
                             <h4><%= @event.preco %>  <i class="fa fa-eur"></i> - Preço total</h4>
                             <% if @event.docsID.present? %>
-                                <div><a id="sub" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Inscreve-te</a></div>
+                                <div><a id="sub2" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Inscreve-te</a></div>
                             <%elsif user_signed_in?
                                 if @event.promoterID == current_user.userID%>
-                                <div><a id="sub" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Criar Formulário de Inscrição</a></div>
+                                <div><a id="sub2" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Criar Formulário de Inscrição</a></div>
                                 <%end%>
                             <% end %>
                             <br>

@@ -5,374 +5,318 @@
     <link rel="stylesheet" href="/gallery/bootstrap-image-gallery.min.css">
 
     <div id="wrapper">
+      <% if @user.normal != nil %>
       <div class="" id="page-wrapper">
         <div class="row row-centered" id="show-evento">
-          <% if @user.normal != nil %>
-          <div class="col-lg-6 col-sm-6">
+          <div class="col-lg-12 col-sm-12">
             <div class="card hovercard">
               <div class="card-background">
-                <% if @user.normal.background.to_s != "" %>
-                <%= image_tag @user.normal.background, :class => "card-bkimg"%>
-                <% end %>
-                <!-- <img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/"> -->
+                <img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/">
+                <!-- FALTA BACKGROUND COVER -->
                 <!-- http://lorempixel.com/850/280/people/9/ -->
               </div>
               <div class="useravatar">
-                <img alt="" src="http://lorempixel.com/100/100/people/9/">
-              </div>
-              <div class="card-info"> <span class="card-title">Pamela Anderson</span>
-                <p><%= @user.email %></p>
-                <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i %>
-                <strong>
-                  <%= link_to 'Editar o meu perfil', root_path+"user/"+@user.userID.to_s+"/edit" %>
-                </strong>
+                <!-- <img alt="" src="http://lorempixel.com/100/100/people/9/"> -->
+                <% if @user.uid != nil %>
+                <img src="http://graph.facebook.com/<%=@user.uid%>/picture" class="img-circle">
+                <% elsif @user.normal.photo.to_s != "" %>
+                <%= image_tag @user.normal.photo .square, :class => "img-circle"%>
+                <% else %>
+                <% if @user.normal.gender.upcase == 'MALE' %>
+                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-circle">
+                <% else %>
+                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-circle">
+                <% end %>
                 <% end %>
               </div>
+              <div class="card-info"> <span class="card-title"><%= @user.normal.first_name + " " + @user.normal.last_name %></span>
+                <p><i class="fa fa-<%= @user.normal.gender %>"></i>  <%= @user.normal.birthday %></p>
+                <p>
+                  <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i %>
+                  <strong>
+                    <%= link_to '', root_path+"user/"+@user.userID.to_s+"/edit" , :class => "fa fa-pencil-square-o"%>
+                  </strong>
+                  <% end %>
+                  
+                </p>
+              </div>
             </div>
-            <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+            <div class="btn-pref btn-group btn-group-justified btn-group-lg btn-user-group" role="group" aria-label="...">
               <div class="btn-group" role="group">
-                <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                  <div class="hidden-xs">Stars</div>
+                <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                  <div class="hidden-xs"> Amigos</div>
                 </button>
               </div>
               <div class="btn-group" role="group">
                 <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
-                  <div class="hidden-xs">Favorites</div>
+                  <div class="hidden-xs">Preferências</div>
                 </button>
               </div>
               <div class="btn-group" role="group">
-                <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                  <div class="hidden-xs">Following</div>
+                <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                  <div class="hidden-xs">Eventos frequentados</div>
                 </button>
               </div>
             </div>
 
             <div class="well">
               <div class="tab-content">
-                <div class="tab-pane fade in active" id="tab1">
-                  <h3>This is tab 1</h3>
+                <div class="tab-pane fade in active text-center" id="tab1">
+                 <div class="col-lg-12 col-sm-12">
+                   <h3>Amigos</h3>
+
+                   <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i && @friends.length != 0 %>
+                   <br> Tem <%= @friends.length %> amigo(s):
+                   <table>
+                    <% @friends.each do |normal| %>
+                    <tr>
+                      <td>
+                        <% if normal.user.uid != nil %>
+                        <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+                        <% elsif normal.photo.to_s != "" %>
+                        <%= image_tag normal.photo .square, :class => "img-responsive img-circle"%>
+                        <% else %>
+                        <% if normal.user.normal.gender.upcase == 'MALE' %>
+                        <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+                        <% else %>
+                        <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+                        <% end %>
+                        <% end %>
+                      </td>
+                      <td>
+                        <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
+                      </td>
+                      <td>
+                        <%= button_to "Anular", root_path+"user/deletefriend", data: { confirm: "Tem a certeza?"}, params: {id1: @user.userID.to_s, id2: normal.normalID.to_s}, method: :post %>
+                      </td>
+                    </tr>
+                    <% end %>
+                  </table>
+                  <% else %>
+                  <br> <%= @friends.length %> amigos <br>
+                  <% end %>
                 </div>
-                <div class="tab-pane fade in" id="tab2">
-                  <h3>This is tab 2</h3>
-                </div>
-                <div class="tab-pane fade in" id="tab3">
-                  <h3>This is tab 3</h3>
-                </div>
+                <br>
+                <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i && @friendRequestsReceived.length != 0 %>
+                <strong>------ Pedidos de Amizade Recebidos ------</strong>
+                <table>
+                  <% @friendRequestsReceived.each do |normal| %>
+                  <tr>
+                    <td>
+                      <% if normal.user.uid != nil %>
+                      <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+                      <% elsif normal.photo.to_s != "" %>
+                      <%= image_tag normal.photo .square, :class => "img-responsive img-circle"%>
+                      <% else %>
+                      <% if normal.user.normal.gender.upcase == 'MALE' %>
+                      <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+                      <% else %>
+                      <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+                      <% end %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
+                    </td>
+                    <td>
+                      <%= button_to "Aceitar", root_path+"user/acceptfriend", data: { confirm: "Tem a certeza?"}, params: {receiver: @user.userID.to_s, sender: normal.normalID.to_s}, method: :post %>
+                    </td>
+                    <td>
+                      <%= button_to "Rejeitar", root_path+"user/rejectfriend", data: { confirm: "Tem a certeza?"}, params: { receiver: @user.userID.to_s, sender: normal.normalID.to_s}, method: :post %>
+                    </td>
+                  </tr>
+                  <% end %>
+                </table>
+                <% end %>
+
+                <% if user_signed_in? && @commonFriends.length != 0 %>
+                <strong>------ Amigos em Comum ------</strong>
+                <br> Tem <%= @commonFriends.length %> amigo(s) em comum:
+                <table>
+                  <% @commonFriends.each do |normal| %>
+                  <tr>
+                    <td>
+                      <% if normal.user.uid != nil %>
+                      <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+                      <% elsif normal.photo.to_s != "" %>
+                      <%= image_tag normal.photo .square, :class => "img-responsive img-circle"%>
+                      <% else %>
+                      <% if normal.user.normal.gender.upcase == 'MALE' %>
+                      <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
+                      <% else %>
+                      <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
+                      <% end %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
+                    </td>
+                  </tr>
+                  <% end %>
+                </table>
+                <% end %>
+
+                <strong>
+                  <br> <%= link_to "Pesquisar Amigos", search_user_index_path %> <br><br>
+                </strong>
+
+                <% if user_signed_in? && current_user.userID.to_i != @user.userID.to_i && !@alreadyFriend %>
+                <%= button_to "Adicionar como amigo", root_path+"user/requestfriend", data: { confirm: "Tem a certeza?"}, params: {sender: current_user.userID.to_s, receiver: @user.userID.to_s}, method: :post %>
+                <% elsif user_signed_in? && current_user.userID.to_i != @user.userID.to_i && @alreadyFriend %>
+                <% if @maybeFriend%>
+                <br> O teu pedido de amizade está pendente <br>
+                <% else %>
+                <br> Já és amigo(a) de <%= @user.normal.first_name + " " + @user.normal.last_name %> <br>
+                <% end %>
+                <% end %>
+
+                <p style="color:#F5F5F5;">.</p>
               </div>
+
+
+              <div class="tab-pane fade in text-center" id="tab2">
+                <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i %>
+                <div class="col-lg-12 col-sm-12">
+                  <strong><%= link_to " Alterar Preferências", root_url+"user/preferences?id="+@user.userID.to_s, :class => "fa fa-pencil" %> </strong>
+                </div>
+                <% else %>
+                <div class="col-lg-12 col-sm-12">
+                 <h3>Preferências</h3>
+               </div>
+               <% end %>
+               <div class="col-lg-6 col-sm-6">
+                <% if @categoriesPrefs.length != 0 %>
+                <h4>Categorias:</h4>
+                <% @categoriesPrefs.each do |category| %>
+                <p><%= category.category.name %></p>
+                <% end %>
+                <% end %>
+              </div>
+
+              <div class="col-lg-6 col-sm-6">
+                <% if @tagsPrefs.length != 0 %>
+                <h4>Tags:</h4>
+                <% @tagsPrefs.each do |tag| %>
+                <p><%= tag.tags.name %></p>
+                <% end %>
+                <% end %>
+              </div>
+              <p style="color:#F5F5F5;">.</p>
             </div>
 
+            <div class="tab-pane fade in text-center" id="tab3">
+              <div class="col-lg-12 col-sm-12">
+               <h3>Eventos Frequentados</h3>
+               <% if (user_signed_in? && current_user.userID.to_i == @user.userID.to_i) or (user_signed_in? && current_user.userID.to_i != @user.userID.to_i && @alreadyFriend && !@maybeFriend) %>
+               <table>
+                <% @assistedEvents.each do |assistedEvent| %>
+                <% if assistedEvent.image.first.present? %>
+                <a href="<%= event_path(assistedEvent)%>" class="thumbnail">
+                  <%=image_tag assistedEvent.image.first.image , :class => "img-responsive"%>
+                </a>
+                <% else %>
+                <%= link_to assistedEvent.name, event_path(assistedEvent), :class => "thumbnail" %>
+                <% end %>
+                <% end %>
+              </table>
+              <% end %>
+            </div>
+            <p style="color:#F5F5F5;">.</p>
           </div>
-
-
-
-          <% if @user.normal != nil %>
-          <p>
-            <% if @user.normal.background.to_s != "" %>
-            <%= image_tag @user.normal.background, :class => "img-responsive"%>
-            <% end %>
-          </p>
-
-          <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i %>
-          <strong>
-            <%= link_to 'Editar o meu perfil', root_path+"user/"+@user.userID.to_s+"/edit" %>
-          </strong>
-          <% end %>
-
-          <br><br>
-
-          <p>
-            <% if @user.uid != nil %>
-            <img src="http://graph.facebook.com/<%=@user.uid%>/picture" class="img-responsive img-circle">
-            <% elsif @user.normal.photo.to_s != "" %>
-            <%= image_tag @user.normal.photo .square, :class => "img-responsive img-circle"%>
-            <% else %>
-            <% if @user.normal.gender.upcase == 'MALE' %>
-            <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
-            <% else %>
-            <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
-            <% end %>
-            <% end %>
-          </p>
-
-          <p>
-            <strong>Nome:</strong>
-            <%= @user.normal.first_name + " " + @user.normal.last_name %>
-          </p>
-
-          <p>
-            <strong>Genero:</strong>
-            <%= @user.normal.gender %>
-          </p>
-
-          <p>
-            <strong>Data de nascimento:</strong>
-            <%= @user.normal.birthday %>
-          </p>
-
-          <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i %>
-          <strong>------ <%= link_to "Alterar Preferencias", root_url+"user/preferences?id="+@user.userID.to_s %> ------</strong>
-          <% else %>
-          <strong>------ Preferencias ------</strong>
-          <% end %>
-          <p>
-            <% if @tagsPrefs.length != 0 %>
-            <strong>Tags:</strong><br>
-            <% @tagsPrefs.each do |tag| %>
-            <%= tag.tags.name %><br>
-            <% end %>
-            <% end %>
-          </p>
-
-          <p>
-            <% if @categoriesPrefs.length != 0 %>
-            <strong>Categorias:</strong><br>
-            <% @categoriesPrefs.each do |category| %>
-            <%= category.category.name %><br>
-            <% end %>
-            <% end %>
-          </p>
-
-          <p>
-            <% if @nightEventsPrefs.length != 0 %>
-            <strong>Prefere Eventos noturnos</strong><br>
-            <% end %>
-          </p>
-
-          <strong>------------- Amigos -------------</strong>
-          <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i && @friends.length != 0 %>
-          <br> Tem <%= @friends.length %> amigo(s):
-          <table>
-            <% @friends.each do |normal| %>
-            <tr>
-              <td>
-                <% if normal.user.uid != nil %>
-                <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
-                <% elsif normal.photo.to_s != "" %>
-                <%= image_tag normal.photo .square, :class => "img-responsive img-circle"%>
-                <% else %>
-                <% if normal.user.normal.gender.upcase == 'MALE' %>
-                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
-                <% else %>
-                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
-                <% end %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
-              </td>
-              <td>
-                <%= button_to "Anular", root_path+"user/deletefriend", data: { confirm: "Tem a certeza?"}, params: {id1: @user.userID.to_s, id2: normal.normalID.to_s}, method: :post %>
-              </td>
-            </tr>
-            <% end %>
-          </table>
-          <% else %>
-          <br> <%= @friends.length %> amigos <br>
-          <% end %>
-
-          <br>
-
-          <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i && @friendRequestsReceived.length != 0 %>
-          <strong>------ Pedidos de Amizade Recebidos ------</strong>
-          <table>
-            <% @friendRequestsReceived.each do |normal| %>
-            <tr>
-              <td>
-                <% if normal.user.uid != nil %>
-                <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
-                <% elsif normal.photo.to_s != "" %>
-                <%= image_tag normal.photo .square, :class => "img-responsive img-circle"%>
-                <% else %>
-                <% if normal.user.normal.gender.upcase == 'MALE' %>
-                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
-                <% else %>
-                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
-                <% end %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
-              </td>
-              <td>
-                <%= button_to "Aceitar", root_path+"user/acceptfriend", data: { confirm: "Tem a certeza?"}, params: {receiver: @user.userID.to_s, sender: normal.normalID.to_s}, method: :post %>
-              </td>
-              <td>
-                <%= button_to "Rejeitar", root_path+"user/rejectfriend", data: { confirm: "Tem a certeza?"}, params: { receiver: @user.userID.to_s, sender: normal.normalID.to_s}, method: :post %>
-              </td>
-            </tr>
-            <% end %>
-          </table>
-          <% end %>
-
-          <br>
-
-          <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i && @friendRequestsSended.length != 0 %>
-          <strong>------ Pedidos de Amizade Enviados ------</strong>
-          <table>
-            <% @friendRequestsSended.each do |normal| %>
-            <tr>
-              <td>
-                <% if normal.user.uid != nil %>
-                <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
-                <% elsif normal.photo.to_s != "" %>
-                <%= image_tag normal.photo .square, :class => "img-responsive img-circle"%>
-                <% else %>
-                <% if normal.user.normal.gender.upcase == 'MALE' %>
-                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
-                <% else %>
-                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
-                <% end %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
-              </td>
-              <td>
-                <%= button_to "Anular", root_path+"user/cancelfriend", data: { confirm: "Tem a certeza?"}, params: {sender: @user.userID.to_s, receiver: normal.normalID.to_s}, method: :post %>
-              </td>
-            </tr>
-            <% end %>
-          </table>
-          <% end %>
-
-          <% if user_signed_in? && @commonFriends.length != 0 %>
-          <strong>------ Amigos em Comum ------</strong>
-          <br> Tem <%= @commonFriends.length %> amigo(s) em comum:
-          <table>
-            <% @commonFriends.each do |normal| %>
-            <tr>
-              <td>
-                <% if normal.user.uid != nil %>
-                <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
-                <% elsif normal.photo.to_s != "" %>
-                <%= image_tag normal.photo .square, :class => "img-responsive img-circle"%>
-                <% else %>
-                <% if normal.user.normal.gender.upcase == 'MALE' %>
-                <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
-                <% else %>
-                <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
-                <% end %>
-                <% end %>
-              </td>
-              <td>
-                <%= link_to normal.first_name + " " + normal.last_name, user_path(normal) %>
-              </td>
-            </tr>
-            <% end %>
-          </table>
-          <% end %>
-
-          <strong>
-            <br> <%= link_to "Pesquisar Amigos", search_user_index_path %> <br><br>
-          </strong>
-
-          <% if user_signed_in? && current_user.userID.to_i != @user.userID.to_i && !@alreadyFriend %>
-          <%= button_to "Adicionar como amigo", root_path+"user/requestfriend", data: { confirm: "Tem a certeza?"}, params: {sender: current_user.userID.to_s, receiver: @user.userID.to_s}, method: :post %>
-          <% elsif user_signed_in? && current_user.userID.to_i != @user.userID.to_i && @alreadyFriend %>
-          <% if @maybeFriend%>
-          <br> O teu pedido de amizade está pendente <br>
-          <% else %>
-          <br> Já és amigo(a) de <%= @user.normal.first_name + " " + @user.normal.last_name %> <br>
-          <% end %>
-          <% end %>
-
-          <% if (user_signed_in? && current_user.userID.to_i == @user.userID.to_i) or (user_signed_in? && current_user.userID.to_i != @user.userID.to_i && @alreadyFriend && !@maybeFriend) %>
-          <strong>------ Eventos que já frequentou ------</strong>
-          <table>
-            <% @assistedEvents.each do |assistedEvent| %>
-            <% if assistedEvent.image.first.present? %>
-            <a href="<%= event_path(assistedEvent)%>" class="thumbnail">
-              <%=image_tag assistedEvent.image.first.image , :class => "img-responsive"%>
-            </a>
-            <% else %>
-            <%= link_to assistedEvent.name, event_path(assistedEvent), :class => "thumbnail" %>
-            <% end %>
-            <% end %>
-          </table>
-          <% end %>
-
-          <% end %>
-
-          <br>
-          <p>
-            <% if @colaborator != nil %>
-            <strong>
-              Utilizador é 
-              <%= link_to "Colaborador", colaborator_path(@colaborator.normal) %> do promotor de eventos:
-              <%= link_to @colaborator.promoter.name, promoter_path(@colaborator.promoter) %>
-            </strong>
-            <% end %>
-          </p>
-
-          <br>
-          <p>
-            <% if @promoter != nil %>
-            <strong>
-              Utilizador é o promotor de eventos: 
-              <%= link_to @promoter.name, promoter_path(@promoter) %>
-            </strong>
-            <% end %>
-          </p>
-
-          <% if user_signed_in? && current_user.admin %>
-
-          <%= link_to 'Banir Utilizador',  user_path(params[:id]),  method: :delete, data: { confirm: 'Are you sure?' } %>
-          <br><br>
-
-          <p>
-            <strong>=============== User Info =======================</strong>
-            <br>
-            <strong>userID:</strong>
-            <%= @user.userID %>
-            <br>
-            <strong>email:</strong>
-            <%= mail_to @user.email, @user.email %>
-            <br>
-            <strong>encrypted_password:</strong>
-            <%= @user.encrypted_password %>
-            <br>
-            <strong>password:</strong>
-            <%= @user.password %>
-            <br>
-            <strong>admin:</strong>
-            <%= @user.admin %>
-            <br>
-            <strong>reset_password_token:</strong>
-            <%= @user.reset_password_token %>
-            <br>
-            <strong>reset_password_sent_at:</strong>
-            <%= @user.reset_password_sent_at %>
-            <br>
-            <strong>remember_created_at:</strong>
-            <%= @user.remember_created_at %>
-            <br>
-            <strong>sign_in_count:</strong>
-            <%= @user.sign_in_count %>
-            <br>
-            <strong>current_sign_in_at:</strong>
-            <%= @user.current_sign_in_at %>
-            <br>
-            <strong>last_sign_in_at:</strong>
-            <%= @user.last_sign_in_at %>
-            <br>
-            <strong>current_sign_in_ip:</strong>
-            <%= @user.current_sign_in_ip %>
-            <br>
-            <strong>last_sign_in_ip:</strong>
-            <%= @user.last_sign_in_ip %>
-            <br>
-            <strong>provider:</strong>
-            <%= @user.provider %>
-            <br>
-            <strong>uid:</strong>
-            <%= @user.uid %>
-            <br>
-            <strong>banned:</strong>
-            <%= @user.banned %>
-          </p>
-
-          <%end%>
-
         </div>
       </div>
+      <% end %> <!--Close if normal user-->
     </div>
+
+
+    <br>
+    <p>
+      <% if @colaborator != nil %>
+      <strong>
+        Utilizador é 
+        <%= link_to "Colaborador", colaborator_path(@colaborator.normal) %> do promotor de eventos:
+        <%= link_to @colaborator.promoter.name, promoter_path(@colaborator.promoter) %>
+      </strong>
+      <% end %>
+    </p>
+
+    <br>
+    <p>
+      <% if @promoter != nil %>
+      <strong>
+        Utilizador é o promotor de eventos: 
+        <%= link_to @promoter.name, promoter_path(@promoter) %>
+      </strong>
+      <% end %>
+    </p>
+
+    <% if user_signed_in? && current_user.admin %>
+
+    <%= link_to 'Banir Utilizador',  user_path(params[:id]),  method: :delete, data: { confirm: 'Are you sure?' } %>
+    <br><br>
+
+    <p>
+      <strong>=============== User Info =======================</strong>
+      <br>
+      <strong>userID:</strong>
+      <%= @user.userID %>
+      <br>
+      <strong>email:</strong>
+      <%= mail_to @user.email, @user.email %>
+      <br>
+      <strong>encrypted_password:</strong>
+      <%= @user.encrypted_password %>
+      <br>
+      <strong>password:</strong>
+      <%= @user.password %>
+      <br>
+      <strong>admin:</strong>
+      <%= @user.admin %>
+      <br>
+      <strong>reset_password_token:</strong>
+      <%= @user.reset_password_token %>
+      <br>
+      <strong>reset_password_sent_at:</strong>
+      <%= @user.reset_password_sent_at %>
+      <br>
+      <strong>remember_created_at:</strong>
+      <%= @user.remember_created_at %>
+      <br>
+      <strong>sign_in_count:</strong>
+      <%= @user.sign_in_count %>
+      <br>
+      <strong>current_sign_in_at:</strong>
+      <%= @user.current_sign_in_at %>
+      <br>
+      <strong>last_sign_in_at:</strong>
+      <%= @user.last_sign_in_at %>
+      <br>
+      <strong>current_sign_in_ip:</strong>
+      <%= @user.current_sign_in_ip %>
+      <br>
+      <strong>last_sign_in_ip:</strong>
+      <%= @user.last_sign_in_ip %>
+      <br>
+      <strong>provider:</strong>
+      <%= @user.provider %>
+      <br>
+      <strong>uid:</strong>
+      <%= @user.uid %>
+      <br>
+      <strong>banned:</strong>
+      <%= @user.banned %>
+    </p>
+
+    <%end%>
+
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+$(".btn-pref .btn").click(function () {
+  $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
+    // $(".tab").addClass("active"); // instead of this do the below 
+    $(this).removeClass("btn-default").addClass("btn-primary");   
+  });
+</script>

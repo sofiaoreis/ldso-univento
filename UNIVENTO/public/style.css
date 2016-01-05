@@ -835,7 +835,7 @@ input[type='radio']:checked:before {
     -webkit-box-shadow: 0 3px 0 #989898, 0 -1px #fff inset;
     -moz-box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
     box-shadow: 0 3px 0 rgba(26,166,155,0.4), 0 -1px rgba(26,166,155,0.8) inset;
-    background: rgba(42 ,43,48,0.6);
+    background: rgba(42 ,43,48,0.9);
     color:#989898;
     border:none;
     outline:none;
@@ -915,6 +915,10 @@ input[type='radio']:checked:before {
 
 .btn-pref {
     padding: 5px 15px;
+}
+
+.btn-user-group {
+    padding: 0;
 }
 
 .checkbox {
@@ -1022,7 +1026,14 @@ a:hover {
     display:inline-block;
 }
 
-#sub{
+#sub {
+    background-color: #2A2B2D;
+    border-color: #1AA69B;
+    color: white;
+    float: right;
+}
+
+#sub2 {
     background-color: #2A2B2D;
     border-color: #1AA69B;
     color: white;
@@ -1094,7 +1105,7 @@ a:hover {
 
 .error
 {
-  color: #ed1c24;
+  color: #880000 ;
 }
 
 .main-pages {
@@ -1108,4 +1119,110 @@ a:hover {
   padding-bottom: 40px;
 }
 
+/* USER PROFILE PAGE */
+ .card {
+    margin-top: 20px;
+    padding: 30px;
+    background-color: rgba(214, 224, 226, 0.2);
+    -webkit-border-top-left-radius:5px;
+    -moz-border-top-left-radius:5px;
+    border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-top-right-radius:5px;
+    border-top-right-radius:5px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 1);
+}
+.card.hovercard .card-background {
+    height: 130px;
+}
+.card-background img {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+    margin-left: -100px;
+    margin-top: -200px;
+    min-width: 130%;
+}
+.card.hovercard .useravatar {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+}
+.card.hovercard .useravatar img {
+    width: 100px;
+    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+.card.hovercard .card-info {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+}
+.card.hovercard .card-info .card-title {
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 1;
+    color: #262626;
+    background-color: rgba(255, 255, 255, 0.1);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.card.hovercard .card-info {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+.card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+.btn-pref .btn {
+    -webkit-border-radius:0 !important;
+}
+
+.btn-primary, .btn-primary:focus {
+    color: #fff;
+    background-color: #1AA69B;
+    border-color: #147F75;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #147F75;
+    border-color: #147F75;
+}
+
+#forgot{
+    float: right;
+    color: rgba(26,166,155,0.8);
+}
+
+
+#forgot:hover
+{
+    color: rgba(42 ,43,48,1);
+
+}
 
