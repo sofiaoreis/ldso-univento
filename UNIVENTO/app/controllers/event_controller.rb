@@ -42,6 +42,7 @@ class EventController < ApplicationController
 		#return
 		@event = Event.find(params[:id])
 		@event.image.each do |img|
+			File.delete("#{Rails.root}/public/uploads/image/image/"<<img.imageID.to_s<<"/square_"<<img["image"])
 			File.delete("#{Rails.root}/public/uploads/image/image/"<<img.imageID.to_s<<"/"<<img["image"])
 		end
 		@event.image.delete_all

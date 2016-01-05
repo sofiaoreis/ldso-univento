@@ -33,7 +33,7 @@ function start () {
 function initialize() {
 
 	$.ajax({
-	    url: window.location.href+"event",
+	    url: "/event",
 	  	type: "get",
 	   	dataType: "json",
 	   	data: {func:"google_maps"}
@@ -57,7 +57,7 @@ function initialize() {
 		});
 
 		$.ajax({
-		    url: window.location.href+"category",
+		    url: "/category",
 		  	type: "get",
 		   	dataType: "json",
 		}).done(function (categorias) {
@@ -207,12 +207,12 @@ function showMarkersWithCategory(id,eventos){
 
 function loadEvents(){
 	$.ajax({
-	    url: window.location.href+"event",
+	    url: "/event",
 	  	type: "get",
 	   	dataType: "json",
 	   	data: {func:"homepage"}
 	}).done(function (eventos) {
-		console.log(eventos);
+		//console.log(eventos);
 /*		for (var i = 0; i < eventos.length; i++) {
 			console.log(eventos[i][info.NAME]);
 		};
