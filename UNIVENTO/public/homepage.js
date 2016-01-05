@@ -262,7 +262,7 @@ function showEvents(eventos){
 				div_item.append('<div class="row-fluid home-events clearfix" id="div_row_'+i+'"> </div>');
 				div_row = $('#div_row_'+i);
 			}
-			link = window.location.href+"event/"+evento[info.EVENT_ID];
+			link = "/event/"+evento[info.EVENT_ID];
 			dataFields = evento[info.START_DATE].split('T');
 			data = dataFields[0].replace(/-/g,'/')+' '+dataFields[1].split(':')[0]+':'+dataFields[1].split(':')[1];
 			img = evento[info.IMG_URL];
