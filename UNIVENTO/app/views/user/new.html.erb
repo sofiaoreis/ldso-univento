@@ -2,17 +2,19 @@
     
          <div class="box title">
 
-          <h2>Regista-te no UNIVENTO!</h2>
+          <h2>Regista-te no Univento!</h2>
           <p>Queres ficar a par de todos os eventos na tua Academia?</p>
 
         </div>
         
         <%= form_for @user, :url => '/user' do |u| %>
-        <div class="row">
+       
+        <div class="field">
+
             <div class="col-md-6">
+              <div class="form-group">
               <div class="input-group">
-            <span class="input-group-addon" id="basic-addon1"><i class="fa">@</i></span> 
-            
+                 <span class="input-group-addon" id="basic-addon1"><i class="fa">@</i></span> 
                 <%= u.email_field :email , :class => 'form-control', :placeholder => 'E-mail'%>
                  </div>
                 <% if @user.errors[:email].any? %>
@@ -20,6 +22,7 @@
               <%= @user.errors[:email].first %>
               </strong></span>
             <% end %>
+          </div>
            
           </div>
 
@@ -39,7 +42,7 @@
 
         </div>
 
-        <div class="row">
+        <div class="field">
           <div class="col-md-6">
           <div class="form-group">
               <div class="input-group" >
@@ -71,7 +74,7 @@
            
             
 
-            <div class="row">
+            <div class="field">
             <div class="col-md-6">
                 <div class="input-group">
                
@@ -93,7 +96,7 @@
 
             </div>
             
-            <div class="row">
+            <div class="field">
             <%= u.submit 'Submeter', :class => 'btn btn-primary active' , :id=> 'btn_promoter_user' %>
           </div>
             </div>

@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   validates_length_of :password, :minimum => 5, :message => 'Password tem de ter mais do que 4 caracteres.'
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i , :message => "E-mail inválido."
+  validates_uniqueness_of :email, allow_blank: false, if: :email_changed?, :message => "Este e-mail já existe."
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
