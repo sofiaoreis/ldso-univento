@@ -22,6 +22,17 @@ class EventController < ApplicationController
     	@event = Event.find(params[:id])
     	authorize! :update, @event, :message => "Não tem autorização para editar este evento"
     	@category = Category.all
+    	if @event.youtube.first.present?
+    		@youtube = @event.youtube.first.videoID
+		else
+			@youtube = ""
+    	end
+
+    	if @event.spotify.first.present?
+    		@spotify = @event.spotify.first.playListLink
+		else
+			@spotify = ""
+    	end
  	end
 
 # ========================================================
@@ -119,7 +130,11 @@ class EventController < ApplicationController
 	        params[:youtube].each do |link|
 	        	if link.present?
 		            youtube = Youtube.new
-		            youtube.videoID="https://www.youtube.com/embed/" + link.sub("https://www.youtube.com/watch?v=", "").gsub("&","?")
+		            if link.include? "https://www.youtube.com/embed/"
+		            	youtube.videoID = link
+		            else 
+		            	youtube.videoID="https://www.youtube.com/embed/" + link.sub("https://www.youtube.com/watch?v=", "").gsub("&","?")
+		            end
 		            youtube.eventID=@event.eventID
 					#y:		https://www.youtube.com/watch?v=pxMy-QB-yP4
 					#ye:	https://www.youtube.com/embed/pxMy-QB-yP4
@@ -136,10 +151,13 @@ class EventController < ApplicationController
 		            replace=""
 		            if link.include? "https://open.spotify.com/"
 		            	replace = "https://open.spotify.com/"
+		            	spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub(replace,"").gsub("/",":")
 		            elsif link.include? "https://play.spotify.com/"
 		            	replace = "https://play.spotify.com/"
+		            	spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub(replace,"").gsub("/",":")
+		            elsif link.include? "https://embed.spotify.com/?uri=spotify:"
+		            	spotify.playListLink=link
 		            end
-		            spotify.playListLink = "https://embed.spotify.com/?uri=spotify:" + link.sub(replace,"").gsub("/",":")
 		            spotify.eventID=@event.eventID
 		            # 		https://open.spotify.com/track/10DZlRWwiTuxSeM9EJAi7z
 		            # 		https://play.spotify.com/track/1fgxA3kGqP5RBIvgNJNryu
@@ -199,6 +217,7 @@ class EventController < ApplicationController
 	def index	
 		respond_to do |format|
 	      format.html {
+	      	redirect_to root_path and return
 			@eventDates = Array.new
 			eventDates2 = Array.new
 
@@ -280,8 +299,8 @@ class EventController < ApplicationController
 			if(prefs != nil)
 				if current_user != nil
 					user = User.find(current_user.id.to_s)
-					ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
-					musicCategoryID = Category.find_by(name: "Música").categoryID
+					#ambianceCategoryID = Category.find_by(name: "Ambiente").categoryID
+					#musicCategoryID = Category.find_by(name: "Música").categoryID
 					nightCategoryID = Category.find_by(name: "Noturno").categoryID
 
 					tagsPrefs = NormalTags.all
@@ -395,6 +414,26 @@ class EventController < ApplicationController
 				end
 		        render :json => eventInfo.to_json
 		    elsif params[:func] == "homepage"
+				require 'set'
+				like_cat_IDs = Set.new
+				like_tags_IDs = Set.new
+
+		    	if user_signed_in?
+		    		user = Normal.find_by_normalID(current_user.id)
+			    		if user.present?
+						tagsPrefs = user.normal_tags.all
+						categoriesPrefs = user.normal_category.all
+
+						categoriesPrefs.each do |categoryPref|
+							like_cat_IDs.add(categoryPref.categoryID)
+						end
+
+						tagsPrefs.each do |tagsPref|
+							like_tags_IDs.add(tagsPref.tagsID)
+						end
+					end
+		    	end
+
 		    	eventInfo = Array.new
 				# ------------------- DB query -------------------------
 				# Find events ordered by most closest date for the next 4 years from now.
@@ -419,7 +458,14 @@ class EventController < ApplicationController
 							elsif eventDate.startDate >= (DateTime.now.beginning_of_day + 7.day) &&  eventDate.startDate <= (DateTime.now.beginning_of_day + 14.day)
 								day = 2 #daqui a 1 semana
 							end
-							eventInfo.push([eventDate.event.name, eventDate.event.eventID, eventDate.event.category.name, 0,0, eventDate.local.address, '',eventDate.event.promoter.name, eventDate.startDate, img, day])
+							like = (like_cat_IDs.include?(eventDate.event.category.categoryID))
+							if !like
+								eventDate.event.eventtags.each do |tag|
+									like = like_tags_IDs.include?(tag.tagsID)
+									break if like
+								end
+							end
+							eventInfo.push([eventDate.event.name, eventDate.event.eventID, eventDate.event.category.name, 0,0, eventDate.local.address, '',eventDate.event.promoter.name, eventDate.startDate, img, day, like])
 						end
 						eventsID.push(eventDate.eventID)
 					end

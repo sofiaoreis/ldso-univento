@@ -1,4 +1,5 @@
 $(start);
+var filter_prefs=false;
 // enum
 var info = {
 	NAME : 0,
@@ -11,7 +12,8 @@ var info = {
 	PROMOTER: 7,
 	START_DATE: 8,
 	IMG_URL: 9,
-	DAY: 10
+	DAY: 10,
+	LIKE: 11 // true se está nas prefs do user
 }
 
 var markersArray = [];
@@ -231,6 +233,10 @@ function loadEvents(){
 			var txt = $(e.target).text();
 			filter("DAY",txt,eventos);
 		});
+		$("#prefs").on("change",function(e){
+			filter_prefs = $("#prefs").is(':checked');
+			filter("PREFS",filter_prefs,eventos);
+		});
 	});
 };
 
@@ -292,11 +298,7 @@ function filter(tipo,value,eventos){
 	novos = [];
 
 	if (tipo=="PROMOTER") {
-		for (var i = 0; i < eventos.length; i++) {
-			if (eventos[i][info.PROMOTER]==value) {
-				novos.push(eventos[i]);
-			};
-		};
+		addThis(novos, eventos, info.PROMOTER, value );
 	}else if (tipo=="DAY"){
 		day = 2;
 		if (value=="Hoje") {
@@ -304,20 +306,32 @@ function filter(tipo,value,eventos){
 		}else if (value=="Amanhã"){
 		    day=1;
 		}
-		for (var i = 0; i < eventos.length; i++) {
-			if (eventos[i][info.DAY]==day) {
-				novos.push(eventos[i]);
-			};
-		};
+		addThis(novos, eventos, info.DAY, day );
 	}else if (tipo=="CAT"){
-		for (var i = 0; i < eventos.length; i++) {
-			if (eventos[i][info.CATEGORIA]==value) {
-				novos.push(eventos[i]);
-			};
-		};
+		addThis(novos, eventos, info.CATEGORIA, value );
+	}else if (tipo=="PREFS"){
+		if (filter_prefs) {
+			addThis(novos, eventos, info.LIKE, true );
+		}else{
+			novos= eventos;
+		}
 	};
 	$("#carEventos .carousel-inner").fadeOut();
 	$("#carEventos .carousel-inner").empty();
 	showEvents(novos);
 	$("#carEventos .carousel-inner").fadeIn();
 };
+
+function addThis(novos, eventos, infoID, value ){
+	for (var i = 0; i < eventos.length; i++) {
+		if (eventos[i][infoID]==value) {
+			if(filter_prefs){
+				if(eventos[i][info.LIKE]){
+					novos.push(eventos[i]);
+				}
+			}else {
+				novos.push(eventos[i]);
+			}
+		};
+	};
+}

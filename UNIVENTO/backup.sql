@@ -33,12 +33,12 @@ INSERT INTO `Promoter` VALUES ('aefaup@fa.up.pt','FAUP','AEFAUP','http://aefaup.
 INSERT INTO `Promoter` VALUES ('aefdup@fd.up.pt','FDUP','AEFDUP','http://aefdup.fd.pt',3);
 INSERT INTO `Promoter` VALUES ('aeisep@isep.ipp.pt','ISEP','AEISEP','http://aeisep.isep.pt',4);
 
-INSERT INTO `Normal` VALUES ('2000-01-01','Leonel','Male','Peixoto',5);
-INSERT INTO `Normal` VALUES ('2000-01-01','Luis','Male','Reis',6);
-INSERT INTO `Normal` VALUES ('2000-01-01','Maria','Female','Marques',7);
-INSERT INTO `Normal` VALUES ('2000-01-01','Miguel','Male','Nunes',8);
-INSERT INTO `Normal` VALUES ('2000-01-01','Sofia','Female','Reis',9);
-INSERT INTO `Normal` VALUES ('2000-01-01','Rui','Male','Andrade',10);
+INSERT INTO `Normal` VALUES ('2000-01-01','Leonel','Male','Peixoto',5,NULL,NULL);
+INSERT INTO `Normal` VALUES ('2000-01-01','Luis','Male','Reis',6,NULL,NULL);
+INSERT INTO `Normal` VALUES ('2000-01-01','Maria','Female','Marques',7,NULL,NULL);
+INSERT INTO `Normal` VALUES ('2000-01-01','Miguel','Male','Nunes',8,NULL,NULL);
+INSERT INTO `Normal` VALUES ('2000-01-01','Sofia','Female','Reis',9,NULL,NULL);
+INSERT INTO `Normal` VALUES ('2000-01-01','Rui','Male','Andrade',10,NULL,NULL);
 
 INSERT INTO `Colaborator` VALUES (1,7);
 INSERT INTO `Colaborator` VALUES (1,9);

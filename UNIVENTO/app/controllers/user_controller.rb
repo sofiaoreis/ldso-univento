@@ -13,11 +13,48 @@ class UserController < ApplicationController
     @user = User.new
   end
 
+# ========================================================
+
+  def edit
+    @user = User.find(params[:id])
+    @normal = Normal.find(params[:id])
+  end
+
+# ========================================================
+ 
+  def update
+    #render plain: params.inspect
+    #return
+
+    @user = User.find(params[:id])
+    @normal = Normal.find(params[:id])
+
+    #email = "leonel1@mail.com"
+    #img = "img"
+    #@user.update(photo: img, email: email)
+
+    if @normal.update(first_name: params[:first_name], last_name: params[:last_name], gender: params[:gender], birthday: Date.civil(*params[:normal].sort.map(&:last).map(&:to_i)))
+      redirect_to @user
+    else
+      render 'edit'
+    end
+
+    if params[:image].present?
+       params[:image]['image'].each do |img|
+        @normal.update(:photo => img)
+      end
+    end
+
+  end
+
   # ========================================================
 
   attr_reader   :errors
 
   def create
+    #render plain: params.inspect
+    #return
+
     @user = User.new
     @user.email = params[:user][:email]
     @user.password = params[:user][:password]

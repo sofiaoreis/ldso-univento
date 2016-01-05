@@ -105,17 +105,13 @@
 <div class="row">
   <div class="col-md-8">
     <div class="input-group">
-      <% @event.youtube.each do |link| %>
         <span class="input-group-addon" id="basic-addon1"><i class="fa fa-youtube"></i></span>
-        <%= text_field_tag 'youtube[]', link.videoID, class: 'form-control', :placeholder=>"Insira um link do youtube" %>
-      <% end %>
+        <%= text_field_tag 'youtube[]', @youtube, class: 'form-control', :placeholder=>"Insira um link do youtube" %>
     </div>
 
     <div class="input-group">
-    <% @event.spotify.each do |link| %>
       <span class="input-group-addon" id="basic-addon1"><i class="fa fa-spotify"></i></span>
-      <%= text_field_tag 'spotify[]', link.playListLink, class: 'form-control', :placeholder=>"Insira um link do spotify" %>
-    <% end %>
+      <%= text_field_tag 'spotify[]', @spotify, class: 'form-control', :placeholder=>"Insira um link do spotify" %>
     </div>
   </div>
 </div><!-- row end-->

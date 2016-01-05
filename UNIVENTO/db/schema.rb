@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(version: 0) do
     t.string "first_name", limit: 50
     t.string "gender",     limit: 50
     t.string "last_name",  limit: 50
+    t.string "photo",      limit: 255
+    t.string "background", limit: 255
   end
 
   create_table "NormalCategory", id: false, force: :cascade do |t|

@@ -5,13 +5,23 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="sidebar-search glowing-border">
+                    <li class="sidebar-search glowing-border text-center">
                         <%= form_tag search_event_index_path, :method => 'post' do %>
                         <%= text_field_tag :search, params[:search] %>
                         <%= submit_tag "Search" %>
                         <% end %>
 
                     </li>
+
+                    <% if user_signed_in? && session[:normal].present?%>
+                        <li class="glowing-border text-center">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="prefs"><span class="glyphicon glyphicon-filter"></span> Filtrar por preferências
+                                </label>
+                            </div>
+                        </li>
+                    <%end%>
 
                     <li>
                         <a href="#"><i class="fa fa-graduation-cap"></i> Instituição<span class="fa arrow"></span></a>
@@ -99,6 +109,7 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
+        <% if !user_signed_in? %>
         <div class="row" id="aviso">
             <div class="col-sm-15 col-md-12">
                 <div class="alert alert-warning alert-dismissible fade in" role="alert">
@@ -108,8 +119,7 @@
                 </div>
             </div>
         </div>
-
-
+        <%end%>
         <div class="row" id="eventos">
             <div class="span12">
                 <div class="well"> 
