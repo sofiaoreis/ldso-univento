@@ -926,7 +926,7 @@ input[type='radio']:checked:before {
     background-color: #1F1F1F;
 }
 
-.page-show h1, h2, h3, h4 {
+.page-show h1, .page-show h2, .page-show h3, .page-show h4 {
     color: white;
 }
 
