@@ -7,13 +7,13 @@
     <div id="wrapper">
       <div class="" id="page-wrapper">
         <div class="row row-centered" id="show-evento">
-
+          <% if @user.normal != nil %>
           <div class="col-lg-6 col-sm-6">
             <div class="card hovercard">
               <div class="card-background">
                 <% if @user.normal.background.to_s != "" %>
-            <%= image_tag @user.normal.background, :class => "card-bkimg"%>
-            <% end %>
+                <%= image_tag @user.normal.background, :class => "card-bkimg"%>
+                <% end %>
                 <!-- <img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/"> -->
                 <!-- http://lorempixel.com/850/280/people/9/ -->
               </div>
@@ -22,6 +22,11 @@
               </div>
               <div class="card-info"> <span class="card-title">Pamela Anderson</span>
                 <p><%= @user.email %></p>
+                <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i %>
+                <strong>
+                  <%= link_to 'Editar o meu perfil', root_path+"user/"+@user.userID.to_s+"/edit" %>
+                </strong>
+                <% end %>
               </div>
             </div>
             <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
@@ -59,12 +64,6 @@
           </div>
 
 
-
-
-          <p>
-            <strong>Email:</strong>
-            <%= @user.email %>
-          </p>
 
           <% if @user.normal != nil %>
           <p>

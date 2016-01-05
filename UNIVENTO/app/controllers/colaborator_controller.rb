@@ -3,6 +3,8 @@ class ColaboratorController < ApplicationController
 # ========================================================
 
   def index
+    flash[:alert] = "Not implemented"
+    redirect_to root_path and return
     @colaborators = Colaborator.all
   end
 
@@ -34,20 +36,18 @@ class ColaboratorController < ApplicationController
 # ========================================================
 
   def create
-=begin
-    @colaborator = Colaborator.new
-    @colaborator.normalID = params[:normalID]
-    @colaborator.promoterID = params[:promoterID]
 
-    if @colaborator.save
-      user = User.find(params[:normalID])
-      redirect_to user
-    else
-      @colaborator.destroy
-      render 'new' end
-=end
+    user = User.where(:email => params[:email]).take
+    if user.present?
+      normal = Normal.find_by_normalID(user.userID)
+      if normal.present?
+        if Colaborator.where("normalID = ? AND promoterID = ?",normal.normalID, current_user.userID).present?
+          flash[:notice] = "Este utilizador já é seu colaborador"
+          redirect_to root_path and return
+        end
+      end
+    end
 
-    #{"email"=>"teste@teste.pt", "convite"=>"aaa"}
     @convite = ConviteColaborator.new
     @convite.promoterID = current_user.userID
     @convite.email = params[:email]

@@ -20,7 +20,7 @@ class PromoterController < ApplicationController
     @owner = user_signed_in? && current_user.userID.to_i == params[:id].to_i
 
     # Find events ordered by most closest date for the next 4 years from now.
-    eventDates1 = EventDate.where(startDate: (Time.now)..Time.now + 1461.day).order(startDate: :asc)
+    eventDates1 = EventDate.where(startDate:  DateTime.now.beginning_of_day..Time.now + 1461.day).order(startDate: :asc)
 
     # ----- Visible Events --------------
 
@@ -59,7 +59,7 @@ class PromoterController < ApplicationController
     eventsID = Array.new
 
     eventDates1.each do |eventDate|
-      if eventDate.event.activeDate > Time.now && eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+      if eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
         if !eventsID.include?(eventDate.eventID)
           @proposedEventDates.push(eventDate)
         end

@@ -13,8 +13,10 @@
                 <td>
                     <% if normal.user.uid != nil %>
                       <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+                    <% elsif normal.photo.to_s != "" %>
+                      <%= image_tag normal.photo .square, :class => "img-responsive img-circle"%>
                     <% else %>
-                      <% if normal.user.normal.gender == 'Male' %>
+                      <% if normal.user.normal.gender.upcase == 'MALE' %>
                         <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
                       <% else %>
                         <img src=<%=root_path+"imgs/profiles/default/female.png"%> class="img-responsive img-circle">
