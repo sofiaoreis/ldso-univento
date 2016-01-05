@@ -42,6 +42,11 @@
                         <%= link_to ' Colaborador', colaborator_index_path, :class => 'fa fa-gear fa-fw' %>
                     </li>
                     <%end%>
+                    <% if Promoter.find_by_promoterID(current_user.userID).present?%>
+                    <li>
+                        <%= link_to ' Promotor', promoter_path(Promoter.find_by_promoterID(current_user.userID)), :class => 'fa fa-gear fa-fw' %>
+                    </li>
+                    <%end%>
                     <li class="divider"></li>
                     <li>
                         <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'fa fa-sign-out fa-fw'  %>

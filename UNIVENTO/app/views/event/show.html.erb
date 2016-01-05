@@ -49,8 +49,10 @@
                                 <ul>
                                     <li><i class="fa fa-user"> <%= @event.promoter.name %> </i></li>
                                     <li><i class="fa fa-tags"> <%= @event.category.name %></i></li>
+                                    <% if @event.tags.length > 0 %>
                                     <li><i class="fa fa-circle-o">
                                     <% @event.tags.each do |link| %> <%= link.name %></i>  <% end %></li>
+                                    <%end%>
                                 </ul>
                             </h5>
                             <h4><%= @event.preco %>  <i class="fa fa-eur"></i> - Preço total</h4>
