@@ -25,6 +25,8 @@ class PromoterController < ApplicationController
     # ----- Visible Events --------------
 
     @shownEventDates = Array.new
+    @hiddenEventDates = Array.new
+    @proposedEventDates = Array.new
 
     eventsID = Array.new
 
@@ -34,32 +36,12 @@ class PromoterController < ApplicationController
           @shownEventDates.push(eventDate)
         end
         eventsID.push(eventDate.eventID)
-      end
-    end
-
-    # ----- Hidden Events --------------
-
-    @hiddenEventDates = Array.new
-
-    eventsID = Array.new
-
-    eventDates1.each do |eventDate|
-      if eventDate.event.activeDate > Time.now && !eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+      elsif eventDate.event.activeDate > Time.now && !eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
         if !eventsID.include?(eventDate.eventID)
           @hiddenEventDates.push(eventDate)
         end
         eventsID.push(eventDate.eventID)
-      end
-    end
-
-    # ----- Proposed Events --------------
-    
-    @proposedEventDates = Array.new
-
-    eventsID = Array.new
-
-    eventDates1.each do |eventDate|
-      if eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+      elsif eventDate.event.activeDate > Time.now && eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
         if !eventsID.include?(eventDate.eventID)
           @proposedEventDates.push(eventDate)
         end

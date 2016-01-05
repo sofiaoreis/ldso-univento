@@ -38,17 +38,12 @@
 
     </div>
     <div class="col-md-6">
+      <%= render "devise/shared/links" %>
 
     </div>
 
-
+ <br>
   </div>
-
-  
-
- 
-
-
 
   <%if params[:colaborator] %>
     <input type="hidden" hidden name="colaborator" value="<%=params[:colaborator]%>">
@@ -58,15 +53,16 @@
   <%if params[:email] %>
     <input type="hidden" hidden name="email" value="<%=params[:email]%>">
   <%end%>
+ 
 
 
-  <div class="actions">
+  <div class="form_row">
     <%= f.submit "Log in",:class => 'btn btn-primary active' , :id=> 'btn_promoter_user' %>
   </div>
 <% end %>
 
 
 
-<%= render "devise/shared/links" %>
+
 
 </div>

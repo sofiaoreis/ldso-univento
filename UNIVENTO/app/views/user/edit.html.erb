@@ -41,20 +41,31 @@
         </div>
 
         <div class="form_row">
-            <label for="gender">Género:</label>
-            <% ['male','female'].each do |gender| %>
-                <% if @normal.gender.upcase == gender.upcase %>
-                    <br><%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
-                <% else %>
-                    <br><%= radio_button_tag 'gender', gender, @gender == gender, :checked => false %>
+            <% if @normal.gender != nil %>
+                <label for="gender">Género:</label>
+                <% ['male','female'].each do |gender| %>
+                    <% if @normal.gender.upcase == gender.upcase %>
+                        <br><%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
+                    <% else %>
+                        <br><%= radio_button_tag 'gender', gender, @gender == gender, :checked => false %>
+                    <% end %>
+                  <%= gender.humanize %>
                 <% end %>
-              <%= gender.humanize %>
+            <% else %>
+                <% [ 'male','female'].each do |gender| %>
+                  <%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
+                  <%= gender.humanize %>
+                <% end %>
             <% end %>
         </div>
 
         <br>
         <label>Data de nascimento:
-        <%=  u.date_select :birthday, order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year %>
+            <% if @normal.birthday != nil %>
+                <%=  u.date_select :birthday, order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year %>
+            <% else %>
+                <%=  date_select("normal", "birthday", order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year) %>
+            <% end %>
         </label>
 
         <br><br>
