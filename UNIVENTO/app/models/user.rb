@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
 
     user = User.where(email: auth.info.email).take
     normal = Normal.where(normalID: user[:userID])
-
+    register = false
     if !normal.present?
       normal = Normal.new
       nomes = auth.info.name.split(' ')
@@ -31,9 +31,10 @@ class User < ActiveRecord::Base
       normal.last_name = nomes[nomes.length-1]
       normal.normalID = user[:userID]
       normal.save
+      register = true
     end
 
-    return user
+    return user,normal,register
   end
 
   def self.getUserType(user)

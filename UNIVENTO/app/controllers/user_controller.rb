@@ -33,6 +33,7 @@ class UserController < ApplicationController
            params[:image]['image'].each do |img|
             @normal.update(:photo => img)
           end
+          session["image"] = @normal.photo.thumb.url
         end
 
         if params[:background].present?

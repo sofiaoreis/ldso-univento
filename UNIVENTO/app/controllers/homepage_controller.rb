@@ -12,12 +12,15 @@ class HomepageController < ApplicationController
   	if session[:normal].present?
       if !session[:name].present?
     	 session[:name] = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
-  	  end
+  	   if Normal.find_by(normalID: current_user.userID).photo.thumb.present?
+        session["image"] = Normal.find_by(normalID: current_user.userID).photo.thumb.url
+       end
+      end
     elsif session[:promoter].present?
       if !session[:name].present?
   		  session[:name] = Promoter.find_by(promoterID: current_user.userID).name
       end
-  	else
+  	elsif user_signed_in?
   		session[:name] = "Ocorreu um erro"
   	end
 
