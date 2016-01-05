@@ -33,6 +33,12 @@ class EventController < ApplicationController
 		else
 			@spotify = ""
     	end
+    	if Colaborator.find_by_normalID(current_user.userID)
+ 			@associacoes = Array.new
+ 			Colaborator.where(normalID: current_user.userID).each do |promoter|
+ 				@associacoes.push(Promoter.find_by_promoterID(promoter.promoterID).name)
+ 			end
+ 		end
  	end
 
 # ========================================================
@@ -104,6 +110,12 @@ class EventController < ApplicationController
 				@event.promoterID = Promoter.where(name: params[:promoter]).take.promoterID
 				@event.normalID = current_user.userID
 	 		end
+ 		end
+ 		if tipo == "update"
+ 			@event.propose=true
+#<!> 		#escolher o id do promotor conforme o valor do input referente à associação
+			@event.promoterID = Promoter.where(name: params[:promoter]).take.promoterID
+			@event.normalID = current_user.userID
  		end
  		
  		if params["activeDate"].present?
@@ -488,6 +500,12 @@ class EventController < ApplicationController
         	@fail = true
             flash[:alert] = "Erro ao criar o evento, por favor verifique os dados introduzidos"
             @category = Category.all
+            if Colaborator.find_by_normalID(current_user.userID)
+	 			@associacoes = Array.new
+	 			Colaborator.where(normalID: current_user.userID).each do |promoter|
+	 				@associacoes.push(Promoter.find_by_promoterID(promoter.promoterID).name)
+	 			end
+	 		end
             render new_event_path
             return true
         end

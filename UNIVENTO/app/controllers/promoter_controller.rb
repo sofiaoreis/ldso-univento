@@ -41,7 +41,7 @@ class PromoterController < ApplicationController
           @hiddenEventDates.push(eventDate)
         end
         eventsID.push(eventDate.eventID)
-      elsif eventDate.event.activeDate > Time.now && eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+      elsif eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
         if !eventsID.include?(eventDate.eventID)
           @proposedEventDates.push(eventDate)
         end

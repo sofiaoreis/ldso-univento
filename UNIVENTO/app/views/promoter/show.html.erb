@@ -349,6 +349,9 @@
                               <% if @owner %>
                                 <%= button_to "Remover", root_path+"event/"+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?" }, method: :delete %>
                               <% end %>
+                              <% if @owner %>
+                                <%= button_to "Aceitar", root_path+"event/accept?id="+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?", id: eventDate.eventID.to_s}, method: :post %>
+                              <% end %>
                          </div>
                        </div>
                     </div>

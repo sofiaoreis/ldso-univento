@@ -3,14 +3,17 @@ class ColaboratorController < ApplicationController
 # ========================================================
 
   def index
-    flash[:alert] = "Not implemented"
-    redirect_to root_path and return
-    @colaborators = Colaborator.all
+    authorize! :read, Colaborator, :message => "Sem permissões"
+    @normal = Normal.find_by_normalID(current_user.userID)
+    @propostas = Event.where("normalID = ? AND propose=true", current_user.userID)
+    @aceites = Event.where("normalID = ? AND propose=false", current_user.userID)
   end
 
 # ========================================================
 
   def show
+    flash[:alert] = "Not implemented"
+    redirect_to root_path and return
     @colaborator = Colaborator.find_by normalID: params[:id]
   end
 
@@ -25,6 +28,7 @@ class ColaboratorController < ApplicationController
 # ========================================================
 
   def edit
+    flash[:alert] = "Not implemented"
     if user_signed_in?
       @colaborator = Colaborator.find_by normalID: params[:id]
     else
@@ -69,7 +73,7 @@ class ColaboratorController < ApplicationController
 # ========================================================
  
   def update
-
+    flash[:alert] = "Not implemented"
     if user_signed_in?
       if Colaborator.delete_all(:normalID => params[:normalID])
         user = User.find(params[:normalID])
@@ -97,11 +101,6 @@ class ColaboratorController < ApplicationController
       end
     end
 
-  end
-
-# ========================================================
-
-  def login
   end
 
 # ========================================================

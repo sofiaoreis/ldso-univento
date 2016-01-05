@@ -22,6 +22,7 @@ class Ability
     end
     if Colaborator.find_by_normalID(user.id)
         can :create, Event # => pormotores/colaboradores podem criar eventos/propostas
+        can :read, Colaborator
     end
 #=end
     #
