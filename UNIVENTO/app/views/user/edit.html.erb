@@ -18,9 +18,11 @@
         <% end %>
 
         <div class="field">
-            <h3>Foto</h3>
-            <label>Inserir fotografia</label>
-            <%= u.file_field :image, :multiple => false, name: "image[image][]" %>
+            <h3>Fotos</h3>
+            <% if @normal.user.uid == nil %>
+                <label>Inserir fotografia</label>
+                <%= u.file_field :image, :multiple => false, name: "image[image][]" %>
+            <% end %>
             <br>
             <label>Inserir image de fundo do perfil</label>
             <%= u.file_field :background, :multiple => false, name: "background[image][]" %>
