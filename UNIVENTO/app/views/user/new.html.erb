@@ -71,26 +71,29 @@
 
 
         </div>
+
+
            
             
 
-            <div class="field">
-            <div class="col-md-6">
-                <div class="input-group">
-               
-                <% [ 'male','female'].each do |gender| %>
-                  <%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
-                  <i class="fa fa-<%= gender %>"></i>&nbsp;
-                <% end %>
-            </div>
-          </div>
-
+           <div class="field">
              <div class="col-md-6">
                                              <div class="form_row">
                                             <i class="fa fa-birthday-cake"></i>
                                                 &nbsp;<%=  date_select("birthday", "birthday", order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year) %>
                                             </div>
                                             </div>
+            <div class="col-md-6">
+                <div class="input-group">
+               
+                <% [ 'male','female'].each do |gender| %>
+                  <%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
+                 &nbsp; <i class="fa fa-<%= gender %>"></i>&nbsp;
+                <% end %>
+            </div>
+          </div>
+
+            
                                        
 
 

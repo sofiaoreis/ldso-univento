@@ -10,15 +10,27 @@ class HomepageController < ApplicationController
   	end
 
   	if session[:normal].present?
-    	session[:name] = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
-  	elsif session[:promoter].present?
-  		session[:name] = Promoter.find_by(promoterID: current_user.userID).name
-  	else
+      if !session[:name].present?
+    	 session[:name] = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
+  	   if Normal.find_by(normalID: current_user.userID).photo.thumb.present?
+        session["image"] = Normal.find_by(normalID: current_user.userID).photo.thumb.url
+       end
+      end
+    elsif session[:promoter].present?
+      if !session[:name].present?
+  		  session[:name] = Promoter.find_by(promoterID: current_user.userID).name
+      end
+  	elsif user_signed_in?
   		session[:name] = "Ocorreu um erro"
   	end
 
     @categories = Category.all
     @promoters = Promoter.all
+    if session[:back].present?
+      if session[:back] != root_url
+        redirect_to session[:back]
+      end
+    end
   end
 
 end

@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
       end
     end
   	session[:normal],session[:promoter] = User.getUserType(resource)
-  	root_path
+  	session[:back] = request.env['HTTP_REFERER']
+    root_url
   end
 end

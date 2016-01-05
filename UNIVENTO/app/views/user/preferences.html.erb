@@ -1,6 +1,7 @@
 <div class="page">    
           <h2>Para teres uma pesquisa ainda mais personalizada, </h2>
-          <p>responde ás seguintes questões.</p>
+          <h2>responde ás seguintes questões.</h2>
+          <p>Pode preencher ou editar o questionário mais tarde, através do seu perfil. </p>
  	
   <%= form_for @user, :url => "savePreferences?id="+@user.userID.to_s , method: :post do |u| %>
 

@@ -33,10 +33,14 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :square do
-     process :crop_and_resize
+     process :crop_and_resize => [126]
   end
 
-  def crop_and_resize  
+  version :thumb do
+     process :crop_and_resize => [50]
+  end
+
+  def crop_and_resize(size)  
     manipulate! do |image|
       image = MiniMagick::Image.open(image.path)              
       if image[:width] < image[:height]
@@ -44,7 +48,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
       elsif image[:width] > image[:height] 
         image.crop("#{image[:height]}x#{image[:height]}+0+0")
       end
-      image.resize("126x126")
+      image.resize("#{size}x#{size}")
       image
     end
   end

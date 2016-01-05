@@ -217,7 +217,7 @@ function sendData(values,docID, user_email){
             email:user_email
     	}
     });
-    window.alert("Inscrição submetida");
+    //window.alert("Inscrição submetida");
     window.location.reload();
 }
 
