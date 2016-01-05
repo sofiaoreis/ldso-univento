@@ -19,6 +19,11 @@ class HomepageController < ApplicationController
 
     @categories = Category.all
     @promoters = Promoter.all
+    if session[:back].present?
+      if session[:back] != root_url
+        redirect_to session[:back]
+      end
+    end
   end
 
 end

@@ -55,7 +55,16 @@
                                 </ul>
                             </h5>
                             <h4><%= @event.preco %>  <i class="fa fa-eur"></i> - Preço total</h4>
+                            <% if @event.docsID.present? %>
+                                <div><a id="sub" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Inscreve-te</a></div>
+                            <%elsif user_signed_in?
+                                if @event.promoterID == current_user.userID%>
+                                <div><a id="sub" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Criar Formulário de Inscrição</a></div>
+                                <%end%>
+                            <% end %>
+                            <br>
                             <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
+                            
                         </div>
                     </div>
                     <div class="row top-buffer classi text-center" >

@@ -559,7 +559,7 @@ class EventController < ApplicationController
 			end
 		else 
 			flash[:alert] = "Tem de estar logged in para se inscrever"
-			redirect_to (root_path) and return
+			redirect_to (@event) and return
 		end
 
 		if !@criarInscricao && !@event.docsID.present?
