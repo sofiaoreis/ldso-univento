@@ -35,29 +35,27 @@ class UserController < ApplicationController
       @user = User.find(params[:id])
       @normal = Normal.find(params[:id])
 
-      if @user.uid == nil
-        if @normal.update(first_name: params[:first_name], last_name: params[:last_name], gender: params[:gender], birthday: Date.civil(*params[:normal].sort.map(&:last).map(&:to_i)))
-          if @user.uid == nil
-            if params[:image].present?
-               params[:image]['image'].each do |img|
-                @normal.update(:photo => img)
-              end
-              session["image"] = @normal.photo.thumb.url
+      if @normal.update(first_name: params[:first_name], last_name: params[:last_name], gender: params[:gender], birthday: Date.civil(*params[:normal].sort.map(&:last).map(&:to_i)))
+        if @user.uid == nil
+          if params[:image].present?
+             params[:image]['image'].each do |img|
+              @normal.update(:photo => img)
             end
+            session["image"] = @normal.photo.thumb.url
           end
-
-          if params[:background].present?
-             params[:background]['image'].each do |img|
-              @normal.update(:background => img)
-            end
-          end
-
-          flash[:sucess] = "O teu perfil foi guardado com sucesso"
-          redirect_to @user
-          return
-        else
-          render 'edit'
         end
+
+        if params[:background].present?
+           params[:background]['image'].each do |img|
+            @normal.update(:background => img)
+          end
+        end
+
+        flash[:sucess] = "O teu perfil foi guardado com sucesso"
+        redirect_to @user
+        return
+      else
+        render 'edit'
       end
     else
       flash[:alert] = "Deve fazer login para poder o seu perfil"
