@@ -346,19 +346,25 @@ class UserController < ApplicationController
 
   def requestfriend
     if user_signed_in?
-      friendShip = Friendship.new
-      friendShip.friends = false
-      friendShip.requesterNormalID = params[:sender]
-      friendShip.requestedNormalID = params[:receiver]
+      normal = Normal.find_by normalID: params[:sender]
+      if normal != nil
+        friendShip = Friendship.new
+        friendShip.friends = false
+        friendShip.requesterNormalID = params[:sender]
+        friendShip.requestedNormalID = params[:receiver]
 
-      if !friendShip.save
-        flash[:alert] = "Pedido de amizade não foi enviado"
-        friendShip.destroy
+        if !friendShip.save
+          flash[:alert] = "Pedido de amizade não foi enviado"
+          friendShip.destroy
+        else
+          flash[:sucess] = "Pedido de amizade enviado"
+        end
+        redirect_to user_path(params[:receiver])
+        return
       else
-        flash[:sucess] = "Pedido de amizade enviado"
+        flash[:alert] = "Não tem permissões para enviar pedidos de amizade"
+        redirect_to root_path
       end
-      redirect_to user_path(params[:receiver])
-      return
     else
       flash[:alert] = "Deve fazer login para poder enviar pedidos de amizade"
       redirect_to root_path
