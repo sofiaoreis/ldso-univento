@@ -59,7 +59,7 @@ class PromoterController < ApplicationController
     eventsID = Array.new
 
     eventDates1.each do |eventDate|
-      if eventDate.event.activeDate > Time.now && eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
+      if eventDate.event.propose && eventDate.event.propose != nil && eventDate.event.promoterID == params[:id].to_i
         if !eventsID.include?(eventDate.eventID)
           @proposedEventDates.push(eventDate)
         end
