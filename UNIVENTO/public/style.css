@@ -1092,4 +1092,20 @@ a:hover {
     cursor:pointer;
 }
 
+.error
+{
+  color: #ed1c24;
+}
+
+.main-pages {
+  background: url("fundo2.jpg") center fixed;
+  width:100%;
+  height: auto;
+}
+
+.title{
+  padding-top: 120px;
+  padding-bottom: 40px;
+}
+
 
