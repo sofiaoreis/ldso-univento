@@ -16,8 +16,13 @@ class UserController < ApplicationController
 # ========================================================
 
   def edit
-    @user = User.find(params[:id])
-    @normal = Normal.find(params[:id])
+    if user_signed_in? && current_user.userID.to_i == params[:id].to_i
+      @user = User.find(params[:id])
+      @normal = Normal.find(params[:id])
+    else
+      flash[:alert] = "Não tem permissões para editar este perfil"
+      redirect_to root_path
+    end
   end
 
 # ========================================================

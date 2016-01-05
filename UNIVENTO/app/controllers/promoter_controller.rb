@@ -95,8 +95,13 @@ class PromoterController < ApplicationController
 # ========================================================
 
   def edit
-    @user = User.find(params[:id])
-    @promoter = Promoter.find(params[:id])
+    if user_signed_in? && current_user.userID.to_i == params[:id].to_i
+      @user = User.find(params[:id])
+      @promoter = Promoter.find(params[:id])
+    else
+      flash[:alert] = "Não tem permissões para editar este promotor"
+      redirect_to root_path
+    end
   end
 
 # ========================================================
@@ -130,15 +135,19 @@ class PromoterController < ApplicationController
 # ========================================================
  
   def update
-    @user = User.find(params[:id])
-    @promoter = Promoter.find(params[:id])
-   
+    if user_signed_in? && current_user.userID.to_i == params[:id].to_i
+      @user = User.find(params[:id])
+      @promoter = Promoter.find(params[:id])
 
       if @promoter.update(name: params[:name], institution: params[:institution], website: params[:website], contact: params[:contact])
         redirect_to @promoter
       else
         render 'edit'
       end
+    else
+      flash[:alert] = "Deve fazer login para poder editar o seu perfil de promotor"
+      redirect_to root_path
+    end
   end
 
 # ========================================================
