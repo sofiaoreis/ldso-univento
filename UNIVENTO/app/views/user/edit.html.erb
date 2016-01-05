@@ -22,10 +22,8 @@
             <label>Inserir fotografia</label>
             <%= u.file_field :image, :multiple => false, name: "image[image][]" %>
             <br>
-            <% if false %>
             <label>Inserir image de fundo do perfil</label>
-            <%= u.file_field :image, :multiple => false, name: "image[image][]" %>
-            <% end %>
+            <%= u.file_field :background, :multiple => false, name: "background[image][]" %>
         </div>
 
         <br><br>

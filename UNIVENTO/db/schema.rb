@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(version: 0) do
 
   create_table "Category", primary_key: "categoryID", force: :cascade do |t|
-    t.string "name", limit: 50
+    t.string "name", limit: 100
   end
 
   create_table "CategoryTags", id: false, force: :cascade do |t|
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 0) do
 
   create_table "Event", primary_key: "eventID", force: :cascade do |t|
     t.text     "descrition",  limit: 65535
-    t.string   "name",        limit: 50
+    t.string   "name",        limit: 100
     t.boolean  "propose"
     t.float    "averageRate", limit: 53
     t.integer  "numRates",    limit: 4
@@ -91,16 +91,16 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "Image", ["eventID"], name: "eventID", using: :btree
 
   create_table "Local", primary_key: "localID", force: :cascade do |t|
-    t.string "address",   limit: 50
+    t.string "address",   limit: 255
     t.float  "latitude",  limit: 53
     t.float  "longitude", limit: 53
   end
 
   create_table "Normal", primary_key: "normalID", force: :cascade do |t|
     t.date   "birthday"
-    t.string "first_name", limit: 50
+    t.string "first_name", limit: 100
     t.string "gender",     limit: 50
-    t.string "last_name",  limit: 50
+    t.string "last_name",  limit: 100
     t.string "photo",      limit: 255
     t.string "background", limit: 255
   end
@@ -120,10 +120,10 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "NormalTags", ["tagsID"], name: "FK_NormalTags_Tags", using: :btree
 
   create_table "Promoter", primary_key: "promoterID", force: :cascade do |t|
-    t.string "contact",     limit: 50
-    t.string "institution", limit: 50
-    t.string "name",        limit: 50
-    t.string "website",     limit: 50
+    t.string "contact",     limit: 255
+    t.string "institution", limit: 255
+    t.string "name",        limit: 255
+    t.string "website",     limit: 255
   end
 
   create_table "Rate", id: false, force: :cascade do |t|
@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 0) do
   add_index "Spotify", ["eventID"], name: "eventID", using: :btree
 
   create_table "Tags", primary_key: "tagsID", force: :cascade do |t|
-    t.string "name", limit: 50
+    t.string "name", limit: 100
   end
 
   create_table "User", primary_key: "userID", force: :cascade do |t|

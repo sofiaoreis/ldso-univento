@@ -2,7 +2,8 @@ class Normal < ActiveRecord::Base
     self.table_name = 'Normal'
     self.primary_key = :normalID
     
-    mount_uploader :photo, ImageUploader
+    mount_uploader :photo, PhotoUploader
+    mount_uploader :background, ProfilebgUploader
 
     has_many :colaborator, :class_name => 'Colaborator', :foreign_key => :normalID
     belongs_to :user, :class_name => 'User', :foreign_key => :normalID

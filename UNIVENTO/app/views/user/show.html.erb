@@ -1,22 +1,28 @@
-<strong>
-  <%= link_to 'Editar o meu perfil', root_path+"user/"+@user.userID.to_s+"/edit" %>
-</strong>
-<br><br>
-
-<p>
-  <strong>Foto:</strong>
-  <%= image_tag @user.normal.photo , :class => "img-responsive"%>
-</p>
-
 <p>
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
 
 <% if @user.normal != nil %>
+  <% if user_signed_in? && current_user.userID.to_i == @user.userID.to_i %>
+    <strong>
+      <%= link_to 'Editar o meu perfil', root_path+"user/"+@user.userID.to_s+"/edit" %>
+    </strong>
+  <% end %>
+
+  <br><br>
+
+  <p>
+    <% if @user.normal.background.to_s != "" %>
+      <%= image_tag @user.normal.background , :class => "img-responsive"%>
+    <% end %>
+  </p>
+
   <p>
     <% if @user.uid != nil %>
       <img src="http://graph.facebook.com/<%=@user.uid%>/picture" class="img-responsive img-circle">
+    <% elsif @user.normal.photo.to_s != "" %>
+      <%= image_tag @user.normal.photo , :class => "img-responsive img-circle"%>
     <% else %>
       <% if @user.normal.gender.upcase == 'MALE' %>
         <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
@@ -79,6 +85,8 @@
           <td>
             <% if normal.user.uid != nil %>
               <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% elsif normal.photo.to_s != "" %>
+              <%= image_tag normal.photo , :class => "img-responsive img-circle"%>
             <% else %>
               <% if normal.user.normal.gender.upcase == 'MALE' %>
                 <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
@@ -110,6 +118,8 @@
           <td>
             <% if normal.user.uid != nil %>
               <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% elsif normal.photo.to_s != "" %>
+              <%= image_tag normal.photo , :class => "img-responsive img-circle"%>
             <% else %>
               <% if normal.user.normal.gender.upcase == 'MALE' %>
                 <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
@@ -142,6 +152,8 @@
           <td>
             <% if normal.user.uid != nil %>
               <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% elsif normal.photo.to_s != "" %>
+              <%= image_tag normal.photo , :class => "img-responsive img-circle"%>
             <% else %>
               <% if normal.user.normal.gender.upcase == 'MALE' %>
                 <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
@@ -170,6 +182,8 @@
           <td>
             <% if normal.user.uid != nil %>
               <img src="http://graph.facebook.com/<%=normal.user.uid%>/picture" class="img-responsive img-circle">
+            <% elsif normal.photo.to_s != "" %>
+              <%= image_tag normal.photo , :class => "img-responsive img-circle"%>
             <% else %>
               <% if normal.user.normal.gender.upcase == 'MALE' %>
                 <img src=<%=root_path+"imgs/profiles/default/male.png"%> class="img-responsive img-circle">
