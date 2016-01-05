@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
-  	# Prevent CSRF attacks by raising an exception.
-  	# For APIs, you may want to use :null_session instead.
-  	protect_from_forgery with: :null_session
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :null_session
 #=begin
 	rescue_from CanCan::AccessDenied do |exception|
 	    redirect_to root_url, :alert => exception.message
@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
       flash[:alert] = "Você foi banido"
     end
 
-#http://localhost:3000/users/sign_in?colaborator=9d0407fb1e4ccef7d176a22eb6ec9979&email=miguelnunes_1994@hotmail.com
+    # =======================SE VEIO DE UM LINK PARA ACEITAR CONVITE ======================
     if params[:colaborator].present? && params[:email].present?
       if params[:email] == resource.email
         if ConviteColaborator.accept(params[:colaborator], params[:email])
@@ -24,13 +24,35 @@ class ApplicationController < ActionController::Base
       else
         flash[:alert] = "Erro: O convite não foi enviado para o email desta conta"
       end
-      session[:normal],session[:promoter] = User.getUserType(resource)
-      root_url
-    else 
-      session[:normal],session[:promoter] = User.getUserType(resource)
+    else # ======================= SE VEIO DE OUTRO SITIO TIPO LOGIN/LOGIN_FB/REGISTER/REGISTER_FB ==========
       session[:back] = request.env['HTTP_REFERER']
-      root_url
     end
-
+    
+    normalID,promoterID = User.getUserType(resource)
+    if normalID.present?
+      if !session[:name].present?
+        session[:name] = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
+        if Normal.find_by(normalID: current_user.userID).photo.thumb.present?
+         session["image"] = Normal.find_by(normalID: current_user.userID).photo.thumb.url
+        end
+        if session[:back].present?
+          if session[:back] != root_url && session[:back] != new_user_session_url
+            return session[:back]
+          end
+        end
+      end
+    elsif promoterID.present?
+      if !session[:name].present?
+        promoter = Promoter.find_by(promoterID: current_user.userID)
+        session[:name] = promoter.name
+        return promoter_url(promoter)
+      end
+    elsif user_signed_in?
+      if !session[:name].present?
+        session[:name] = "Ocorreu um erro"
+        return root_url
+      end
+    end
+    return root_url
   end
 end
