@@ -183,7 +183,7 @@
          <label class="label_fn control-label" for="event_price">Preço</label>
          <div class="input-group">
          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-eur"></i></span>
-         <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01, class: "input_fn form-control"%>
+         <%= number_field_tag 'price[]',nil , :in => 0..999, :step => 0.01, class: "input_fn form-control", :placeholder=>"Preço"%>
        </div>
        <% if @event.errors[:preco].any? %>
          <span class="error"><%= @event.errors[:preco].first %></span>
@@ -198,13 +198,17 @@
       <div class="form-group">
        <label class="label_fn control-label" for="event_local">Local</label>
        <fieldset class="gllpLatlonPicker" id="map0">
-       <div class="col-md-5">
-        <input name="dates[0][address]" value="Porto" type="text" class="gllpSearchField form-control">
-        </div>
-         <div class="col-md-5">
+        <div class="row">
+            <div class="col-md-8">
+              <input name="dates[0][address]" value="Porto" type="text" class="gllpSearchField form-control">
+               </div>
+       
+         <div class="col-md-2">
         <input type="button" class="gllpSearchButton btn" value="search">
         </div>
-        <br>
+      </div>
+
+        
         <br>
         <div class="gllpMap clearfix">Google Maps</div>
         <input name="dates[0][latitude]" type="hidden" class="gllpLatitude" value="41.1579438"/>
@@ -226,11 +230,15 @@
 
 <!-- Button (Double) -->
 <br>
-<div class="row">
-  <div class="col-md-10 column">
+<div class="row" id="btnEvent">
+  
+  <div class="col-md-12 column">
+
+    
   <button type="button" id="btnAdd" name="btnAdd" class="btn fa fa-plus"></button>
   &nbsp;
   <button type="button" id="btnDel" name="btnDel" class="btn fa fa-minus"></button>
+
 </div>
 </div>
 <br>
@@ -240,16 +248,20 @@
 
       <hr>
 
+<div class="row">
   <label>Imagem de capa</label>
   <br>
   <div class="fileUpload btn">
   <%= f.file_field :image, :multiple => false, name: "image[image][]" %>
 </div>
+</div>
   <br>
+<div class="row">
   <label>Images para a galeria (máx.8)</label>
   <br>
   <div class="fileUpload btn">
   <%= f.file_field :image, :multiple => true, name: "image[image][]" %>
+</div>
 </div>
 </div>
 <br>
