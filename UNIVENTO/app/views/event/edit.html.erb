@@ -7,14 +7,14 @@
 
 <div id="wrapper">
   <div id="page-wrapper">
-    <div class="row row-centered clearfix" id="newevento">
+    <div class="row row-centered clearfix center" id="newevento">
       <h1 class="text-center">Editar Evento</h1>
       <hr>
       <%= form_for(@event,:url => "/event/"<<params[:id] , :authenticity_token => true, :html => { :multipart => true }) do |f| %>
       
       <%if @associacoes.present? %>
       <div class="form_row">
-                <label for="gender">Propor Evento para:</label>
+                <label>Propor Evento para:</label>
                 <% @associacoes.each do |promoter| %>
                   <br><%= radio_button_tag 'promoter', promoter, @promoter == promoter, :checked => true %>
                   <%= promoter %>
@@ -25,46 +25,47 @@
 
       <div class="row">
         <!-- Event Name -->
-        <div class="col-md-6 column">
-          <div class="form-group">
-           <label class="label_fn control-label" for="event_name">Título:</label>
-           <% if @event.errors[:name].any? %>
-           <div class="btn btn-danger"><%= @event.errors[:name].first %></div>
-           <% end %><br>
+        <div class="col-md-5">
+          <div class="form-group" id="title_box">
+           <label class="label_fn control-label" for="event_name">Título</label>
            <%= f.text_field :name, class: "input_fn form-control" %>
+            <% if @event.errors[:name].any? %>
+           <span class="error"><%= @event.errors[:name].first %></span>
+           <% end %>
          </div>
        </div>
 
        <!-- Event Price -->
-       <div class="col-md-2 column">
+       <div class="col-md-5 column">
         <div class="form-group">
-         <label class="label_fn control-label" for="event_tprice">Preço Total:</label>
-         <% if @event.errors[:preco].any? %>
-         <div class="btn btn-danger"><%= @event.errors[:preco].first %></div>
-         <% end %><br>
+         <label class="label_fn control-label" for="event_tprice">Preço Total</label>
+         <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1"><i class="fa fa-eur"></i></span>
          <%= f.number_field :preco, :in => 0..999, :step => 0.01, class: "input_fn form-control" %>
+       </div>
+         <% if @event.errors[:preco].any? %>
+         <span class="error"><%= @event.errors[:preco].first %></span>
+         <% end %>
        </div>
      </div>
    </div><!-- row end-->
 
    <div class="row">
     <!-- Event Description -->
-    <div class="col-md-8 column">
+    <div class="col-md-5 column">
       <div class="form-group">
-       <label class="label_fn control-label" for="event_name">Descrição:</label>
-       <% if @event.errors[:descrition].any? %>
-       <div class="btn btn-danger"><%= @event.errors[:descrition].first %></div>
-       <% end %><br>
-       <%= f.text_area :descrition, class: "form-control" %>
+       <label class="label_fn control-label" for="event_name">Descrição</label>
+      
+       <%= f.text_area :descrition, class: "form-control"%>
+        <% if @event.errors[:descrition].any? %>
+       <span class="error"><%= @event.errors[:descrition].first %></span>
+       <% end %>
      </div>
    </div>
- </div><!-- row end-->
-
- <div class="row">
   <!-- Active Date -->
-  <div class="col-md-4 column">
+  <div class="col-md-5 column">
     <div class="form-group">
-      <label class="label_fn control-label" for="data_inicio">Data da partir da qual o evento fica ativo:</label>
+      <label class="label_fn control-label" for="data_inicio">Data de Activação</label>
       <div class='input-group date' id=''>
         <input type='text' class="form-control" name="activeDate" value="<%=@event.activeDate%>"/>
         <span class="input-group-addon">
@@ -77,19 +78,19 @@
 
 
 <div class="row">
-  <div class="col-md-4 column">
-    <label for="category">Escolha a categoria:</label>
+  <div class="col-md-10 column">
+    <label for="category">Categoria</label>
     <fieldset>
       <input type='hidden' id="eventCategory" value="<%=@event.categoryID%>"/>
       <input type='hidden' id="eventTags" value="<%=@event.tags.pluck(:tagsID)%>"/>
-      <legend><%= select_tag 'category', options_from_collection_for_select(@category, "categoryID", "name") %></legend>
+      <legend class="cat"><%= select_tag 'category', options_from_collection_for_select(@category, "categoryID", "name") %></legend>
       <% @category.each_with_index do |category,index| %>
         <% if index > 0%>
           <span id="catID_<%=category.categoryID%>" class="cat_options" style="display: none;">
         <% else %>
           <span id="catID_<%=category.categoryID%>" class="cat_options">
         <% end %>
-          <h6 for="tag">Escolha até 3 tags da categoria  <%= category.name %>:</h6>
+          <h6 for="tag"><strong>Aviso:</strong> Só pode selecionar 3 categorias de  <%= category.name %>.</h6>
           <% category.tags.each do |tag| %>
           <%= check_box_tag 'tags[]', tag.tagsID, @tag == tag %>
           <%= tag.name %>
@@ -102,30 +103,38 @@
 </div><!-- row end-->
 <br>
 
+ <h3 id="reference" name="reference" class="heading-reference">Youtube e Spotify</h3>
+  <hr>
+
 <div class="row">
   <div class="col-md-8">
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1"><i class="fa fa-youtube"></i></span>
-        <%= text_field_tag 'youtube[]', @youtube, class: 'form-control', :placeholder=>"Insira um link do youtube" %>
+        <%= text_field_tag 'youtube[]', @youtube, class: 'form-control', :placeholder=>"Insira um url do youtube" %>
     </div>
+  </div>
+</div>
 
+<div class="row">
+<div class="col-md-8">
     <div class="input-group">
       <span class="input-group-addon" id="basic-addon1"><i class="fa fa-spotify"></i></span>
-      <%= text_field_tag 'spotify[]', @spotify, class: 'form-control', :placeholder=>"Insira um link do spotify" %>
+      <%= text_field_tag 'spotify[]', @spotify, class: 'form-control', :placeholder=>"Insira o url da playlist spotify" %>
     </div>
   </div>
 </div><!-- row end-->
 
 <% @event.eventdate.each_with_index do |link, index| %>
   <div id="entry<%=index%>" class="clonedInput">
-    <h2 id="reference" name="reference" class="heading-reference">Data #<%=(index+1)%></h2>
+    <h2 id="reference" name="reference" class="heading-reference"><%=(index+1)%> º Dia</h2>
+    <hr>
     <fieldset>
 
       <div class="row">
         <!-- Beginning Date -->
-        <div class="col-md-4 column">
+        <div class="col-md-5 column">
           <div class="form-group">
-            <label class="label_fn control-label" for="data_fim">Data de início:</label>
+            <label class="label_fn control-label" for="data_fim">Data de início</label>
             <div class='input-group date' id=''>
               <input type='text' class="form-control" name="dates[<%=index%>][startDate]" value="<%= link.startDate %>"/>
               <span class="input-group-addon">
@@ -136,9 +145,9 @@
         </div>
 
         <!-- End Date -->
-        <div class="col-md-4 column">
+        <div class="col-md-5 column">
           <div class="form-group">
-            <label class="label_fn control-label" for="data_fim">Data de fim:</label>
+            <label class="label_fn control-label" for="data_fim">Data de fim</label>
             <div class='input-group date' id=''>
               <input type='text' class="form-control" name="dates[<%=index%>][endDate]" value="<%= link.endDate %>"/>
               <span class="input-group-addon">
@@ -153,23 +162,33 @@
         <!-- Event Price -->
         <div class="col-md-2 column">
           <div class="form-group">
-           <label class="label_fn control-label" for="event_price">Preço:</label>
+           <label class="label_fn control-label" for="event_price">Preço</label>
+            <div class="input-group">
+         <span class="input-group-addon" id="basic-addon1"><i class="fa fa-eur"></i></span>
+           <%= number_field_tag 'price[]',link.preco, :in => 0..999, :step => 0.01, :class=>"form-control" %>
+         </div>
            <% if @event.errors[:preco].any? %>
-           <div class="btn btn-danger"><%= @event.errors[:preco].first %></div>
-           <% end %><br>
-           <%= number_field_tag 'price[]',link.preco, :in => 0..999, :step => 0.01, :class=>"form-control" %><br>
+           <span class="error"><%= @event.errors[:preco].first %></span>
+           <% end %>
          </div>
        </div>
      </div>
 
      <div class="row">
       <!-- Place -->
-      <div class="col-md-8 column">
+      <div class="col-md-10 column">
         <div class="form-group">
-         <label class="label_fn control-label" for="event_local">Escolha o Local:</label>
+         <label class="label_fn control-label" for="event_local">Local</label>
          <fieldset class="gllpLatlonPicker" id="map<%= index.to_s%>">
+           <div class="row">
+            <div class="col-md-8">
           <input name="dates[<%=index%>][address]" value="<%= link.local.address %>" type="text" class="gllpSearchField form-control">
+           </div>
+           <div class="col-md-2">
           <input type="button" class="gllpSearchButton btn btn-default" value="search">
+        </div>
+      </div>
+      <br>
           <div class="gllpMap">Google Maps</div>
           <input name="dates[<%=index%>][latitude]" type="hidden" class="gllpLatitude" value="<%= link.local.latitude %>"/>
           <input name="dates[<%=index%>][longitude]" type="hidden" class="gllpLongitude" value="<%= link.local.longitude %>"/>
@@ -181,32 +200,52 @@
 
   <div class="row">
     <!-- Place -->
-    <div class="col-md-8 column">
-      <label class="label_fn control-label" for="event_local">Insira uma descrição detalhada:</label>
+    <div class="col-md-10 column">
+      <label class="label_fn control-label" for="event_local">Insira uma descrição detalhada</label>
       <%= cktext_area :page, "info"<<index.to_s, :value => link.descrition, :ckeditor => {:uiColor => '#ffffff', :toolbar => 'mini'} %>
     </div>
   </div><!-- row end-->
   </div><!-- end #entry1 -->
 <% end -%>
 <!-- Button (Double) -->
-<p>
-  <button type="button" id="btnAdd" name="btnAdd" class="btn btn-info">Adicionar Dia</button>
-  <button type="button" id="btnDel" name="btnDel" class="btn btn-danger">Remover dia acima</button>
-</p>
-<br><br>
-<div class="field">
-  <h2>Imagens</h2>
-  <p>Atenção: As imagens inseridas anteriormente serão apagadas</p>
-  <label>Inserir imagem de capa</label>
-  <%= f.file_field :image, :multiple => false, name: "image[image][]" %>
-  <br>
-  <label>Inserir images para exibir na galeria</label>
-  <%= f.file_field :image, :multiple => true, name: "image[image][]" %>
+<br>
+<div class="row" id="btnEvent">
+  <div class="col-md-12 column">
+  <button type="button" id="btnAdd" name="btnAdd" class="btn fa fa-plus"></button>
+    &nbsp;
+  <button type="button" id="btnDel" name="btnDel" class="btn fa fa-minus"></button>
+</div>
 </div>
 <br>
-<p>
-  <%= f.submit'Atualizar Evento', :class => 'btn btn-default' %>
-</p>
+<div class="field">
+
+   <h4><i class="fa fa-file-image-o"></i> Imagens</h4>
+
+      <hr>
+
+  <h6 for="tag"><strong>Atenção:</strong> As imagens inseridas anteriormente serão apagadas.</span></h6>
+
+  <div class="row">
+  <label>Imagem de capa</label>
+  <br>
+  <div class="fileUpload btn">
+  <%= f.file_field :image, :multiple => false, name: "image[image][]" %>
+</div>
+</div>
+  <br>
+<div class="row">
+  <label>Images para a galeria (máx.8)</label>
+  <br>
+  <div class="fileUpload btn">
+  <%= f.file_field :image, :multiple => true, name: "image[image][]" %>
+</div>
+</div>
+</div>
+<br>
+<div class="row">
+  <%= f.submit'Atualizar', :class => 'btn btn-default', :id => 'sub' %>
+ <br>
+</div>
 <% end %>
 
 <!-- Button
