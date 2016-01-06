@@ -1,0 +1,15 @@
+<h1>Advanced Search</h1>
+
+<%= form_tag("/advanced_search", method: "get") do %>
+  <%= label_tag(:promoter, "Promoter") %>
+  <%= text_field_tag(:promoter) %>  <br>
+  <%= label_tag(:institution, "Institution") %>
+  <%= text_field_tag(:institution) %> <br>
+  <%= label_tag(:category, "Category") %>
+  <%= text_field_tag(:category) %> <br>
+  <%= label_tag(:date, "Date") %>
+  <%= text_field_tag(:date) %> <br>
+  <%= label_tag(:local, "Local") %>
+  <%= text_field_tag(:local) %> <br>
+  <%= submit_tag("Search") %>
+<% end %>

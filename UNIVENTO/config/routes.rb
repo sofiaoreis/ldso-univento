@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     post 'deletefriend', :on => :collection
     post 'search', :on => :collection
     get 'search', :on => :collection
+
   end
 
   resources :event do 
@@ -26,6 +27,8 @@ Rails.application.routes.draw do
     post 'accept', :on => :collection
     get 'registration'
   end
+  get '/advanced_search_form', to: 'event#advanced_search_form'
+  get '/advanced_search', to: 'event#advanced_search'
 
   resources :promoter
 
