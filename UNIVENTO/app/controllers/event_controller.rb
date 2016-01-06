@@ -6,7 +6,11 @@ class EventController < ApplicationController
 		  @event = Event.find(params[:id])
 		  authorize! :read, @event, :message => "Evento indisponível"
 		  @image = @event.image.all
-		  @vai = Registration.where(:normalID => current_user.userID).present?
+		  if user_signed_in?
+		  	@vai = (Registration.where("normalID = ? AND eventID = ?",current_user.userID, @event.eventID).present?)
+		  else
+		  	@vai = true
+		  end
 		  if @event.activeDate > Time.now
 		  	flash[:alert] = "Evento será publicado em: "<<@event.activeDate.to_s
 		  end

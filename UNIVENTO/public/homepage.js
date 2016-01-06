@@ -107,7 +107,7 @@ function loadMarkers(eventos){
 	    	}
 	    	markers.push([evento[info.NAME],evento[info.LATITUDE],evento[info.LONGITUDE]]);
 	    	infoWindowContent.push(['<div class="info_content">' +
-	        '<a href="'+window.location.href+"event/"+evento[info.EVENT_ID]+'" style="text-decoration: none; color: #19a69a; background-color: #1AA69B;"><h3 style="text-decoration: none; color: #19a69a;">'+evento[info.NAME]+'</h3></a>' +
+	        '<a href="'+"/event/"+evento[info.EVENT_ID]+'" style="text-decoration: none; color: #19a69a; background-color: #1AA69B;"><h3 style="text-decoration: none; color: #19a69a;">'+evento[info.NAME]+'</h3></a>' +
 	        '<p>'+evento[info.DESCRIPTION]+'</p>' +
 	        '<p>'+evento[info.ADDRESS]+', '+evento[info.LATITUDE]+', '+evento[info.LONGITUDE]+'</p>'+
 	        '</div>']);
