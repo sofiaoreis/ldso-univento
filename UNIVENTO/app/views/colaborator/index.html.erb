@@ -95,9 +95,7 @@
                             <div class="text-content">
                                 <a href="<%= event_path(event)%>"><h5><%= event.name %></h5>
                                 <h5><small><%= event.promoter.name %></small></h5></a>
-                                <% if @owner %>
                                 <%= button_to "Editar", edit_event_path(event), data: nil, method: :get %>
-                              <% end %>
                          </div>
                        </div>
                     </div>
