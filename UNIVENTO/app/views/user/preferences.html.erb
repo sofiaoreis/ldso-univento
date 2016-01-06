@@ -1,53 +1,125 @@
-<div class="page">    
-          <h2>Para teres uma pesquisa ainda mais personalizada, </h2>
-          <h2>responde ás seguintes questões.</h2>
+<div class="wrapper main-pages center">
+  <div class="page-wrapper">
+    <div class="row row-centered">
+      <div class="col-md-10 text-center col-centered">
+        <div class="box title">
+          <h2>Para teres uma pesquisa ainda mais personalizada, responde às seguintes questões.</h2>
           <p>Pode preencher ou editar o questionário mais tarde, através do seu perfil. </p>
- 	
-  <%= form_for @user, :url => "savePreferences?id="+@user.userID.to_s , method: :post do |u| %>
+        </div>
 
-    <div class="ambiente">
-    	<p>Que tipo de ambientes te agrada mais?</p>
-        <% @ambianceTags.each do |tag| %>
-          <%= check_box_tag 'ambianceTags[]', tag.tagsID, @tag == tag %>
-          <%= tag.name %>
-        <% end %>
+        <%= form_for @user, :url => "savePreferences?id="+@user.userID.to_s , method: :post do |u| %>
+        <div class="col-md-12 text-center">
+          <div class="panel-group" id="accordion">
+            <div class="panel panel-default panel-preferences-d" id="panel1">
+              <div class="panel-heading">
+                <h4 class="panel-title panel-preferences">
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    Que tipo de ambientes te agrada mais?
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body panel-pref-body">
+                  <div class="row">
+                    <% @ambianceTags.each do |tag| %>
+                    <%= check_box_tag 'ambianceTags[]', tag.tagsID, @tag == tag %>
+                    <%= tag.name %>&nbsp;
+                    <% end %>
+                  </div>
+                  <div class="row btn-down-pref">
+                    <button type="button" class="btn btn-default " data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                     <i class="fa fa-arrow-circle-down"></i>
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <div class="panel panel-default panel-preferences-d" id="panel2">
+            <div class="panel-heading">
+              <h4 class="panel-title panel-preferences">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                  Os teus estilos de música preferidos:
+                </a>
+              </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+              <div class="panel-body panel-pref-body">
+                <div class="row">
+                  <% @musicTags.each do |tag| %>
+                  <%= check_box_tag 'musicTags[]', tag.tagsID, @tag == tag %>
+                  <%= tag.name %>&nbsp;
+                  <% end %>
+                </div>
+                <div class="row btn-down-pref">
+                  <button type="button" class="btn btn-default" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                   <i class="fa fa-arrow-circle-down"></i>
+                 </button>
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="panel panel-default panel-preferences-d" id="panel3">
+          <div class="panel-heading">
+            <h4 class="panel-title panel-preferences">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                Estás à procura de eventos em que áreas?
+              </a>
+            </h4>
+          </div>
+          <div id="collapseThree" class="panel-collapse collapse">
+            <div class="panel-body panel-pref-body">
+              <div class="row">
+                <% @categories.each do |category| %>
+                <div class="col-md-2 ">
+                  <%= check_box_tag 'categories[]', category.categoryID, @category == category %>
+                  <%= category.name %>&nbsp;
+                </div>
+                <% end %>
+              </div>
+              <div class="row btn-down-pref">
+               <button type="button" class="btn btn-default" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+                 <i class="fa fa-arrow-circle-down"></i>
+               </button>
+             </div>
+           </div>
+         </div>
+       </div>
+       <div class="panel panel-default panel-preferences-d" id="panel4">
+        <div class="panel-heading">
+          <h4 class="panel-title panel-preferences">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">
+              És uma pessoa que prefere eventos mais diurnos ou noturnos?
+            </a>
+          </h4>
+        </div>
+        <div id="collapseFour" class="panel-collapse collapse">
+          <div class="panel-body panel-pref-body">
+            <div class="row">
+              <label for="eventTime"></label>
+              Diurnos <i class="fa fa-sun-o"></i> <%= radio_button_tag 'eventTime', "dayTime", @eventTime == "dayTime", :checked => false %> &nbsp; &nbsp; &nbsp;
+              Noturnos <i class="fa fa-moon-o"></i> <%= radio_button_tag 'eventTime', "nightTime", @eventTime == "nightTime", :checked => false %> 
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-     <div class="musica">
-    	<p>Os teus estilos de música preferidos:</p>
-        <% @musicTags.each do |tag| %>
-          <%= check_box_tag 'musicTags[]', tag.tagsID, @tag == tag %>
-          <%= tag.name %>
-        <% end %>
+    <div class="row">
+      <%= button_to "Preencher mais tarde", :back, :class => 'btn btn-default sub3-light'%>  <%= u.submit 'Submeter', :class => 'btn btn-default sub3' %>
+      <% end %>
     </div>
 
-    <div class="tipos">
-     	<p>Estás à procura de eventos em que áreas?</p>
-        <% @categories.each do |category| %>
-          <%= check_box_tag 'categories[]', category.categoryID, @category == category %>
-          <%= category.name %>
-        <% end %>
-    </div>
-
-    <div class="tipos">
-     	<p>És uma pessoa que prefere eventos mais diurnos ou noturnos?</p>
-      <label for="eventTime"></label>
-        Diurnos<%= radio_button_tag 'eventTime', "dayTime", @eventTime == "dayTime", :checked => false %><br>
-        Noturnos<%= radio_button_tag 'eventTime', "nightTime", @eventTime == "nightTime", :checked => false %><br>
-    </div>
-
-    <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>
-  <% end %>
-
-  <br><%= link_to "Back", :back %><br>
-
+  </div>
 </div>
-       
+</div>
+</div>
+</div>
 
-   
-   
 
-     
+
+
+
+
 
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];

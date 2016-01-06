@@ -1107,9 +1107,14 @@ a:hover {
 }
 
 .main-pages {
-  background: url("fundo2.jpg") center fixed;
+background: url("fundo2.jpg") no-repeat center fixed;
+    /*background-image: url("fundo2.jpg") no-repeat center;*/
+    background-size: 100% ;
+    height: auto;
+    width: auto;
+  /*background: url("fundo2.jpg") center fixed;
   width:100%;
-  height: auto;
+  height: auto;*/
 }
 
 .title{
@@ -1141,17 +1146,18 @@ a:hover {
     background-color: rgba(255, 255, 255, 1);
 }
 .card.hovercard .card-background {
-    height: 130px;
+    height: 210px;
 }
 .card-background img {
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
     margin-left: -100px;
     margin-top: -200px;
-    min-width: 130%;
+    width: auto;
+    height: auto;
 }
 .card.hovercard .useravatar {
     position: absolute;
@@ -1180,7 +1186,7 @@ a:hover {
     font-size: 30px;
     line-height: 1;
     color: #262626;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.6);
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -1247,7 +1253,6 @@ a:hover, a:focus, a:active {text-decoration: none;}
 .banir-btn {
     padding-bottom: 15px;
 }
-
 .banir-btn a{
     background-color:#C41623;
     -moz-border-radius:28px;
@@ -1267,4 +1272,76 @@ a:hover, a:focus, a:active {text-decoration: none;}
 .banir-btn a:active {
     position:relative;
     top:1px;
+}
+
+.panel-preferences-d > .panel-heading {
+    background-color: #A3CCC7;
+}
+
+.panel-preferences {
+    color: white;
+}
+
+.panel-preferences a:hover, a:focus {
+    text-decoration: none;
+    color: #2A2B2D;
+    background-color: #A3CCC7;
+    font-weight: normal;
+}
+
+.btn-down-pref {
+    padding-top: 20px;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.panel-pref-body {
+    margin-left: 0;
+    background-color: rgba(255,255,255,0.9);
+}
+
+.a-btn {
+    padding-bottom: 15px;
+}
+.a-btn a{
+    background-color:#F5F5F5;
+    border-radius:10px;
+    border:1px solid white;
+    cursor:pointer;
+    color:black;
+    padding:5px 15px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px white;
+}
+.a-btn a:hover {
+    background-color:#dcdcdc;
+}
+.a-btn a:active {
+    position:relative;
+    top:1px;
+}
+
+.sub3 {
+    background-color: #A3CCC7;
+    border-color: #1AA69B;
+    color: white;
+}
+
+.sub3:hover, .sub3:focus {
+    color: white;
+    background-color: #8EB2AD;
+}
+
+.sub3-light {
+    background-color: #f5f5f5;
+    border-color: #dcdcdc;
+    color: black;
+}
+
+.sub3-light:hover, .sub3-light:focus {
+    color: black;
+    background-color: #dcdcdc;
 }
