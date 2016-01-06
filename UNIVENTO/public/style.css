@@ -1218,13 +1218,14 @@ background: url("fundo2.jpg") no-repeat center fixed;
     border-color: #147F75;
 }
 
-.forgot{
+#forgot{
+
     float: right;
     color: rgba(26,166,155,0.8);
 }
 
 
-.forgot:hover
+#forgot:hover
 {
     color: rgba(42 ,43,48,1);
 }
@@ -1403,4 +1404,8 @@ a:hover, a:focus, a:active {text-decoration: none;}
 
 #fotos{
    color: white;
+}
+
+#eventos3{
+    padding-bottom: 100px;
 }

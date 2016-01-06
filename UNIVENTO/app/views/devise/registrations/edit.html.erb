@@ -9,44 +9,68 @@
   <%= devise_error_messages! %>
 
 
-  <div class="row">
-
-            <div class="col-md-6">
-              <div class="form-group">
-              <div class="input-group">
-                 <span class="input-group-addon" id="basic-addon1"><i class="fa">@</i></span> 
-                   <%= f.email_field :email, autofocus: true %>
+    <div class="row">
+     <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa">@</i></span> 
+                   <%= f.email_field :email, autofocus: true , :class=>"form-control", :placeholder => "E-mail"%>
               </div>
             </div>
           </div>
-        </div>
+        
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <span class="error">Aguardando confirmação para: <%= resource.unconfirmed_email %></span>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+ <div class="row">
+     <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span> 
+   
+    <%= f.password_field :password, autocomplete: "off", :class=>"form-control", :placeholder => "Password"%>
+  </div>
+</div>
+
+     <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-check"></i></span> 
+    <%= f.password_field :password_confirmation, autocomplete: "off",:class=>"form-control", :placeholder => "Confirmação da Password" %>
+    </div>
+</div>
+</div>
+
+  <div class="row">
+     <div class="col-md-6">
+       
+            <div class="field"> 
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i></div>
+     <div class="input-group">
+     <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span>
+    <%= f.password_field :current_password, autocomplete: "off",:class=>"form-control", :placeholder => "Password Actual" %>
+  </div>
+</div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+   <div class="actions">
+    <%= f.submit "Update", :class => 'btn btn-primary active' , :id=> 'btn_promoter_user' %>
+  </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
+ 
 <% end %>
 
-<h3>Cancel my account</h3>
+  <div class="field">
+          
+                <h3 id="fotos">Cancelar Conta</h3>
+                <hr>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+<p><strong>Não está contente?</strong> <%= button_to "Cancelar", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, :class => 'btn btn-primary active' , :id=> 'btn_promoter_user' %></p>
+</div>
+</div>
 
-<%= link_to "Back", :back %>
