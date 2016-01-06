@@ -267,7 +267,7 @@ function showEvents(eventos){
 			data = dataFields[0].replace(/-/g,'/')+' '+dataFields[1].split(':')[0]+':'+dataFields[1].split(':')[1];
 			img = evento[info.IMG_URL];
 			if (evento[info.IMG_URL]==null){
-				img = 'imgs/404.jpg';
+				img = 'imgs/evento_default.jpg';
 			}
 			div_row.append('<div class="col-xs-3 col-sm-3 col-md-3  text-center doc-item">'
 							    +'<div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">'
