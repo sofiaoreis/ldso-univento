@@ -1409,3 +1409,7 @@ a:hover, a:focus, a:active {text-decoration: none;}
 #eventos3{
     padding-bottom: 100px;
 }
+
+
+.box2 h2 {color:rgba(42 ,43,48,1);padding:10px;padding-left: 15px;}
+
