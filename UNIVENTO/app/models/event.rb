@@ -24,7 +24,7 @@ class Event < ActiveRecord::Base
     #has_many :registration, :class_name => 'Registration', :foreign_key => :eventID
     has_many :spotify, :class_name => 'Spotify', :foreign_key => :eventID, dependent: :delete_all
     has_many :youtube, :class_name => 'Youtube', :foreign_key => :eventID, dependent: :delete_all
-
+    has_many :registrations, :class_name => 'Registration', :foreign_key => :eventID, dependent: :delete_all
     has_many :tags, :through => :eventtags, dependent: :delete_all
 end
 

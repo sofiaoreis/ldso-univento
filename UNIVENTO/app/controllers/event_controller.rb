@@ -6,6 +6,7 @@ class EventController < ApplicationController
 		  @event = Event.find(params[:id])
 		  authorize! :read, @event, :message => "Evento indisponível"
 		  @image = @event.image.all
+		  @vai = Registration.where(:normalID => current_user.userID).present?
 		  if @event.activeDate > Time.now
 		  	flash[:alert] = "Evento será publicado em: "<<@event.activeDate.to_s
 		  end
@@ -582,7 +583,7 @@ class EventController < ApplicationController
 			redirect_to (@event) and return
 		end
 
-		if !@criarInscricao && !@event.docsID.present?
+		if !@criarInscricao && !@event.docsID.present? && !params[:go].present?
 			flash[:alert]= "Inscrição indisponível"
 			redirect_to (root_path) and return
 		end
@@ -594,6 +595,7 @@ class EventController < ApplicationController
 	      		render :json => [@event.name, @event.eventID,@event.docsID,current_user.email].to_json 
 	      	elsif params[:accao] == "saveDocsID"
 	      		@event.docsID = params[:docsID]
+	      		@event.registrations.delete_all
 	      		render :json => @event.save!.to_json
 	      	elsif params[:accao] == "saveRegistration"
 	      		registration = Registration.new
