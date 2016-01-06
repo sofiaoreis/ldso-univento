@@ -932,7 +932,7 @@ input[type='radio']:checked:before {
     color: white;
 }
 
-.page-show a {
+.page-show a {
     color: white;
 }
 
@@ -1218,13 +1218,13 @@ background: url("fundo2.jpg") no-repeat center fixed;
     border-color: #147F75;
 }
 
-#forgot{
+.forgot{
     float: right;
     color: rgba(26,166,155,0.8);
 }
 
 
-#forgot:hover
+.forgot:hover
 {
     color: rgba(42 ,43,48,1);
 }
@@ -1344,4 +1344,63 @@ a:hover, a:focus, a:active {text-decoration: none;}
 .sub3-light:hover, .sub3-light:focus {
     color: black;
     background-color: #dcdcdc;
+}
+
+.tag {
+   padding-bottom: 15px;
+}
+
+
+.tag a{
+   background-color:rgba(42 ,43,48,0.95);
+   border-radius:2px;
+   border:1px solid rgba(26,166,155,0.8);
+   cursor:pointer;
+   color:#ffffff ;
+   font-size:10px;
+   padding-left:12px;
+   padding-right: 12px;
+   padding-top: 3px;
+    padding-bottom: 3px;
+   text-decoration:none;
+  
+}
+.tag a:hover {
+   background-color:rgba(42 ,43,48,0.7);
+}
+.tag a:active {
+   position:relative;
+   top:1px;
+}
+
+#tags{
+   margin-top:-30px; 
+   margin-left: 25px;
+}
+
+#title_col {
+   padding:25px;
+   padding-bottom: 30px;
+
+}
+
+#prop{
+   padding-top: 100px;
+}
+
+.main-pages2 {
+ background: url("fundo3.jpg") no-repeat center fixed;
+ background-size: 100%;
+ width:auto;
+ height: auto;
+}
+
+.title3{
+ padding-top: 120px;
+ padding-bottom: 40px;
+
+}
+
+#fotos{
+   color: white;
 }
