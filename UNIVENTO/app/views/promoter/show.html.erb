@@ -5,7 +5,7 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="sidebar-search glowing-border">
+                    <li class="sidebar-search glowing-border text-center">
                         <%= form_tag search_event_index_path, :method => 'post' do %>
                         <%= text_field_tag :search, params[:search] %>
                         <%= submit_tag "Search" %>
@@ -42,7 +42,7 @@
 
 
 <% if @owner %>
-  <div class="row" id="title_col">
+  <div class="field" id="title_col">
       <h4>&nbsp;&nbsp;&nbsp;<i class="fa fa-users"></i>&nbsp;Colaboradores</h4>
 
       <hr>
@@ -61,20 +61,22 @@
           
         
       <% end %>
-       </div>
-         
-       </div>
+        </div>
+     </div>
   <% else %>
     <span>Não existem colaboradores.<span>
+    </div>
+     </div>
   <% end %>
 <% end %>
 
 
-<div row>
+<div class="field">
 <h4 class="text-center" id="prop">Eventos Activos</h4>
 </div>
+
 <% if @shownEventDates.length != 0 %>
-<div class="row" id="eventos">
+<div class="row" id="eventos3">
     <div class="span12">
         <div class="well"> 
             <div id="carEventos" class="carousel slide" data-interval="3000" data-pause="true">
@@ -86,7 +88,7 @@
                     <% end %>
                 </ol>
 
-                <!-- Carousel items -->
+              
                 <div class="carousel-inner">
                   <% @shownEventDates.each_with_index do |eventDate,i|%>
                     <%if i%12 == 0%>
@@ -119,10 +121,10 @@
                                 <a href="<%= event_path(eventDate.event)%>"><h5><%= eventDate.event.name %></h5>
                                 <h5><small><%= eventDate.event.promoter.name %></small></h5></a>
                                 <% if @owner %>
-                                <%= button_to "Editar", root_path+"event/"+eventDate.eventID.to_s+"/edit", data: nil, method: :get %>
+                                <%= link_to "", root_path+"event/"+eventDate.eventID.to_s+"/edit", data: nil, method: :get, :class =>"fa fa-pencil" %>
                               <% end %>
                               <% if @owner %>
-                                <%= button_to "Remover", root_path+"event/"+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?" }, method: :delete %>
+                                <%= link_to "", root_path+"event/"+eventDate.eventID.to_s, data: { confirm: "Tem a certeza?" }, method: :delete, :class =>"fa fa-times" %>
                               <% end %>
                          </div>
                        </div>
@@ -134,7 +136,7 @@
                       </div>
                     <%end%>
                   <%end%>
-                </div><!--/carousel-inner-->
+                </div>
 
                 <a class="left carousel-control" href="#carEventos" data-slide="prev">
                     <span class="glyphicon glyphicon-circle-arrow-left"></span>
@@ -144,16 +146,19 @@
                     <span class="glyphicon glyphicon-circle-arrow-right"></span>
                     <span class="sr-only">Next</span>
                 </a>
-            </div><!--/myCarousel-->
-        </div><!--/well-->
+            </div>
+        </div>
     </div>
 </div>
+</div>
 <% else %>
-  <span>Não existe eventos activos.</span>
+  <span>Não existem eventos activos.</span>
 <% end %>
 
+
+
 <% if @owner%>
-<div class="row">
+<div class="field">
 <h4 class="text-center" id="prop">Eventos Inactivos</h4>
 <hr>
 </div>
@@ -237,7 +242,7 @@
   <span>Não existem eventos inactivos.</span>
 <% end %>
 
-<div id="row"><h4 class="text-center" id="prop">Eventos Propostos por colaboradores</h4>
+<div id="field"><h4 class="text-center" id="prop">Eventos Propostos por colaboradores</h4>
 <hr>
 </div>
 
@@ -324,7 +329,7 @@
   <br>Não existe eventos propostos<br>
 <% end %>
 
-<div class="row">
+<div class="field">
 <h4 class="text-center">Eventos Antigos</h4>
 <hr>
 </div>
@@ -409,7 +414,7 @@
 <% end %>
 <%end%>
         <!-- /.row -->
-    </div>
+   
     <!-- /#page-wrapper -->
 </div>
 </div>

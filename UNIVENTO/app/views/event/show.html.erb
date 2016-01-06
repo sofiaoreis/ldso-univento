@@ -59,7 +59,7 @@
                             <% if @event.docsID.present? && Normal.find_by_normalID(current_user.userID).present?%>
                                 <div><a id="sub2" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Inscreve-te</a></div>
                             <%elsif !@vai && Normal.find_by_normalID(current_user.userID).present?%>
-                                <button id="go" class="btn btn-default"> <i class="fa fa-car"> Go</i></button>
+                                <button id="go" class="btn btn-default"> <i class="fa fa-thumbs-o-up"></i> Going</i></button>
                             <%end%>
                             <%if user_signed_in? %>
                                <% if @event.promoterID == current_user.userID && !@event.docsID.present? %>
