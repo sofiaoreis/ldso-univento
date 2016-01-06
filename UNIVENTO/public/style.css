@@ -1413,3 +1413,7 @@ a:hover, a:focus, a:active {text-decoration: none;}
 
 .box2 h2 {color:rgba(42 ,43,48,1);padding:10px;padding-left: 15px;}
 
+#variasRespostas
+{
+    text-color:rgba(42 ,43,48,1);
+}
