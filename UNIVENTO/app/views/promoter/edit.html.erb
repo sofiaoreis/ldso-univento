@@ -1,7 +1,8 @@
-<div class="jumbotron">
+<div class="container-fluid main-pages center" id="page-wrapper">
 
-    <div class="regist_title">Editar promotor</div>
-    <br>
+    <div class="box title">
+        <h2>Editar perfil de utilizador</h2>
+    </div>
 
     <%= form_for @user, :url => promoter_path(@user) , method: :patch do |u| %>
 
@@ -18,37 +19,69 @@
             </div>
         <% end %>
 
-        <div class="form-group">
-            <strong>Nome</strong>
+       <div class="row">
+       <div class="col-md-6">
+          <div class="form-group">
+              <div class="input-group" >
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
             <%= text_field_tag :name, @promoter.name, class: 'form-control', :placeholder => 'Nome' %>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <strong>Instituição</strong>
+
+
+    <div class="col-md-6">
+          <div class="form-group">
+      <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-university"></i></span> 
             <%= text_field_tag :institution, @promoter.institution, class: 'form-control', :placeholder => 'Instituição' %>
         </div>
-        <div class="form-group">
-            <strong>Website</strong>
+    </div>
+</div>
+</div>
+ <div class="row">
+         <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-link"></i></span> 
             <%= text_field_tag :website, @promoter.website, class: 'form-control', :placeholder => 'Website'%>
         </div>
-        <div class="form-group">
-            <strong>Email de Contato</strong>
+    </div>
+         <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa">@</i></span> 
             <%= text_field_tag :contact, @promoter.contact, class: 'form-control', :placeholder => 'Contacto'%>
         </div>
+    </div>
 
-        <br>Credenciais do Promotor<br>
+    </div>
 
-        <div class="form-group">
+<div class="field">
+        <h2 id="fotos">Credenciais do Promotor<h2>
+            <hr></div>
+
+<div class="row">
+         <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa">@</i></span> 
             <%= u.email_field :email, :class => 'form-control', :placeholder => 'E-mail'%>
         </div>
-        <div class="form-group">
+    </div>
+       <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1"><i class="fa fa-lock"></i></span> 
             <%= u.password_field :password, :class => 'form-control', :placeholder => 'Password' %>
         </div>
-        <br>
+    </div>
+</div>
+<div class="field">
+     <%= link_to 'Mudar Credenciais', root_path+"users/edit" , :id=>"forgot"%><br>
 
-        <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>
+    </div>
+    <br>
+
+        <%= u.submit 'Submeter', :class => 'btn btn-primary active' , :id=> 'btn_promoter_user'  %>
     <% end %>
 
-    <br><%= link_to 'Mudar Credenciais', root_path+"users/edit" %><br>
+   
 
-    <br><%= link_to "Back", :back %><br>
 </div>
