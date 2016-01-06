@@ -79,7 +79,7 @@
                       <div class="col-xs-3 col-sm-3 col-md-3  text-center doc-item">
                         <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
                             <ul class="hover-list animate">
-                                <li><a href="<%= event_path(event)%>"><i class="fa fa-clock-o"> <%= event.eventdate.first.startDate %> </i></a></li>
+                                <li><a href="<%= event_path(event)%>"><i class="fa fa-clock-o"> <%= event.eventdate.first.startDate.to_s.split(':')[0]<<": "<<event.eventdate.first.startDate.to_s.split(':')[1]%> </i></a></li>
                                 <li><a href="<%= event_path(event)%>"><i class="fa fa-map-marker"> <%= event.eventdate.first.local.address%></i></a></li>
                                 <li><a href="<%= event_path(event)%>"><i class="fa fa-tags"> <%= event.category.name %></i></a></li>
                             </ul>
@@ -160,7 +160,7 @@
                       <div class="col-xs-3 col-sm-3 col-md-3  text-center doc-item">
                         <div class="common-event animated fadeInUp clearfix ae-animation-fadeInUp">
                             <ul class="hover-list animate">
-                                <li><a href="<%= event_path(event)%>"><i class="fa fa-clock-o"> <%= event.eventdate.first.startDate %> </i></a></li>
+                                <li><a href="<%= event_path(event)%>"><i class="fa fa-clock-o"> <%= event.eventdate.first.startDate.to_s.split(':')[0]<<": "<<event.eventdate.first.startDate.to_s.split(':')[1]%> </i></a></li>
                                 <li><a href="<%= event_path(event)%>"><i class="fa fa-map-marker"> <%= event.eventdate.first.local.address%></i></a></li>
                                 <li><a href="<%= event_path(event)%>"><i class="fa fa-tags"> <%= event.category.name %></i></a></li>
                             </ul>
