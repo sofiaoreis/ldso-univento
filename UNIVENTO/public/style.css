@@ -853,7 +853,6 @@ input[type='radio']:checked:before {
 
 .form_row label {position:relative}
 .form_row label:after {
-    content:'<>';
     font:11px "Consolas", monospace;
     color:#aaa;
     -webkit-transform:rotate(90deg);
@@ -867,7 +866,6 @@ input[type='radio']:checked:before {
     pointer-events:none;
 }
 .form_row label:before {
-    content:'';
     right:6px; top:0px;
     width:20px; height:20px;
     background:#989898;
@@ -1054,7 +1052,7 @@ a:hover {
 .gllpSearchButton{
   background-color: #2A2B2D;
     border-color: #1AA69B;
-    float: right;
+    float: left;
     color: white;
 }
 
@@ -1223,6 +1221,50 @@ a:hover {
 #forgot:hover
 {
     color: rgba(42 ,43,48,1);
-
 }
 
+.page-user a{
+    color: black;
+}
+
+.button_to input {
+    color: black;
+    background-color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+    border-radius: 7px;
+}
+
+.button_to input:hover {
+    background-color: #f8f8f8;
+}
+
+a:hover, a:focus, a:active {text-decoration: none;}
+
+#link-banir a{
+    color: red;
+}
+
+.banir-btn {
+    padding-bottom: 15px;
+}
+
+.banir-btn a{
+    background-color:#C41623;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    border:1px solid #AF121E;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:17px;
+    padding:10px 70px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #AF121E;
+}
+.banir-btn a:hover {
+    background-color:#AF121E;
+}
+.banir-btn a:active {
+    position:relative;
+    top:1px;
+}
