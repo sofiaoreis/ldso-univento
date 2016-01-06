@@ -1,6 +1,8 @@
-<div class="jumbotron">
+<div class="container-fluid main-pages center" id="page-wrapper">
 
-    <h2 class="regist_title">Editar perfil de utilizador</h2>
+    <div class="box title2">
+        <h2>Editar perfil de utilizador</h2>
+    </div>
 
     <%= form_for @normal, :url => user_path(@user), :authenticity_token => true, :html => { :multipart => true }, method: :patch do |u| %>
 
@@ -18,69 +20,109 @@
         <% end %>
 
         <div class="field">
-            <h3>Fotos</h3>
+          
+                <h3 id="fotos">Fotos</h3>
+                <hr>
+           
+            
             <% if @normal.user.uid == nil %>
+                <div class="field">
                 <label>Inserir fotografia</label>
+                <br>
+                 <div class="fileUpload btn">
                 <%= u.file_field :image, :multiple => false, name: "image[image][]" %>
+                </div>
+            </div>
             <% end %>
             <br>
-            <label>Inserir image de fundo do perfil</label>
+            <div class="field">
+            <label>Inserir imagem de fundo do perfil</label>
+            <br>
+             <div class="fileUpload btn">
             <%= u.file_field :background, :multiple => false, name: "background[image][]" %>
         </div>
+        </div>
+        </div>
 
-        <br><br>
-
-        <div class="form-group">
-            <strong>Nome</strong>
+        <h3 id="fotos">Utilizador</h3>
+                <hr>
+<div class="row">
+       <div class="col-md-6">
+          <div class="form-group">
+              <div class="input-group" >
+                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user"></i></span>
             <%= text_field_tag :first_name, @normal.first_name, class: 'form-control', :placeholder => 'Nome' %>
         </div>
+    </div>
+</div>
 
-        <div class="form-group">
-            <strong>Apelido</strong>
+      <div class="col-md-6">
+            <div class="form-group">
             <%= text_field_tag :last_name, @normal.last_name, class: 'form-control', :placeholder => 'Apelido' %>
-        </div>
+       
+    </div>
+</div>
+</div>
 
-        <div class="form_row">
+<div class="row">
+    <div class="col-md-6">
+        <div class="field">
             <% if @normal.gender != nil %>
-                <label for="gender">Género:</label>
+                <label for="gender">Género</label>
                 <% ['male','female'].each do |gender| %>
                     <% if @normal.gender.upcase == gender.upcase %>
-                        <br><%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
+                        <%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
                     <% else %>
-                        <br><%= radio_button_tag 'gender', gender, @gender == gender, :checked => false %>
+                        <%= radio_button_tag 'gender', gender, @gender == gender, :checked => false %>
                     <% end %>
-                  <%= gender.humanize %>
+                 <i class="fa fa-<%= gender %>"></i>
                 <% end %>
             <% else %>
                 <% [ 'male','female'].each do |gender| %>
                   <%= radio_button_tag 'gender', gender, @gender == gender, :checked => true %>
-                  <%= gender.humanize %>
+                   <i class="fa fa-<%= gender %>"></i>
                 <% end %>
             <% end %>
         </div>
-
-        <br>
-        <label>Data de nascimento:
+    </div>
+        
+    <div class="col-md-6" >
+        <div class="field" style="float:right; padding-right:10px;">
+        <%= link_to 'Mudar Credenciais', root_path+"users/edit"  %>
+        </div>
+    </div>
+          
+    </div>   
+    <br>
+    <div class="row">     
             <% if @normal.birthday != nil %>
+                <div class="col-md-6">
+                                             <div class="form_row">
+                                            <i class="fa fa-birthday-cake"></i>
                 <%=  u.date_select :birthday, order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year %>
+                 </div>
+                </div>
             <% else %>
+                <div class="col-md-6">
+                                             <div class="form_row">
+                                            <i class="fa fa-birthday-cake"></i>
                 <%=  date_select("normal", "birthday", order: [:day, :month, :year], start_year: Time.now.year-100, end_year:Time.now.year) %>
+                </div>
+                </div>
             <% end %>
-        </label>
+        </div>
+       
+        
 
         <br><br>
 
-        <%= u.submit 'Submeter', :class => 'btn btn-primary active' %>
+        <%= u.submit 'Submeter', :class => 'btn btn-primary active', :id=> 'btn_promoter_user' %>
     <% end %>
 
     <br><br>
     <strong>
-        <%= link_to 'Mudar Credenciais', root_path+"users/edit" %>
+       
     </strong>
     <br><br>
-
-    <br>
-    <%= link_to "Back", :back %>
-    <br>
 
 </div>

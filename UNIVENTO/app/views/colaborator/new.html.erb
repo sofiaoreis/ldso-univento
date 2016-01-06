@@ -1,18 +1,28 @@
 <script src="/addColaborador.js"></script>
 
-<div class="container">
-    <div class="jumbotron">
+<div class="container-fluid main-pages2 center" id="page-wrapper">
+   
         <%= form_for @convite, :url => '/colaborator' do |c| %>
+             <div class="box title3">
             <h2>Convidar Colaborador<h2>
+            </div>
 
-            <div class="form-group">
-              <%= email_field_tag :email, "", class: 'form-control', :placeholder => 'Email' %>
+            
+            <div class="col-md-6">
+              <div class="form-group">
+                <div class="input-group">
+                 <span class="input-group-addon" id="basic-addon1"><i class="fa">@</i></span> 
+              <%= email_field_tag :email, "", class: 'form-control', :placeholder => 'E-mail' %>
+                </div>
             </div>
             <div class="form-group">
               <%= text_area_tag :convite, "", class: 'form-control', :placeholder => 'Adicione uma mensagem ao convite' %>
             </div>
 
-            <%= c.submit 'Convidar', :class => 'btn btn-primary active pull-right' %>
+            <div class="field">
+            <%= c.submit 'Convidar', :class => 'btn btn-primary active pull-right', :id=> 'btn_promoter_user' %>
+        </div>
         <% end %>
+
     </div>
 </div>
