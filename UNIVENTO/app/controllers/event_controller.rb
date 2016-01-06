@@ -112,10 +112,12 @@ class EventController < ApplicationController
 	 		end
  		end
  		if tipo == "update"
- 			@event.propose=true
-#<!> 		#escolher o id do promotor conforme o valor do input referente à associação
-			@event.promoterID = Promoter.where(name: params[:promoter]).take.promoterID
-			@event.normalID = current_user.userID
+ 			if Colaborator.find_by_normalID(current_user.userID)
+	 			@event.propose=true
+	#<!> 		#escolher o id do promotor conforme o valor do input referente à associação
+				@event.promoterID = Promoter.where(name: params[:promoter]).take.promoterID
+				@event.normalID = current_user.userID
+			end
  		end
  		
  		if params["activeDate"].present?
