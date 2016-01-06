@@ -247,7 +247,7 @@
   </div>
 
 <div class="col-sm-12 col-md-12 text-center banir-btn">
-  <% if user_signed_in? && current_user.admin %>
+  <% if user_signed_in? && current_user.admin && current_user.userID.to_s != params[:id].to_s %>
 
   <%= link_to 'Banir Utilizador',  user_path(params[:id]),  method: :delete, data: { confirm: 'Are you sure?' } %>
 </div>
