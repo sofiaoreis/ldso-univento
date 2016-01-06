@@ -1,6 +1,7 @@
       
 <div id="wrapper">
     <!-- Navigation -->
+    <div class="page-wrapper">
     <nav class="navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
@@ -14,7 +15,8 @@
                     </li>
 
                     <li>
-                        <%= link_to 'Propor Evento', root_path+"event/new" %>
+                      
+                        <%= link_to ' Propor Evento', root_path+"event/new", class: "fa fa-plus" %>
                        
                         <!-- /.nav-second-level -->
                     </li>
@@ -26,31 +28,29 @@
     </nav>
 
     <div id="page-wrapper-homepage">
-  
-  <strong>=============== Promotores associados =======================</strong>
+      <div class="row" id="title_col">
+      <h4>&nbsp;&nbsp;&nbsp;<i class="fa fa-graduation-cap"></i>&nbsp;Estás a colaborar com estes promotores:</h4>
 
+      <hr>
+      </div>
 
-    <br><br>
-    <table border="1">
-      <tr>
-        <th>Name</th>
-      </tr>
-      <% @normal.colaborator.each do |p| %>
-        <tr>
-          <td> <%= link_to p.promoter.name, promoter_path(p.promoter)%> </td>
-        </tr>
-      <% end %>
-    </table>
+        
 
+       <div id="tags">
+          <% @normal.colaborator.each do |p| %>
+            <span class="tag"> <%= link_to p.promoter.name, promoter_path(p.promoter)%> </span>&nbsp;
+         <% end %>
+      </div>
+      <br>
+    
+    <div class="row" id="prop">
+      <h4 class="text-center">Propostas Pendentes</h4>
+      <hr>
+      
 
+    </div>
 
-  <br><br>
-
-
-<br>
-
-<h4 class="text-center">Propostas Pendentes</h4>
-<% if @propostas.length != 0 %>
+    <% if @propostas.length != 0 %>
 <div class="row" id="eventos">
     <div class="span12">
         <div class="well"> 
@@ -88,7 +88,7 @@
                             <%if event.image.first.present?%>
                             <img width="250" height="250" src="<%=event.image.first.image.square.url%>" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%else%>
-                            <img width="250" height="250" src="/imgs/404.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
+                            <img width="250" height="250" src="/imgs/evento_default.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%end%>
                             </figure>
                             </a>
@@ -121,13 +121,13 @@
     </div>
 </div>
 <% else %>
-  <br>Não existem propostas pendentes<br>
+  <span>Não existem propostas pendentes.</span>
 <% end %>
-<hr>
 
-<br>
+<div class="row" id="prop">
 <h4 class="text-center">Propostas aceites</h4>
 <hr>
+</div>
 
 <% if @aceites.length != 0 %>
 <div class="row" id="eventos">
@@ -167,7 +167,7 @@
                             <%if event.image.first.present?%>
                             <img width="250" height="250" src="<%=event.image.first.image.square.url%>" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%else%>
-                            <img width="250" height="250" src="/imgs/404.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
+                            <img width="250" height="250" src="/imgs/evento_default.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%end%>
                             </figure>
                             </a>
@@ -199,10 +199,11 @@
     </div>
 </div>
 <% else %>
-  <br>Não existem propostas aceites<br>
+  <span>Não existem propostas aceites.</span>
 <% end %>
         <!-- /.row -->
     </div>
+  </div>
     <!-- /#page-wrapper -->
 </div>
 <!-- /#wrapper -->

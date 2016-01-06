@@ -56,13 +56,20 @@
                                 </ul>
                             </h5>
                             <h4><%= @event.preco %>  <i class="fa fa-eur"></i> - Preço total</h4>
-                            <% if @event.docsID.present? %>
+                            <% if @event.docsID.present? && Normal.find_by_normalID(current_user.userID).present?%>
                                 <div><a id="sub2" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Inscreve-te</a></div>
-                            <%elsif user_signed_in?
-                                if @event.promoterID == current_user.userID%>
+                            <%elsif !@vai && Normal.find_by_normalID(current_user.userID).present?%>
+                                <button id="go" class="btn btn-default"> <i class="fa fa-car"> Go</i></button>
+                            <%end%>
+                            <%if user_signed_in? %>
+                               <% if @event.promoterID == current_user.userID && !@event.docsID.present? %>
                                 <div><a id="sub2" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Criar Formulário de Inscrição</a></div>
                                 <%end%>
+                                <% if @event.promoterID == current_user.userID && @event.docsID.present? %>
+                                <div><a id="sub2" class="btn btn-default" href="<%= event_registration_path(@event)%>" role="button">Ver Inscrições</a></div>
+                                <%end%>
                             <% end %>
+                            <i class="fa fa-car"> <%= @event.registrations.length %></i>
                             <br>
                             <div class="fb-share-button" data-href=<%= request.original_url %>  data-layout="button_count"></div>
                             

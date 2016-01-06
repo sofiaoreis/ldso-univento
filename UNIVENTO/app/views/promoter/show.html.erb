@@ -14,18 +14,20 @@
                     </li>
 <% if @owner%>
                     <li>
-                        <%= link_to 'Criar Evento', root_path+"event/new" %>
+                        <%= link_to ' Criar Evento', root_path+"event/new", :class => "fa fa-plus" %>
                        
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <%= link_to 'Novo Colaborador', new_colaborator_path %>
+                        <%= link_to ' Novo Colaborador', new_colaborator_path, :class => "fa fa-user-plus" %>
                         
                         <!-- /.nav-second-level -->
                     </li>
+                    <% if @owner %>
                     <li>
-                        <%= link_to 'Colaboradores', "#" %>
+                        <%= link_to ' Editar Promotor', root_path+"promoter/"+@user.promoter.promoterID.to_s+"/edit", :class => "fa fa-pencil"%>
                     </li>
+                    <% end %>
 <%end %>
 
                 </ul>
@@ -36,102 +38,41 @@
     </nav>
 
     <div id="page-wrapper-homepage">
-  
-  <% if @owner %>
-    <%= link_to 'Editar Promotor', root_path+"promoter/"+@user.promoter.promoterID.to_s+"/edit" %>
-    <br><%= link_to 'Mudar Credenciais', root_path+"users/edit" %><br>
-  <% end %>
 
 
-<% if user_signed_in? && current_user.admin %>
-  <p>
-    <strong>=============== <%= link_to "Inherited User", user_path(@promoter.user) %>  =======================</strong>
-
-    <h1 class="text-center">Criar Evento</h1>
-      <hr>
-    <br>
-    <strong>userID:</strong>
-    <%= @user.userID %>
-    <br>
-    <strong>email:</strong>
-    <%= mail_to @user.email, @user.email %>
-    <br>
-    <strong>encrypted_password:</strong>
-    <%= @user.encrypted_password %>
-    <br>
-    <strong>password:</strong>
-    <%= @user.password %>
-    <br>
-    <strong>admin:</strong>
-    <%= @user.admin %>
-    <br>
-    <strong>reset_password_token:</strong>
-    <%= @user.reset_password_token %>
-    <br>
-    <strong>reset_password_sent_at:</strong>
-    <%= @user.reset_password_sent_at %>
-    <br>
-    <strong>remember_created_at:</strong>
-    <%= @user.remember_created_at %>
-    <br>
-    <strong>sign_in_count:</strong>
-    <%= @user.sign_in_count %>
-    <br>
-    <strong>current_sign_in_at:</strong>
-    <%= @user.current_sign_in_at %>
-    <br>
-    <strong>last_sign_in_at:</strong>
-    <%= @user.last_sign_in_at %>
-    <br>
-    <strong>current_sign_in_ip:</strong>
-    <%= @user.current_sign_in_ip %>
-    <br>
-    <strong>last_sign_in_ip:</strong>
-    <%= @user.last_sign_in_ip %>
-    <br>
-    <strong>provider:</strong>
-    <%= @user.provider %>
-    <br>
-    <strong>uid:</strong>
-    <%= @user.uid %>
-  </p>
-<% end %>
 
 <% if @owner %>
-  <strong>=============== Colaboradores =======================</strong>
+  <div class="row" id="title_col">
+      <h4>&nbsp;&nbsp;&nbsp;<i class="fa fa-users"></i>&nbsp;Colaboradores</h4>
+
+      <hr>
+      </div>
 
   <% if @colaborators.length != 0 && @owner %>
-    <br><br>
-    <table border="1">
-      <tr>
-        <th>normalID</th>
-        <th>colaborator Name</th>
-        <th>promoterID</th>
-        <th>promoter Name</th>
-        <th></th>
-        <th colspan="3"></th>
-      </tr>
+      <div id="tags">
+          <div class="row">
       <% @colaborators.each do |colaborator| %>
-        <tr>
-          <td><%= colaborator.normalID %></td>
-          <td><%= link_to (colaborator.normal.first_name+" "+colaborator.normal.last_name), colaborator_path(colaborator.normal) %></td>
-          <td><%= colaborator.promoterID %></td>
-          <td><%= link_to colaborator.promoter.name, promoter_path(colaborator.promoter) %></td>
-          <td><%= button_to "Despromover", root_path+"colaborator/"+colaborator.normalID.to_s, data: { confirm: "Tem a certeza?", id: colaborator.normalID.to_s }, method: :delete %></td>
-        </tr>
+        
+          <span class="tag"><%= link_to (colaborator.normal.first_name+" "+colaborator.normal.last_name), colaborator_path(colaborator.normal) %></span>
+        
+          <%= link_to "", root_path+"colaborator/"+colaborator.normalID.to_s, data: { confirm: "Tem a certeza?", id: colaborator.normalID.to_s }, method: :delete, :class => "fa fa-times"%> 
+
+          &nbsp;
+          
+        
       <% end %>
-    </table>
-
+       </div>
+         
+       </div>
   <% else %>
-    <br>Não existem colaboradores<br>
+    <span>Não existem colaboradores.<span>
   <% end %>
-
-  <br><br>
 <% end %>
 
-<br>
 
-<h4 class="text-center">Eventos Activos</h4>
+<div row>
+<h4 class="text-center" id="prop">Eventos Activos</h4>
+</div>
 <% if @shownEventDates.length != 0 %>
 <div class="row" id="eventos">
     <div class="span12">
@@ -170,7 +111,7 @@
                             <%if eventDate.event.image.first.present?%>
                             <img width="250" height="250" src="<%=eventDate.event.image.first.image.square.url%>" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%else%>
-                            <img width="250" height="250" src="/imgs/404.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
+                            <img width="250" height="250" src="/imgs/evento_default.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%end%>
                             </figure>
                             </a>
@@ -208,13 +149,14 @@
     </div>
 </div>
 <% else %>
-  <br>Não existe eventos activos<br>
+  <span>Não existe eventos activos.</span>
 <% end %>
-<hr>
+
 <% if @owner%>
-<br>
-<h4 class="text-center">Eventos Inactivos</h4>
+<div class="row">
+<h4 class="text-center" id="prop">Eventos Inactivos</h4>
 <hr>
+</div>
 
 <% if @hiddenEventDates.length != 0 %>
 <div class="row" id="eventos">
@@ -254,7 +196,7 @@
                             <%if eventDate.event.image.first.present?%>
                             <img width="250" height="250" src="<%=eventDate.event.image.first.image.square.url%>" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%else%>
-                            <img width="250" height="250" src="/imgs/404.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
+                            <img width="250" height="250" src="/imgs/evento_default.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%end%>
                             </figure>
                             </a>
@@ -292,11 +234,12 @@
     </div>
 </div>
 <% else %>
-  <br>Não existe eventos invisiveis<br>
+  <span>Não existem eventos inactivos.</span>
 <% end %>
 
-<br><h4 class="text-center">Eventos Propostos por colaboradores</h4>
+<div id="row"><h4 class="text-center" id="prop">Eventos Propostos por colaboradores</h4>
 <hr>
+</div>
 
 <% if @proposedEventDates.length != 0 %>
 <div class="row" id="eventos">
@@ -336,7 +279,7 @@
                             <%if eventDate.event.image.first.present?%>
                             <img width="250" height="250" src="<%=eventDate.event.image.first.image.square.url%>" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%else%>
-                            <img width="250" height="250" src="/imgs/404.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
+                            <img width="250" height="250" src="/imgs/evento_default.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%end%>
                             </figure>
                             </a>
@@ -381,9 +324,10 @@
   <br>Não existe eventos propostos<br>
 <% end %>
 
-<br>
+<div class="row">
 <h4 class="text-center">Eventos Antigos</h4>
 <hr>
+</div>
 
 <% if @ObsoletedProposedEventDates.length != 0 %>
 <div class="row" id="eventos">
@@ -423,7 +367,7 @@
                             <%if eventDate.event.image.first.present?%>
                             <img width="250" height="250" src="<%=eventDate.event.image.first.image.square.url%>" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%else%>
-                            <img width="250" height="250" src="/imgs/404.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
+                            <img width="250" height="250" src="/imgs/evento_default.jpg" class="doc-img animate attachment-gallery-post-single wp-post-image" alt="#">
                             <%end%>
                             </figure>
                             </a>
@@ -461,12 +405,13 @@
     </div>
 </div>
 <% else %>
-  <br>Não existe eventos propostos obsoletos<br>
+  <span>Não existe eventos propostos obsoletos.</span>
 <% end %>
 <%end%>
         <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
+</div>
 </div>
 <!-- /#wrapper -->
 

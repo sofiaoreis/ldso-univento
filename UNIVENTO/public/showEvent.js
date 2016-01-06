@@ -9,6 +9,17 @@ function start(){
         js.src = "//connect.facebook.net/pt_PT/sdk.js#xfbml=1&version=v2.5&appId=548043568677408";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+
+
+    $("#go").on("click",function(){
+       $.ajax({
+            url: window.location.href+"/registration",
+            type: "get",
+            dataType: "json",
+            data: {accao:"saveRegistration", go: true}
+        });
+       window.location.reload();
+    });
 };
 function loadMaps(){
     $(".gllpLatlonPicker").each(function() {
