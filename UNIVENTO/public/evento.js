@@ -2,10 +2,12 @@ var index=1;
 function setup(){
 
     $('select').on('change', function() {
-      $("input[name=\"tags[]\"").prop("checked",false);
+      $("input[name=\"tags[]\"]").prop("checked",false);
       $(".cat_options").hide();
       $("#catID_"+this.value).show();
     });
+
+	setDateTimePicker();
 
     if($("#eventCategory").length ){
     	$("#category").val($("#eventCategory").val());
@@ -15,8 +17,6 @@ function setup(){
 			$("input[value=\""+value+"\"]").prop("checked",true);
     	});
     }
-
-	setDateTimePicker();
 	index = $('.clonedInput').length;
 
   	$("#btnAdd").on("click",function(){
