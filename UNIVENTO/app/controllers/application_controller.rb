@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
     
     normalID,promoterID = User.getUserType(resource)
     if normalID.present?
+      session[:normal] = true
       if !session[:name].present?
         session[:name] = Normal.find_by(normalID: current_user.userID).first_name << " " << Normal.find_by(normalID: current_user.userID).last_name
         if Normal.find_by(normalID: current_user.userID).photo.thumb.present?
