@@ -10,15 +10,14 @@ A plataforma pode ser utilizada por quatro tipos diferentes de actores, com perm
 
 O nosso objetivo final ainda não ficou concluído, apesar de termos desenvolvido a maioria das funcionalidades durante o semestre. No próximo ponto iremos falar sobre as funcionalidades concluídas e as que faltam concluir.
 
-#### Funcionalidades
-
 ###### Funcionalidades Implementadas
 
 * [x] Registo para um utilizador normal
 * [x] Registo para um colaborador (caso, ainda não tenha uma conta de utilizador normal)
 * [x] Registo de um promotor
 * [x] Login na página para utilizador normal, colaborador e promotor
-* 
-
+* [x] Homepage de utilizador normal
+* [x] Homepage de colaborador
+* [x] Homepage de promotor
 
 ###### Funcionalidades Por Implementar
